@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FlexUnitTestRunnerApplication 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns="*"
+	testSuite="{AllTests.suite()}"
+	>
+	
+	<mx:Script>
+		<![CDATA[
+		]]>
+	</mx:Script>
+	
+</FlexUnitTestRunnerApplication>
