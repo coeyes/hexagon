@@ -3,6 +3,7 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns="*"
 	testSuite="{AllTests.suite()}"
+	applicationComplete="callLater(AllTests.onCreationComplete, [this]);"
 	>
 	
 	<mx:Script>
