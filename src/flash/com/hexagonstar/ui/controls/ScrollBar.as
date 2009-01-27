@@ -77,7 +77,7 @@ package com.hexagonstar.ui.controls
 		// Constants                                                                          //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
-		public static const WIDTH:Number = 15;
+		public static const WIDTH:Number = 12;
 		
 		protected static const DOWN_ARROW_STYLES:Object =
 		{
@@ -565,7 +565,7 @@ package com.hexagonstar.ui.controls
 			
 			_thumb = new LabelButton();
 			_thumb.label = "";
-			_thumb.setSize(WIDTH, 15);
+			_thumb.setSize(WIDTH - 2, 15);
 			_thumb.move(0, 15);
 			_thumb.focusEnabled = false;
 			addChild(_thumb);
