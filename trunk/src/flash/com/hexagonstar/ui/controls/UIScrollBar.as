@@ -50,7 +50,7 @@ package com.hexagonstar.ui.controls
 	 * component include <code>width</code>, <code>height</code>, and <code>wordWrap
 	 * </code>.</p>
 	 */
-	public class UIScrollBar extends ScrollBar
+	public class UIScrollBar extends ScrollBarLite
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
@@ -155,7 +155,7 @@ package com.hexagonstar.ui.controls
 		 */
 		public static function get styleDefinition():Object
 		{ 
-			return UIComponent.mergeStyles(_defaultStyles, ScrollBar.styleDefinition);
+			return UIComponent.mergeStyles(_defaultStyles, ScrollBarLite.styleDefinition);
 		}
 		
 		

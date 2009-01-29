@@ -29,15 +29,9 @@
  */
 package com.hexagonstar.ui.controls
 {
-	import com.hexagonstar.ui.core.InvalidationType;
-	import com.hexagonstar.ui.core.UIComponent;
-	import com.hexagonstar.ui.events.ComponentEvent;
-	import com.hexagonstar.ui.events.ScrollEvent;
+	import com.hexagonstar.ui.core.InvalidationType;	import com.hexagonstar.ui.core.UIComponent;	import com.hexagonstar.ui.events.ComponentEvent;	import com.hexagonstar.ui.events.ScrollEvent;		import flash.events.MouseEvent;
 	
-	import flash.events.MouseEvent;
-	
-	
-	[Event(name="scroll", type="fl.events.ScrollEvent")]
+		[Event(name="scroll", type="fl.events.ScrollEvent")]
 	
 	[Style(name="downArrowDisabledSkin", type="Class")]
 	[Style(name="downArrowDownSkin", type="Class")]
