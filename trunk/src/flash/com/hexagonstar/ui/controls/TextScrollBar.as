@@ -39,18 +39,18 @@ package com.hexagonstar.ui.controls
 	
 	
 	/**
-	 * The UIScrollBar class includes all of the scroll bar functionality, but adds
+	 * The TextScrollBar class includes all of the scroll bar functionality, but adds
 	 * a <code>scrollTarget()</code> method so it can be attached to a TextField
 	 * component instance.
 	 *
 	 * <p><strong>Note:</strong> When you use ActionScript to update properties of 
 	 * the TextField component that affect the text layout, you must call the <code>
-	 * update()</code> method on the UIScrollBar component instance to refresh its scroll 
+	 * update()</code> method on the TextScrollBar component instance to refresh its scroll 
 	 * properties. Examples of text layout properties that belong to the TextField
 	 * component include <code>width</code>, <code>height</code>, and <code>wordWrap
 	 * </code>.</p>
 	 */
-	public class UIScrollBar extends ScrollBarLite
+	public class TextScrollBar extends ScrollBarLite
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
@@ -68,9 +68,9 @@ package com.hexagonstar.ui.controls
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Creates a new UIScrollBar instance.
+		 * Creates a new TextScrollBar instance.
 		 */
-		public function UIScrollBar()
+		public function TextScrollBar()
 		{
 			super();
 		}
