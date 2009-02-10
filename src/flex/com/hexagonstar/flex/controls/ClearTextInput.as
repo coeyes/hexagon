@@ -210,7 +210,8 @@ package com.hexagonstar.flex.controls
 		 * updateDisplayList
 		 * @private
 		 */
-		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		override protected function updateDisplayList(unscaledWidth:Number,
+			unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			
