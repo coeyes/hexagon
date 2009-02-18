@@ -2,4 +2,4 @@
 	import com.hexagonstar.data.types.Byte;
 	
 	import flash.utils.ByteArray;		
-	/**	 * IFile Interface	 */	public interface IFile extends IBasicClass	{		function get path():String;		function set path(v:String):void;		function get size():Byte;		function set size(v:Byte):void;		function get isValid():Boolean;		function get errorStatus():String;		function get content():*;		function set content(v:*):void;		function get contentAsBinary():ByteArray;		function set contentAsBinary(v:ByteArray):void;		function get fileTypeID():int;	}}
+	/**	 * IFile Interface	 */	public interface IFile extends IBasicClass	{		function get path():String;		function set path(v:String):void;		function get size():Byte;		function set size(v:Byte):void;		function get isValid():Boolean;		function get errorStatus():String;		function get content():*;		function set content(v:*):void;		function get contentAsBinary():ByteArray;		function set contentAsBinary(v:ByteArray):void;		function get fileTypeID():int;		function get id():int;		function set id(v:int):void;	}}
