@@ -272,9 +272,6 @@ package com.hexagonstar.game.tile
 			var gridW:int = _grid.width * _tileWidth;
 			var gridH:int = _grid.height * _tileHeight;
 			
-			var winWidthTiles:int = _windowWidth / (_tileWidth / 2);
-			var winHeightTiles:int = _windowHeight / (_tileHeight / 2);
-			
 			/* If the grid is smaller (or equal) to the window size, the buffer size
 			 * can be the same as the grid size since no scrolling is necessary but if
 			 * the grid is larger, the buffer needs to be the window size + one column
@@ -285,7 +282,7 @@ package com.hexagonstar.game.tile
 			}
 			else
 			{
-				_bufferWidth = _windowWidth + _tileWidth;
+				_bufferWidth = _windowWidth - (_windowWidth % _tileWidth) + _tileWidth;
 			}
 			
 			if (gridH <= _windowHeight)
@@ -294,17 +291,12 @@ package com.hexagonstar.game.tile
 			}
 			else
 			{
-				_bufferHeight = _windowHeight + _tileHeight;
+				_bufferHeight = _windowHeight - (_windowHeight % _tileHeight) + _tileHeight;
 			}
 			
-			// TODO Need to change calculations so that the correct
-			// buffertile width and height are calculated when using a window
-			// size that is not an exact multiplication of the tile size.
-			_bufferWidthTiles = Math.floor(_bufferWidth / _tileWidth);
-			_bufferHeightTiles = Math.floor(_bufferHeight / _tileHeight);
+			_bufferWidthTiles = _bufferWidth / _tileWidth;
+			_bufferHeightTiles = _bufferHeight / _tileHeight;
 			
-			Debug.trace("winWidthTiles=" + winWidthTiles, Debug.LEVEL_DEBUG);
-			Debug.trace("winHeightTiles=" + winHeightTiles, Debug.LEVEL_DEBUG);
 			Debug.trace("gridW=" + gridW, Debug.LEVEL_DEBUG);
 			Debug.trace("gridH=" + gridH, Debug.LEVEL_DEBUG);
 			Debug.trace("bufferWidth=" + _bufferWidth, Debug.LEVEL_DEBUG);
