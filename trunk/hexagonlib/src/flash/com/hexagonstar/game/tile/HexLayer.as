@@ -29,19 +29,8 @@
  */
 package com.hexagonstar.game.tile
 {
-	import com.hexagonstar.data.structures.grids.Grid2D;
-	import com.hexagonstar.game.tile.ds.PropertyMap;
-	import com.hexagonstar.util.debug.Debug;
-	
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;	
-
-	
-	/**
+	import com.hexagonstar.data.structures.grids.Grid2D;	import com.hexagonstar.game.tile.ds.PropertyMap;	import com.hexagonstar.util.debug.Debug;		import flash.display.Bitmap;	import flash.display.BitmapData;	import flash.display.DisplayObject;	import flash.display.Sprite;	import flash.geom.Point;	import flash.geom.Rectangle;	
+		/**
 	 * HexLayer Class
 	 */
 	public class HexLayer extends Sprite implements ITileLayer
@@ -62,6 +51,10 @@ package com.hexagonstar.game.tile
 		
 		protected var _tileWidth:int;
 		protected var _tileHeight:int;
+		
+		protected var _sectorWidth:Number;
+		protected var _sectorHeight:Number;
+		protected var _gradient:Number;
 		
 		protected var _bufferWidth:int;
 		protected var _bufferHeight:int;
@@ -147,20 +140,22 @@ package com.hexagonstar.game.tile
 			var xPos:int;
 			var yPos:int;
 			
-			Debug.trace("bwt=" + _bufferWidthTiles + ", bht=" + _bufferHeightTiles);
-			for (var y:int = 0; y < _bufferHeightTiles; y++)
+			_sectorWidth = _tileWidth / 4 * 3;
+			_sectorHeight = _tileHeight;
+			_gradient = (_tileWidth / 4) / (_tileHeight / 2);
+			
+			for (var x:int = 0; x < _bufferHeightTiles; x++)
 			{
-				for (var x:int = 0; x < _bufferWidthTiles; x++)
+				for (var y:int = 0; y < _bufferWidthTiles; y++)
 				{
-					//Debug.trace("x: " + x + "  y: " + y);
 					tileID = _grid.getCell(x, y);
 					
 					/* Only draw tiles if necessary */
 					if (tileID > 0)
 					{
 						tile = _tileSet.getTile(tileID);
-						_point.x = x * _tileWidth;
-						_point.y = y * _tileHeight;
+						_point.x = _tileWidth * y / 4 * 3;
+						_point.y = _tileHeight * x + (y % 2) * _tileHeight / 2;
 						
 						if (tile is AnimTile)
 						{
@@ -172,7 +167,8 @@ package com.hexagonstar.game.tile
 						}
 						else
 						{
-							_bitmap.copyPixels((tile as Tile).bitmapData, _rectangle, _point);
+							_bitmap.copyPixels((tile as Tile).bitmapData, _rectangle, _point,
+								null, null, true);
 						}
 					}
 				}
@@ -271,6 +267,50 @@ package com.hexagonstar.game.tile
 		 */
 		protected function calculateBufferSize():void
 		{
+			// TODO Calculate correct buffer sizes for hexagonal tilemap!
+			
+			var gridW:int = _grid.width * _tileWidth;
+			var gridH:int = _grid.height * _tileHeight;
+			
+			var winWidthTiles:int = _windowWidth / (_tileWidth / 2);
+			var winHeightTiles:int = _windowHeight / (_tileHeight / 2);
+			
+			/* If the grid is smaller (or equal) to the window size, the buffer size
+			 * can be the same as the grid size since no scrolling is necessary but if
+			 * the grid is larger, the buffer needs to be the window size + one column
+			 * and row of a tile width/height */
+			if (gridW <= _windowWidth)
+			{
+				_bufferWidth = gridW;
+			}
+			else
+			{
+				_bufferWidth = _windowWidth + _tileWidth;
+			}
+			
+			if (gridH <= _windowHeight)
+			{
+				_bufferHeight = gridH;
+			}
+			else
+			{
+				_bufferHeight = _windowHeight + _tileHeight;
+			}
+			
+			// TODO Need to change calculations so that the correct
+			// buffertile width and height are calculated when using a window
+			// size that is not an exact multiplication of the tile size.
+			_bufferWidthTiles = Math.floor(_bufferWidth / _tileWidth);
+			_bufferHeightTiles = Math.floor(_bufferHeight / _tileHeight);
+			
+			Debug.trace("winWidthTiles=" + winWidthTiles, Debug.LEVEL_DEBUG);
+			Debug.trace("winHeightTiles=" + winHeightTiles, Debug.LEVEL_DEBUG);
+			Debug.trace("gridW=" + gridW, Debug.LEVEL_DEBUG);
+			Debug.trace("gridH=" + gridH, Debug.LEVEL_DEBUG);
+			Debug.trace("bufferWidth=" + _bufferWidth, Debug.LEVEL_DEBUG);
+			Debug.trace("bufferHeight=" + _bufferHeight, Debug.LEVEL_DEBUG);
+			Debug.trace("bufferWidthTiles=" + _bufferWidthTiles, Debug.LEVEL_DEBUG);
+			Debug.trace("bufferHeightTiles=" + _bufferHeightTiles, Debug.LEVEL_DEBUG);
 		}
 	}
 }
