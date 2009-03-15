@@ -50,7 +50,7 @@ package com.hexagonstar.game.tile
 		protected var _metaData:MetaData;
 		
 		protected var _properties:PropertyMap;
-		protected var _layers:Vector.<TileLayer>;
+		protected var _layers:Vector.<ITileLayer>;
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ package com.hexagonstar.game.tile
 		{
 			_metaData = new MetaData();
 			_properties = new PropertyMap();
-			_layers = new Vector.<TileLayer>(layerCount, false);
+			_layers = new Vector.<ITileLayer>(layerCount, false);
 		}
 
 		
@@ -85,7 +85,7 @@ package com.hexagonstar.game.tile
 		 * 
 		 * @param layer The Tile Layer.
 		 */
-		public function addLayer(layer:TileLayer):void
+		public function addLayer(layer:ITileLayer):void
 		{
 			_layers[layer.index] = layer;
 		}
@@ -94,7 +94,7 @@ package com.hexagonstar.game.tile
 		/**
 		 * getLayer
 		 */
-		public function getLayer(index:int):TileLayer
+		public function getLayer(index:int):ITileLayer
 		{
 			return _layers[index];
 		}
@@ -113,7 +113,7 @@ package com.hexagonstar.game.tile
 		 */
 		public function initLayers(tileSetsMap:PropertyMap, winWidth:int, winHeight:int):void
 		{
-			for each (var l:TileLayer in _layers)
+			for each (var l:ITileLayer in _layers)
 			{
 				l.init(tileSetsMap, winWidth, winHeight);
 			}
@@ -198,7 +198,7 @@ package com.hexagonstar.game.tile
 		/**
 		 * The tile layers of the TileMap.
 		 */
-		public function get layers():Vector.<TileLayer>
+		public function get layers():Vector.<ITileLayer>
 		{
 			return _layers;
 		}
