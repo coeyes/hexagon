@@ -172,6 +172,7 @@ package com.hexagonstar.flex.containers
 		{
 			removeEventListeners();
 			PopUpManager.removePopUp(this);
+			dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 		}
 		
 		

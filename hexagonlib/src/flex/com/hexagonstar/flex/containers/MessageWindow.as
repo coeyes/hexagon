@@ -103,17 +103,15 @@ package com.hexagonstar.flex.containers
 			super.createChildren();
 			
 			_messageTitle = new Label();
+			_messageTitle.styleName = "messageWindowTitle";
 			_messageTitle.percentWidth = 100;
 			_messageTitle.selectable = false;
-			_messageTitle.setStyle("fontSize", 12);
-			_messageTitle.setStyle("fontWeight", "bold");
 			
 			_messageText = new TextArea();
+			_messageText.styleName = "messageWindowText";
 			_messageText.percentWidth = 100;
 			_messageText.percentHeight = 100;
 			_messageText.selectable = false;
-			_messageText.setStyle("fontSize", 10);
-			_messageText.setStyle("borderStyle", "none");
 			
 			addChild(_messageTitle);
 			addChild(_messageText);
