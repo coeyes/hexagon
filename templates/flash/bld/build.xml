@@ -6,7 +6,7 @@
 	Universal build file for ActionScript 3 Projects.
 *********************************************************************************************
 -->
-<project name="Flash Project Template" default="Init Project" basedir=".">
+<project name="Flash Project Template" default="Init Project" basedir="..">
 	
 	<!-- application information -->
 	<property name="app_id"			value="com.hexagonstar.flashprojecttemplate"/>
@@ -55,9 +55,9 @@
 	<property name="src"				value="src"/>
 	
 	<!-- eclipse workspace & additional source/swc pathes -->
-	<property name="workspace"		value="C:/Users/sascha/Documents/Eclipse"/>
-	<property name="hexagonLibFlash"	value="${workspace}/com.hexagonstar.hexagonlib/src/flash"/>
-	<property name="alconSWCPath"		value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
+	<property name="workspace"			value="C:/Users/sascha/Documents/Eclipse"/>
+	<property name="hexagonlib_swc_path"	value="${eclipse.workspace}/com.hexagonstar.hexagonlib/swc"/>
+	<property name="alconSWCPath"			value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
 	
 	<!-- sdk pathes -->
 	<property name="sdk"				value="C:/Program Files (x86)/Adobe/Flex SDK/${sdk_version}"/>
@@ -182,12 +182,12 @@ package
 					<contributor name="${meta_contributor}"/>
 				</metadata>
 				
-				<!-- Source Pathes -->
-				<source-path path-element="${hexagonLibFlash}"/>
-				
 				<!-- Library Pathes -->
 				<compiler.include-libraries dir="${swc}" append="true">
 					<include name="library.swc"/>
+				</compiler.include-libraries>
+				<compiler.include-libraries dir="${hexagonlib_swc_path}" append="true">
+					<include name="hexagonlib_flash.swc"/>
 				</compiler.include-libraries>
 				<compiler.include-libraries dir="${alconSWCPath}" append="true">
 					<include name="alcon.swc"/>
