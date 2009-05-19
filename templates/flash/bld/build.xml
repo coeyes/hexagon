@@ -9,41 +9,41 @@
 <project name="Flash Project Template" default="Init Project" basedir="..">
 	
 	<!-- application information -->
-	<property name="app_id"			value="com.hexagonstar.flashprojecttemplate"/>
-	<property name="app_name"			value="Flash Project Template"/>
-	<property name="app_version"		value="1.0.0"/>
-	<property name="app_releasetype"	value=""/>
-	<property name="app_copyright"	value="Copyright(c) Hexagon Star Softworks"/>
-	<property name="app_year"			value="2009"/>
-	<property name="app_website"		value="http://www.hexagonstar.com/"/>
-	<property name="app_language"		value="EN"/>
+	<property name="app.id"			value="com.hexagonstar.flashprojecttemplate"/>
+	<property name="app.name"			value="Flash Project Template"/>
+	<property name="app.version"		value="1.0.0"/>
+	<property name="app.releasetype"	value="web"/>
+	<property name="app.copyright"	value="Copyright(c) Hexagon Star Softworks"/>
+	<property name="app.year"			value="2009"/>
+	<property name="app.website"		value="http://www.hexagonstar.com/"/>
+	<property name="app.language"		value="EN"/>
 	
 	<!-- top class (either App.as or App.mxml) -->
-	<property name="app_class"		value="App.as"/>
+	<property name="app.class"		value="App.as"/>
 	
 	<!-- swf properties -->
-	<property name="swf_bgcolor"		value="0x262626"/>
-	<property name="swf_framerate"	value="90"/>
-	<property name="swf_width"		value="1024"/>
-	<property name="swf_height"		value="640"/>
-	<property name="swf_targetname"	value="app.swf"/>
+	<property name="swf.bgcolor"		value="0x262626"/>
+	<property name="swf.framerate"	value="90"/>
+	<property name="swf.width"		value="1024"/>
+	<property name="swf.height"		value="640"/>
+	<property name="swf.targetname"	value="app.swf"/>
 	
 	<!-- swf meta tags -->
-	<property name="meta_title"		value="Flash Project Template"/>
-	<property name="meta_description"	value=""/>
-	<property name="meta_publisher"	value="Hexagon Star Softworks"/>
-	<property name="meta_creator"		value="Hexagon Star Softworks"/>
-	<property name="meta_contributor"	value=""/>
+	<property name="meta.title"		value="Flash Project Template"/>
+	<property name="meta.description"	value=""/>
+	<property name="meta.publisher"	value="Hexagon Star Softworks"/>
+	<property name="meta.creator"		value="Hexagon Star Softworks"/>
+	<property name="meta.contributor"	value=""/>
 	
 	<!-- version of the used flex sdk -->
-	<property name="sdk_version"		value="3.2.0"/>
+	<property name="sdk.version"		value="3.3.0"/>
 	
 	<!-- version of the targetted flash player (9.0.124 or 10.0.12) -->
-	<property name="fpv_version"		value="10.0.12"/>
+	<property name="fpv.version"		value="10.0.12"/>
 	
 	<!-- advanced compiler options -->
-	<property name="max_recursion_depth"	value="1000"/>
-	<property name="max_execution_time"	value="60"/>
+	<property name="max.recursiondepth"	value="1000"/>
+	<property name="max.executiontime"	value="60"/>
 	
 	<!-- default project folders -->
 	<property name="bin"				value="bin"/>
@@ -56,11 +56,11 @@
 	
 	<!-- eclipse workspace & additional source/swc pathes -->
 	<property name="workspace"			value="C:/Users/sascha/Documents/Eclipse"/>
-	<property name="hexagonlib_swc_path"	value="${eclipse.workspace}/com.hexagonstar.hexagonlib/swc"/>
-	<property name="alconSWCPath"			value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
+	<property name="swcpath.hexagonlib"	value="${eclipse.workspace}/com.hexagonstar.hexagonlib/swc"/>
+	<property name="swcpath.alcon"		value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
 	
 	<!-- sdk pathes -->
-	<property name="sdk"				value="C:/Program Files (x86)/Adobe/Flex SDK/${sdk_version}"/>
+	<property name="sdk"				value="C:/Program Files (x86)/Adobe/Flex SDK/${sdk.version}"/>
 	<property name="FLEX_HOME"		value="${sdk}"/>
 	<property name="fcsh"				value="${sdk}/bin/fcsh.exe"/>
 	<property name="mxmlc"			value="${sdk}/bin/mxmlc.exe"/>
@@ -105,11 +105,11 @@
 	
 	<macrodef name="prepareBuild">
 		<sequential>
-			<buildnumber/>
+			<buildnumber file="bld/build.number"/>
 			<tstamp>
 				<format property="build.date" pattern="dd-MMMM-yyyy HH:mm" unit="minute" locale="en"/>
 			</tstamp>
-			<echo message="*** ${ant.project.name} version: ${app_version} build #${build.number}, ${build.date} ***" level="info"/>
+			<echo message="*** ${ant.project.name} version: ${app.version} build #${build.number}, ${build.date} ***" level="info"/>
 			<createAppInfo srcfolder="${src}" buildnr="${build.number}" builddate="${build.date}"/>
 		</sequential>
 	</macrodef>
@@ -122,8 +122,8 @@
 		<sequential>
 			<echo message="Creating AppInfo.as ..." level="info"/>
 			<echo file="@{srcfolder}/AppInfo.as" append="false"><![CDATA[/*
- * ${ant.project.name} v${app_version}
- * ${app_copyright}
+ * ${ant.project.name} v${app.version}
+ * ${app.copyright}
  */
 package
 {
@@ -133,16 +133,16 @@ package
 	 **************************************************************************/
 	public final class AppInfo
 	{
-		public static const APP_ID:String			= "${app_id}";
-		public static const APP_NAME:String			= "${app_name}";
-		public static const APP_VERSION:String		= "${app_version}";
+		public static const APP_ID:String			= "${app.id}";
+		public static const APP_NAME:String			= "${app.name}";
+		public static const APP_VERSION:String		= "${app.version}";
 		public static const APP_BUILD:String			= "@{buildnr}";
 		public static const APP_BUILD_DATE:String	= "@{builddate}";
-		public static const APP_RELEASE_TYPE:String	= "${app_releasetype}";
-		public static const APP_COPYRIGHT:String		= "${app_copyright}";
-		public static const APP_YEAR:String			= "${app_year}";
-		public static const APP_WEBSITE:String		= "${app_website}";
-		public static const APP_LANGUAGE:String		= "${app_language}";
+		public static const APP_RELEASE_TYPE:String	= "${app.releasetype}";
+		public static const APP_COPYRIGHT:String		= "${app.copyright}";
+		public static const APP_YEAR:String			= "${app.year}";
+		public static const APP_WEBSITE:String		= "${app.website}";
+		public static const APP_LANGUAGE:String		= "${app.language}";
 	}
 }]]>
 </echo>
@@ -153,43 +153,43 @@ package
 	<macrodef name="compile">
 		<attribute name="debug" default="true"/>
 		<sequential>
-			<echo message="Compiling ${swf_targetname} for Runtime v${fpv_version} ..." level="info"/>
+			<echo message="Compiling ${swf.targetname} for Runtime v${fpv.version} ..." level="info"/>
 			<flextasks.mxmlc
 				show-unused-type-selector-warnings="false"
-				file="${basedir}/${src}/${app_class}"
-				output="${basedir}/${bin}/${swf_targetname}"
+				file="${basedir}/${src}/${app.class}"
+				output="${basedir}/${bin}/${swf.targetname}"
 				incremental="false"
 				locale="en_US"
-				default-frame-rate="${swf_framerate}"
-				default-background-color="${swf_bgcolor}"
-				target-player="${fpv_version}"
+				default-frame-rate="${swf.framerate}"
+				default-background-color="${swf.bgcolor}"
+				target-player="${fpv.version}"
 				debug="@{debug}"
 			>
 				<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
-				<default-size width="${swf_width}" height="${swf_height}"/>
+				<default-size width="${swf.width}" height="${swf.height}"/>
 				<default-script-limits
-					max-recursion-depth="${max_recursion_depth}"
-					max-execution-time="${max_execution_time}"
+					max-recursion-depth="${max.recursiondepth}"
+					max-execution-time="${max.executiontime}"
 				/>
 				<metadata
-					title="${meta_title}"
-					description="${meta_description}"
+					title="${meta.title}"
+					description="${meta.description}"
 					date="${build.date}"
 				>
-					<language code="${app_language}"/>
-					<publisher name="${meta_publisher}"/>
-					<creator name="${meta_creator}"/>
-					<contributor name="${meta_contributor}"/>
+					<language code="${app.language}"/>
+					<publisher name="${meta.publisher}"/>
+					<creator name="${meta.creator}"/>
+					<contributor name="${meta.contributor}"/>
 				</metadata>
 				
 				<!-- Library Pathes -->
 				<compiler.include-libraries dir="${swc}" append="true">
 					<include name="library.swc"/>
 				</compiler.include-libraries>
-				<compiler.include-libraries dir="${hexagonlib_swc_path}" append="true">
+				<compiler.include-libraries dir="${swcpath.hexagonlib}" append="true">
 					<include name="hexagonlib_flash.swc"/>
 				</compiler.include-libraries>
-				<compiler.include-libraries dir="${alconSWCPath}" append="true">
+				<compiler.include-libraries dir="${swcpath.alcon}" append="true">
 					<include name="alcon.swc"/>
 				</compiler.include-libraries>
 				
@@ -200,9 +200,9 @@ package
 	
 	<macrodef name="debugLauncher">
 		<sequential>
-			<echo message="Opening ${swf_targetname} in Flash Player (Debug) ..." level="info"/>
+			<echo message="Opening ${swf.targetname} in Flash Player (Debug) ..." level="info"/>
 			<exec executable="${debugplayer}" spawn="true">
-				<arg value="${basedir}\${bin}\${swf_targetname}"/>
+				<arg value="${basedir}\${bin}\${swf.targetname}"/>
 			</exec>
 		</sequential>
 	</macrodef>
@@ -210,9 +210,9 @@ package
 	
 	<macrodef name="releaseLauncher">
 		<sequential>
-			<echo message="Opening ${swf_targetname} in Flash Player (Release) ..." level="info"/>
+			<echo message="Opening ${swf.targetname} in Flash Player (Release) ..." level="info"/>
 			<exec executable="${flashplayer}" spawn="true">
-				<arg value="${basedir}\${bin}\${swf_targetname}"/>
+				<arg value="${basedir}\${bin}\${swf.targetname}"/>
 			</exec>
 		</sequential>
 	</macrodef>
