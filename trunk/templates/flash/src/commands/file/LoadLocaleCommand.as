@@ -1,13 +1,13 @@
-package commands
+package commands.file
 {
 	import io.LocaleLoader;
-	
+
 	import com.hexagonstar.env.command.Command;
 	import com.hexagonstar.env.command.ICommandListener;
-	
+
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
-	
+
 	
 	/**
 	 * LoadLocaleCommand Class

@@ -1,8 +1,21 @@
-package commands
+package commands.env
 {
-	import model.Config;		import com.hexagonstar.env.command.Command;	import com.hexagonstar.env.command.CompositeCommand;	import com.hexagonstar.env.command.ICommandListener;	import com.hexagonstar.env.console.Console;	import com.hexagonstar.env.event.CommandCompleteEvent;	import com.hexagonstar.env.event.CommandErrorEvent;		import flash.events.ErrorEvent;
+	import commands.file.LoadConfigCommand;
+	import commands.file.LoadDataFilesCommand;
+	import commands.file.LoadLocaleCommand;
+
+	import model.Config;
+
+	import com.hexagonstar.env.command.CompositeCommand;
+	import com.hexagonstar.env.command.ICommandListener;
+	import com.hexagonstar.env.console.Console;
+	import com.hexagonstar.env.event.CommandCompleteEvent;
+	import com.hexagonstar.env.event.CommandErrorEvent;
+
+	import flash.events.ErrorEvent;
+
 	
-		/**
+	/**
 	 * This composite command is used to manage initialization of the application.
 	 * 
 	 * The following tasks are taken care of by this command in order:
@@ -167,7 +180,7 @@ package commands
 		 */
 		private function setEarlySettings():void
 		{
-			var config:Config = Config.instance;
+			var config:Config = Main.config;
 			
 			/* We make the console available to the user right after the config
 			 * file was loaded in case data file loading takes long (e.g. on the web). */
