@@ -13,8 +13,8 @@ package
 		public static const APP_ID:String			= "com.hexagonstar.flashprojecttemplate";
 		public static const APP_NAME:String			= "Flash Project Template";
 		public static const APP_VERSION:String		= "1.0.0";
-		public static const APP_BUILD:String			= "1198";
-		public static const APP_BUILD_DATE:String	= "19-May-2009 14:41";
+		public static const APP_BUILD:String			= "1200";
+		public static const APP_BUILD_DATE:String	= "31-May-2009 17:33";
 		public static const APP_RELEASE_TYPE:String	= "web";
 		public static const APP_COPYRIGHT:String		= "Copyright(c) Hexagon Star Softworks";
 		public static const APP_YEAR:String			= "2009";
