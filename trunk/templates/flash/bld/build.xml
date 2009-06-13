@@ -183,15 +183,15 @@ package
 				</metadata>
 				
 				<!-- Library Pathes -->
-				<compiler.include-libraries dir="${swc}" append="true">
+				<compiler.library-path dir="${swc}" append="true">
 					<include name="library.swc"/>
-				</compiler.include-libraries>
-				<compiler.include-libraries dir="${swcpath.hexagonlib}" append="true">
+				</compiler.library-path>
+				<compiler.library-path dir="${swcpath.hexagonlib}" append="true">
 					<include name="hexagonlib_flash.swc"/>
-				</compiler.include-libraries>
-				<compiler.include-libraries dir="${swcpath.alcon}" append="true">
+				</compiler.library-path>
+				<compiler.library-path dir="${swcpath.alcon}" append="true">
 					<include name="alcon.swc"/>
-				</compiler.include-libraries>
+				</compiler.library-path>
 				
 			</flextasks.mxmlc>
 		</sequential>
