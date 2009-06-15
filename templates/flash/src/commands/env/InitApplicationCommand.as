@@ -186,6 +186,7 @@ package commands.env
 			 * file was loaded in case data file loading takes long (e.g. on the web). */
 			Console.instance.consoleEnabled = config.consoleEnabled;
 			Console.instance.transparency = config.consoleTransparency;
+			Console.instance.maxBufferSize = config.consoleMaxBufferSize;
 			
 			/* Set the default locale as the currently used locale. */
 			config.currentLocale = config.defaultLocale.toLocaleLowerCase();
