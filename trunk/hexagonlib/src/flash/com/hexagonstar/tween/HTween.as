@@ -433,7 +433,7 @@ package com.hexagonstar.tween
 		 * Jumps the tween to its beginning. This is the same as setting
 		 * <code>position = -delay</code>.
 		 */
-		public function beginning():void
+		public function rewind():void
 		{
 			setPosition(-_delay);
 		}
@@ -1187,9 +1187,9 @@ package com.hexagonstar.tween
 		 * locks or unlocks the tween in memory.
 		 * @private
 		 */
-		protected function setGCLock(value:Boolean):void
+		protected function setGCLock(v:Boolean):void
 		{
-			if (value) 
+			if (v) 
 			{
 				if (_target is IEventDispatcher) 
 				{ 
