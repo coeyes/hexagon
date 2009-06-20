@@ -29,7 +29,7 @@ package com.hexagonstar.math.easing
 		 */
 		public function easeIn(t:Number, b:Number, c:Number, d:Number):Number
 		{
-			return c * (t / d) + b;
+			return t;//c * (t / d) + b;
 		}
 		
 		
@@ -38,7 +38,7 @@ package com.hexagonstar.math.easing
 		 */
 		public function easeOut(t:Number, b:Number, c:Number, d:Number):Number
 		{
-			return c * (t / d) + b;
+			return t;//c * (t / d) + b;
 		}
 		
 		
@@ -47,7 +47,7 @@ package com.hexagonstar.math.easing
 		 */
 		public function easeInOut(t:Number, b:Number, c:Number, d:Number):Number
 		{
-			return c * (t / d) + b;
+			return t;//c * (t / d) + b;
 		}
 	}
 }
