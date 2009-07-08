@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataFiles>
+	<file id="data1" path="data/data1.xml"/>
+	<file id="data2" path="data/data2.xml"/>
+</dataFiles>
