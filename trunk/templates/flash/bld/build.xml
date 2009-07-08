@@ -69,10 +69,6 @@
 	<property name="flashplayer"		value="${flashplayer.debug}"/>
 	<property name="debugplayer"		value="${flashplayer.release}"/>
 	
-	<!-- iFac -->
-	<property name="ifac.ant"			value="${ant.home}/../com.netTrek.iFac.eclipse_0.2.1/antbuild/iFac-ant.jar"/>
-	<property name="ifac.delay"		value="0"/>
-	
 	
 	<!-- ==================================================================================== -->
 	<!-- TARGETS                                                                              -->
@@ -102,13 +98,6 @@
 	<target name="Launch" description="Runs the Application.">
 		<releaseLauncher/>
 	</target>
-	
-	
-	<!-- ==================================================================================== -->
-	<!-- TASKDEFS                                                                             -->
-	<!-- ==================================================================================== -->
-	
-	<taskdef name="ifac" classname="com.netTrek.iFac.ant.core.IFacTask" classpath="${ifac.ant}"/>
 	
 	
 	<!-- ==================================================================================== -->
@@ -206,33 +195,6 @@ package
 				</compiler.library-path>
 				
 			</flextasks.mxmlc>
-		</sequential>
-	</macrodef>
-	
-	
-	<macrodef name="compilePure">
-		<attribute name="isdebug" default="true"/>
-		<sequential>
-			<echo message="Compiling pure ActionScript version of ${swf.targetname} for Runtime v${fpv.version} ..." level="info"/>
-			<ifac failonerror="true" delay="${ifac.delay}" verbose="false">
-				<arg value="mxmlc"/>
-				<arg value="-output=${basedir}/${bin}/test.swf"/>
-				<arg value="-sp ${basedir}/${src}"/>
-				<arg value="-library-path ${swcpath.hexagonlib}"/>
-				<arg value="-library-path ${swcpath.alcon}"/>
-				<arg value="-default-size ${swf.width} ${swf.height}"/>
-				<arg value="-default-frame-rate ${swf.framerate}"/>
-				<arg value="-default-background-color ${swf.bgcolor}"/>
-				<arg value="-default-script-limits ${max.recursiondepth} ${max.executiontime}"/>
-				<arg value="-target-player ${fpv.version}"/>
-				<arg value="-debug=@{isdebug}"/>
-				<arg value="-strict=true"/>
-				<arg value="-optimize=true"/>
-				<arg value="-benchmark=true"/>
-				<arg value="-incremental=false"/>
-				<arg value="-show-unused-type-selector-warnings=false"/>
-				<arg value="-- ${basedir}/${src}/${app.class}"/>
-			</ifac>
 		</sequential>
 	</macrodef>
 	
