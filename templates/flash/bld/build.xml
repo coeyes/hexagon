@@ -56,6 +56,7 @@
 	
 	<!-- eclipse workspace & additional source/swc pathes -->
 	<property name="workspace"			value="${eclipse.workspace}"/>
+	<property name="srcpath.hexagonlib"	value="${workspace}/com.hexagonstar.hexagonlib/src/flash"/>
 	<property name="swcpath.hexagonlib"	value="${workspace}/com.hexagonstar.hexagonlib/swc"/>
 	<property name="swcpath.alcon"		value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
 	
@@ -66,8 +67,8 @@
 	<property name="mxmlc"			value="${sdk}/bin/mxmlc.exe"/>
 	<property name="compc"			value="${sdk}/bin/compc.exe"/>
 	<property name="asdoc"			value="${sdk}/bin/asdoc.exe"/>
-	<property name="flashplayer"		value="${flashplayer.debug}"/>
-	<property name="debugplayer"		value="${flashplayer.release}"/>
+	<property name="debugplayer"		value="${flashplayer.debug}"/>
+	<property name="flashPlayer"		value="${flashplayer.release}"/>
 	
 	
 	<!-- ==================================================================================== -->
@@ -183,13 +184,16 @@ package
 					<contributor name="${meta.contributor}"/>
 				</metadata>
 				
+				<!-- Source Pathes -->
+				<source-path path-element="${srcpath.hexagonlib}"/>
+				
 				<!-- Library Pathes -->
 				<compiler.library-path dir="${swc}" append="true">
 					<include name="library.swc"/>
 				</compiler.library-path>
-				<compiler.library-path dir="${swcpath.hexagonlib}" append="true">
+				<!--<compiler.library-path dir="${swcpath.hexagonlib}" append="true">
 					<include name="hexagonlib_flash.swc"/>
-				</compiler.library-path>
+				</compiler.library-path> -->
 				<compiler.library-path dir="${swcpath.alcon}" append="true">
 					<include name="alcon.swc"/>
 				</compiler.library-path>
