@@ -187,6 +187,8 @@ package commands.env
 			Console.instance.consoleEnabled = config.consoleEnabled;
 			Console.instance.transparency = config.consoleTransparency;
 			Console.instance.maxBufferSize = config.consoleMaxBufferSize;
+			Console.instance.setFont(EmbeddedAssets.fontConsolas.fontName,
+				config.consoleFontSize);
 			
 			/* Set the default locale as the currently used locale. */
 			config.currentLocale = config.defaultLocale.toLocaleLowerCase();
