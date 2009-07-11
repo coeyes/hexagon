@@ -114,7 +114,7 @@ package com.hexagonstar.tween
 		/* keeps active tweens in memory */
 		protected static var _activeTweens:Dictionary = new Dictionary();
 		
-		protected var _autoPlay:Boolean = true;
+		protected var _autoPlay:Boolean = false;
 		protected var _autoRotation:Boolean = false;
 		protected var _autoVisible:Boolean = true;
 		protected var _reflect:Boolean = false;
@@ -1237,7 +1237,6 @@ package com.hexagonstar.tween
 		}
 	}
 }
-
 
 import com.hexagonstar.tween.HTween;
 
