@@ -4,11 +4,8 @@ package commands.env
 	import commands.file.LoadDataFilesCommand;
 	import commands.file.LoadLocaleCommand;
 
-	import model.Config;
-
 	import com.hexagonstar.env.command.CompositeCommand;
 	import com.hexagonstar.env.command.ICommandListener;
-	import com.hexagonstar.env.console.Console;
 	import com.hexagonstar.env.event.CommandCompleteEvent;
 	import com.hexagonstar.env.event.CommandErrorEvent;
 
@@ -107,7 +104,7 @@ package commands.env
 			switch (_progress)
 			{
 				case 0:
-					setEarlySettings();
+					Main.instance.secondarySetup();
 					notifyProgress("Config file loading complete.");
 					execute2();
 					break;
@@ -173,27 +170,6 @@ package commands.env
 			_cmd4.execute();
 		}
 		
-		
-		/**
-		 * Sets config properties that should be available as soon as possible.
-		 * @private
-		 */
-		private function setEarlySettings():void
-		{
-			var config:Config = Main.config;
-			
-			/* We make the console available to the user right after the config
-			 * file was loaded in case data file loading takes long (e.g. on the web). */
-			Console.instance.consoleEnabled = config.consoleEnabled;
-			Console.instance.transparency = config.consoleTransparency;
-			Console.instance.maxBufferSize = config.consoleMaxBufferSize;
-			Console.instance.setFont(EmbeddedAssets.fontConsolas.fontName,
-				config.consoleFontSize);
-			
-			/* Set the default locale as the currently used locale. */
-			config.currentLocale = config.defaultLocale.toLocaleLowerCase();
-		}
-
 		
 		/**
 		 * @private
