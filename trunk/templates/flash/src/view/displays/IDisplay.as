@@ -1,0 +1,1 @@
+package view.displays{	import view.IView;		/**	 * IDisplay Interface	 * @author Sascha Balkau <sascha@hexagonstar.com>	 */	public interface IDisplay extends IView	{	}}
