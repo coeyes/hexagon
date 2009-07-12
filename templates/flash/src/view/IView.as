@@ -1,7 +1,7 @@
 package view 
 {
 	/**
-	 * IView interface
+	 * The base interface for all view types.
 	 * @author Sascha Balkau <sascha@hexagonstar.com>
 	 */
 	public interface IView 

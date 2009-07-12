@@ -68,7 +68,7 @@
 	<property name="compc"			value="${sdk}/bin/compc.exe"/>
 	<property name="asdoc"			value="${sdk}/bin/asdoc.exe"/>
 	<property name="debugplayer"		value="${flashplayer.debug}"/>
-	<property name="flashPlayer"		value="${flashplayer.release}"/>
+	<property name="flashplayer"		value="${flashplayer.release}"/>
 	
 	
 	<!-- ==================================================================================== -->
