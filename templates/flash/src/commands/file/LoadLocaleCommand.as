@@ -78,7 +78,6 @@ package commands.file
 		private function onError(e:ErrorEvent):void
 		{
 			notifyError(e.text);
-			complete();
 		}
 		
 		
