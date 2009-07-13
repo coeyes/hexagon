@@ -23,7 +23,7 @@
 	
 	<!-- swf properties -->
 	<property name="swf.bgcolor"		value="0x222222"/>
-	<property name="swf.framerate"	value="90"/>
+	<property name="swf.framerate"	value="60"/>
 	<property name="swf.width"		value="1024"/>
 	<property name="swf.height"		value="640"/>
 	<property name="swf.targetname"	value="app.swf"/>
