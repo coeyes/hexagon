@@ -29,6 +29,7 @@
  */
 package com.hexagonstar.io.file.types
 {
+	import com.hexagonstar.io.file.loaders.ZIPFileLoader;
 	import com.hexagonstar.data.types.Byte;
 	import com.hexagonstar.io.file.FileErrorStatus;
 
@@ -51,7 +52,6 @@ package com.hexagonstar.io.file.types
 		
 		protected var _filesList:Vector.<ZippedFile>;
 		protected var _filesDict:Dictionary;
-		protected var _charEncoding:String;
 		protected var _parseFunc:Function;
 		
 		
@@ -121,8 +121,8 @@ package com.hexagonstar.io.file.types
 		 * @return A reference to the newly created ZippedFile object
 		 */
 		public function addFileFromString(path:String,
-											  content:String,
-											  charset:String = "utf-8"):ZippedFile
+							  content:String,
+							  charset:String = ZIPFileLoader.CHAR_ENCODING_UTF8):ZippedFile
 		{
 			return addFileFromStringAt((_filesList ? _filesList.length : 0),
 				path, content, charset);
@@ -175,9 +175,9 @@ package com.hexagonstar.io.file.types
 		 * @return A reference to the newly created ZippedFile object
 		 */
 		public function addFileFromStringAt(index:int,
-												 path:String,
-												 content:String,
-												 charset:String = "utf-8"):ZippedFile
+							path:String,
+							content:String,
+							charset:String = ZIPFileLoader.CHAR_ENCODING_UTF8):ZippedFile
 		{
 			if (_filesDict[path])
 			{
