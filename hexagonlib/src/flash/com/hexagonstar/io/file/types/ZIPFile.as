@@ -53,7 +53,6 @@ package com.hexagonstar.io.file.types
 		protected var _filesDict:Dictionary;
 		protected var _charEncoding:String;
 		protected var _parseFunc:Function;
-		//protected var _currentFile:ZippedFile;
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -90,43 +89,43 @@ package com.hexagonstar.io.file.types
 		/**
 		 * Retrieves a file contained in the ZIP archive, by filename.
 		 * 
-		 * @param name The filename of the file to retrieve
+		 * @param path The filename of the file to retrieve
 		 * @return A reference to a FZipFile object
 		 */
-		public function getFileByName(name:String):ZippedFile 
+		public function getFileByPath(path:String):ZippedFile 
 		{
-			return _filesDict[name] ? ZippedFile(_filesDict[name]) : null;
+			return _filesDict[path] ? ZippedFile(_filesDict[path]) : null;
 		}
 		
 		
 		/**
 		 * Adds a file to the ZIP archive.
 		 * 
-		 * @param name The filename
+		 * @param path The filename
 		 * @param content The ByteArray containing the uncompressed data
 		 *         (pass <code>null</code> to add a folder)
 		 * @return A reference to the newly created ZippedFile object
 		 */
-		public function addFile(name:String, content:ByteArray = null):ZippedFile
+		public function addFile(path:String, content:ByteArray = null):ZippedFile
 		{
-			return addFileAt((_filesList ? _filesList.length : 0), name, content);
+			return addFileAt((_filesList ? _filesList.length : 0), path, content);
 		}
 		
 		
 		/**
 		 * Adds a file from a String to the ZIP archive.
 		 * 
-		 * @param name The filename
+		 * @param path The filename
 		 * @param content The String
 		 * @param charset The character set
 		 * @return A reference to the newly created ZippedFile object
 		 */
-		public function addFileFromString(name:String,
+		public function addFileFromString(path:String,
 											  content:String,
 											  charset:String = "utf-8"):ZippedFile
 		{
 			return addFileFromStringAt((_filesList ? _filesList.length : 0),
-				name, content, charset);
+				path, content, charset);
 		}
 		
 		
@@ -134,22 +133,22 @@ package com.hexagonstar.io.file.types
 		 * Adds a file to the ZIP archive, at a specified index.
 		 * 
 		 * @param index The index
-		 * @param name The filename
+		 * @param path The filename
 		 * @param content The ByteArray containing the uncompressed data
 		 *         (pass <code>null</code> to add a folder)
 		 * @return A reference to the newly created ZippedFile object
 		 */
 		public function addFileAt(index:int,
-									 name:String,
+									 path:String,
 									 content:ByteArray = null):ZippedFile
 		{
-			if (_filesDict[name])
+			if (_filesDict[path])
 			{
-				throw(new Error("File already exists: " + name + ". Please remove first."));
+				throw(new Error("File already exists: " + path + ". Please remove first."));
 			}
 			
 			var file:ZippedFile = new ZippedFile();
-			file.filename = name;
+			file.path = path;
 			file.content = content;
 			
 			if (index >= _filesList.length)
@@ -161,7 +160,7 @@ package com.hexagonstar.io.file.types
 				_filesList.splice(index, 0, file);
 			}
 			
-			_filesDict[name] = file;
+			_filesDict[path] = file;
 			return file;
 		}
 		
@@ -170,23 +169,23 @@ package com.hexagonstar.io.file.types
 		 * Adds a file from a String to the ZIP archive, at a specified index.
 		 * 
 		 * @param index The index
-		 * @param name The filename
+		 * @param path The filename
 		 * @param content The String
 		 * @param charset The character set
 		 * @return A reference to the newly created ZippedFile object
 		 */
 		public function addFileFromStringAt(index:int,
-												 name:String,
+												 path:String,
 												 content:String,
 												 charset:String = "utf-8"):ZippedFile
 		{
-			if (_filesDict[name])
+			if (_filesDict[path])
 			{
-				throw(new Error("File already exists: " + name + ". Please remove first."));
+				throw(new Error("File already exists: " + path + ". Please remove first."));
 			}
 			
 			var file:ZippedFile = new ZippedFile();
-			file.filename = name;
+			file.path = path;
 			file.setContentAsString(content, charset);
 			
 			if (index >= _filesList.length)
@@ -198,7 +197,7 @@ package com.hexagonstar.io.file.types
 				_filesList.splice(index, 0, file);
 			}
 			
-			_filesDict[name] = file;
+			_filesDict[path] = file;
 			return file;
 		}
 		
@@ -209,9 +208,9 @@ package com.hexagonstar.io.file.types
 		public function addZippedFile(zippedFile:ZippedFile):void
 		{
 			_filesList.push(zippedFile);
-			if (zippedFile.filename)
+			if (zippedFile.path)
 			{
-				_filesDict[zippedFile.filename] = zippedFile;
+				_filesDict[zippedFile.path] = zippedFile;
 			}
 		}
 		
@@ -230,7 +229,7 @@ package com.hexagonstar.io.file.types
 				if (file != null)
 				{
 					_filesList.splice(index, 1);
-					delete _filesDict[file.filename];
+					delete _filesDict[file.path];
 					return file;
 				}
 			}
