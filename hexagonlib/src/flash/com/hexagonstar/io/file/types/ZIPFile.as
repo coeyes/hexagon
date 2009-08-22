@@ -317,24 +317,24 @@ package com.hexagonstar.io.file.types
 		
 		override public function get content():*
 		{
-			return contentAsBinary;
+			return contentAsBytes;
 		}
 		
 		
 		public function set content(v:*):void
 		{
-			contentAsBinary = (v as ByteArray);
+			contentAsBytes = (v as ByteArray);
 		}
 		
 		
-		public function get contentAsBinary():ByteArray
+		public function get contentAsBytes():ByteArray
 		{
 			_content.position = 0;
 			return _content;
 		}
 		
 		
-		public function set contentAsBinary(v:ByteArray):void
+		public function set contentAsBytes(v:ByteArray):void
 		{
 			try
 			{
