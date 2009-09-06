@@ -29,24 +29,18 @@
  */
 package com.hexagonstar.flex.containers
 {
+	import com.hexagonstar.env.event.FlexWindowEvent;
+
 	import mx.controls.Button;
-	
-	import flash.events.Event;
-	import flash.events.MouseEvent;	
+
+	import flash.events.MouseEvent;
 
 	
 	/**
 	 * OneButtonWindow Class
 	 */
-	public class OneButtonWindow extends BasicWindow
+	public class OneButtonWindow extends BasicWindow implements IFlexWindow
 	{
-		////////////////////////////////////////////////////////////////////////////////////////
-		// Constants                                                                          //
-		////////////////////////////////////////////////////////////////////////////////////////
-		
-		public static const OK_BUTTON:String = "okButton";
-		
-		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +89,7 @@ package com.hexagonstar.flex.containers
 		 */
 		protected function onOkButton(e:MouseEvent):void
 		{
-			dispatchEvent(new Event(OK_BUTTON));
+			dispatchEvent(new FlexWindowEvent(FlexWindowEvent.OK_BUTTON, this));
 			close();
 		}
 		

@@ -29,21 +29,23 @@
  */
 package com.hexagonstar.flex.containers
 {
-	import mx.controls.Label;
-	import mx.controls.TextArea;
+	import com.hexagonstar.env.event.FlexWindowEvent;
+
+	import mx.controls.Button;
+
+	import flash.events.MouseEvent;
 
 	
 	/**
-	 * MessageWindow Class
+	 * TwoButtonWindow Class
 	 */
-	public class MessageWindow extends OneButtonWindow implements IFlexWindow
+	public class TwoButtonWindow extends OneButtonWindow implements IFlexWindow
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
-		protected var _messageTitle:Label;
-		protected var _messageText:TextArea;
+		protected var _cancelButton:Button;
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -51,9 +53,9 @@ package com.hexagonstar.flex.containers
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Creates a new MessageWindow instance.
+		 * Creates a new TwoButtonWindow instance.
 		 */
-		public function MessageWindow()
+		public function TwoButtonWindow()
 		{
 			super();
 		}
@@ -64,29 +66,31 @@ package com.hexagonstar.flex.containers
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Sets the text for the dialog's content title.
+		 * Sets the label text of the window's Cancel Button.
+		 * @param text the label text for the Cancel button.
 		 */
-		public function set messageTitle(v:String):void
+		public function set cancelButtonLabel(v:String):void
 		{
-			_messageTitle.htmlText = v;
+			_cancelButton.label = v;
 		}
 		
-		public function get messageTitle():String
+		public function get cancelButtonLabel():String
 		{
-			return _messageTitle.htmlText;
+			return _cancelButton.label;
 		}
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Event Handlers                                                                     //
+		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Sets the text for the dialog's content text.
+		 * Called when the Cancel button was pressed.
 		 */
-		public function set messageText(v:String):void
+		protected function onCancelButton(e:MouseEvent):void
 		{
-			_messageText.htmlText = v;
-		}
-		
-		public function get messageText():String
-		{
-			return _messageText.htmlText;
+			dispatchEvent(new FlexWindowEvent(FlexWindowEvent.CANCEL_BUTTON, this));
+			close();
 		}
 		
 		
@@ -102,19 +106,21 @@ package com.hexagonstar.flex.containers
 		{
 			super.createChildren();
 			
-			_messageTitle = new Label();
-			_messageTitle.styleName = "messageWindowTitle";
-			_messageTitle.percentWidth = 100;
-			_messageTitle.selectable = false;
-			
-			_messageText = new TextArea();
-			_messageText.styleName = "messageWindowText";
-			_messageText.percentWidth = 100;
-			_messageText.percentHeight = 100;
-			_messageText.selectable = false;
-			
-			addChild(_messageTitle);
-			addChild(_messageText);
+			_cancelButton = new Button();
+			_cancelButton.label = "Cancel";
+			_cancelButton.addEventListener(MouseEvent.CLICK, onCancelButton);
+			_controlBar.addChild(_cancelButton);
+		}
+		
+		
+		/**
+		 * Removes all assigned event listeners from the window and it's children.
+		 * @private
+		 */
+		override protected function removeEventListeners():void
+		{
+			super.removeEventListeners();
+			_cancelButton.removeEventListener(MouseEvent.CLICK, onCancelButton);
 		}
 	}
 }
