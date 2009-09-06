@@ -29,28 +29,22 @@
  */
 package com.hexagonstar.flex.containers
 {
+	import com.hexagonstar.env.event.FlexWindowEvent;
+
 	import mx.containers.ControlBar;
 	import mx.containers.TitleWindow;
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
-	
-	import flash.events.Event;
+
 	import flash.events.KeyboardEvent;
-	import flash.ui.Keyboard;	
+	import flash.ui.Keyboard;
 
 	
 	/**
 	 * BasicWindow Class
 	 */
-	public class BasicWindow extends TitleWindow
+	public class BasicWindow extends TitleWindow implements IFlexWindow
 	{
-		////////////////////////////////////////////////////////////////////////////////////////
-		// Constants                                                                          //
-		////////////////////////////////////////////////////////////////////////////////////////
-		
-		public static const CLOSE_BUTTON:String = "closeButton";
-		
-		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +112,7 @@ package com.hexagonstar.flex.containers
 		 */
 		protected function onCloseButton(e:CloseEvent):void
 		{
-			dispatchEvent(new Event(CLOSE_BUTTON));
+			dispatchEvent(new FlexWindowEvent(FlexWindowEvent.CLOSE_BUTTON, this));
 			close();
 		}
 		
@@ -172,7 +166,7 @@ package com.hexagonstar.flex.containers
 		{
 			removeEventListeners();
 			PopUpManager.removePopUp(this);
-			dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+			dispatchEvent(new FlexWindowEvent(FlexWindowEvent.CLOSE, this));
 		}
 		
 		
