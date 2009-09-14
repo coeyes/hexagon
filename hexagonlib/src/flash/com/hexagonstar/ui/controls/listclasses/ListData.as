@@ -33,12 +33,11 @@ package com.hexagonstar.ui.controls.listclasses
 
 	
 	/**
-	 * ListData is a messenger class that holds information relevant to a specific 
-	 * cell in a list-based component. This information includes the label and icon that are
-	 * associated with the cell; whether or not the cell is selected; and the position of 
-	 * the cell in the list by row and column. 
-	 *
-	 * <p>A new ListData component is created for a cell renderer each time it is invalidated.</p>
+	 * ListData is a messenger class that holds information relevant to a specific cell
+	 * in a list-based component. This information includes the label and icon that are
+	 * associated with the cell; whether or not the cell is selected; and the position
+	 * of the cell in the list by row and column. <p>A new ListData component is created
+	 * for a cell renderer each time it is invalidated.</p>
 	 */
 	public class ListData
 	{
@@ -59,17 +58,17 @@ package com.hexagonstar.ui.controls.listclasses
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Creates a new instance of the ListData class as specified by its parameters. 
-		 *
+		 * Creates a new instance of the ListData class as specified by its parameters.
+		 * 
 		 * @param label The label to be displayed in this cell.
 		 * @param icon The icon to be displayed in this cell.
 		 * @param owner The component that owns this cell.
 		 * @param index The index of the item in the data provider.
-		 * @param row The row in which this item is being displayed. In a List or 
-		 *        DataGrid, this value corresponds to the index. In a TileList, this
-		 *        value may be different than the index.
-		 * @param col The column in which this item is being displayed. In a List, 
-		 *        this value is always 0.
+		 * @param row The row in which this item is being displayed. In a List or DataGrid,
+		 *            this value corresponds to the index. In a TileList, this value may be
+		 *            different than the index.
+		 * @param col The column in which this item is being displayed. In a List, this
+		 *            value is always 0.
 		 */
 		public function ListData(label:String,
 									icon:Object,
