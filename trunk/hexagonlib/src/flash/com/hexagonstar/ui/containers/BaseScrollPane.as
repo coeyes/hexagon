@@ -145,7 +145,7 @@ package com.hexagonstar.ui.containers
 		{
 			repeatDelay:		500,
 			repeatInterval:		35,
-			skin:				"ScrollPane_upSkin",
+			skin:				"ScrollPaneUpSkin",
 			contentPadding:		0,
 			disabledAlpha:		0.5
 		};

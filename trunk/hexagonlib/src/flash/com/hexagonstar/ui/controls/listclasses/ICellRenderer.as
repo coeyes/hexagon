@@ -58,43 +58,27 @@ package com.hexagonstar.ui.controls.listclasses
 		 * are automatically updated after the cell is invalidated.
 		 */
 		function get listData():ListData;
-		
-		
-		/**
-		 * @private
-		 */
 		function set listData(v:ListData):void;
 		
 		
 		/**
-		 * Gets or sets an Object that represents the data that is 
-		 * associated with a component. When this value is set, the 
-		 * component data is stored and the containing component is 
-		 * invalidated. The invalidated component is then automatically 
-		 * redrawn.
-		 *
-		 * <p>The data property represents an object containing the item
-		 * in the DataProvider that the cell represents.  Typically, the
-		 * data property contains standard properties, depending on the
-		 * component type. In CellRenderer in a List or ComboBox component
-		 * the data contains a label, icon, and data properties; a TileList: a 
-		 * label and a source property; a DataGrid cell contains values
-		 * for each column.  The data property can also contain user-specified
-		 * data relevant to the specific cell. Users can extend a CellRenderer
-		 * for a component to utilize different properties of the data 
-		 * in the rendering of the cell.</p>
-		 *
-		 * <p>Additionally, the <code>labelField</code>, <code>labelFunction</code>, 
-		 * <code>iconField</code>, <code>iconFunction</code>, <code>sourceField</code>, 
-		 * and <code>sourceFunction</code> elements can be used to specify which properties 
-		 * are used to draw the label, icon, and source respectively.</p>
+		 * Gets or sets an Object that represents the data that is associated with a
+		 * component. When this value is set, the component data is stored and the
+		 * containing component is invalidated. The invalidated component is then
+		 * automatically redrawn. <p>The data property represents an object containing the
+		 * item in the DataProvider that the cell represents. Typically, the data property
+		 * contains standard properties, depending on the component type. In CellRenderer in
+		 * a List or ComboBox component the data contains a label, icon, and data
+		 * properties; a TileList: a label and a source property; a DataGrid cell contains
+		 * values for each column. The data property can also contain user-specified data
+		 * relevant to the specific cell. Users can extend a CellRenderer for a component to
+		 * utilize different properties of the data in the rendering of the cell.</p>
+		 * <p>Additionally, the <code>labelField</code>, <code>labelFunction</code>,
+		 * <code>iconField</code>, <code>iconFunction</code>, <code>sourceField</code>, and
+		 * <code>sourceFunction</code> elements can be used to specify which properties are
+		 * used to draw the label, icon, and source respectively.</p>
 		 */
 		function get data():Object;
-		
-		
-		/**
-		 * @private
-		 */
 		function set data(v:Object):void;
 		
 		
@@ -105,11 +89,6 @@ package com.hexagonstar.ui.controls.listclasses
 		 * indicates that it is not.
 		 */
 		function get selected():Boolean;
-		
-		
-		/**
-		 * @private
-		 */
 		function set selected(v:Boolean):void;
 		
 		
