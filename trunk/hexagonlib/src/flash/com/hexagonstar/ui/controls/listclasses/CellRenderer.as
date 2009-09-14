@@ -32,8 +32,7 @@ package com.hexagonstar.ui.controls.listclasses
 	import com.hexagonstar.ui.controls.LabelButton;
 
 	import flash.events.MouseEvent;
-	
-	
+
 	[Style(name="upSkin", type="Class")]
 	[Style(name="downSkin", type="Class")]
 	[Style(name="overSkin", type="Class")]

@@ -445,15 +445,23 @@ package com.hexagonstar.ui.controls
 			 * renderers for old data, and recycles old renderers for new data. */
 
 			/* set horizontal scroll */
-			_listHolder.x = _listHolder.y = _contentPadding;
+			_listHolder.x = _listHolder.y = _contentPadding + 2;
 			
 			var r:Rectangle = _listHolder.scrollRect;
 			r.x = _horizontalScrollPosition;
 			
+			/* On Probation! correct the scrollRect size so that it doesn't overlap
+			 * the component skin (but only do it once at first method call) */
+			if (_listHolder.width == 0)
+			{
+				r.width -= 4;
+				r.height -= 4;
+			}
+			
 			/* set pixel scroll */
 			r.y = Math.floor(_verticalScrollPosition) % rowHeight;
 			_listHolder.scrollRect = r;
-			_listHolder.cacheAsBitmap = useBitmapScrolling;
+			_listHolder.cacheAsBitmap = _useBitmapScrolling;
 			
 			/* figure out what we have to render */
 			var startIndex:uint = Math.floor(_verticalScrollPosition / rowHeight);

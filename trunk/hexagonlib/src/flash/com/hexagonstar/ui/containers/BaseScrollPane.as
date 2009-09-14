@@ -112,7 +112,7 @@ package com.hexagonstar.ui.containers
 		
 		protected var _hasVScrollBar:Boolean;
 		protected var _hasHScrollBar:Boolean;
-		protected var _useBitmpScrolling:Boolean = false;
+		protected var _useBitmapScrolling:Boolean = false;
 		
 		/* if false, uses contentWidth to determine hScroll, otherwise uses fixed
 		 * _maxHorizontalScroll value */
@@ -353,11 +353,11 @@ package com.hexagonstar.ui.containers
 		 */
 		public function get useBitmapScrolling():Boolean
 		{
-			return _useBitmpScrolling;
+			return _useBitmapScrolling;
 		}
 		public function set useBitmapScrolling(v:Boolean):void
 		{
-			_useBitmpScrolling = v;
+			_useBitmapScrolling = v;
 			invalidate(InvalidationType.STATE);
 		}
 		
@@ -473,7 +473,7 @@ package com.hexagonstar.ui.containers
 			super.configUI();
 			
 			/* contentScrollRect is not actually used by BaseScrollPane, only by subclasses. */
-			_contentScrollRect = new Rectangle(0, 0, 85, 85);
+			_contentScrollRect = new Rectangle(0, 0, 1, 1);
 			
 			/* set up vertical scroll bar */
 			_vScrollBar = new ScrollBar();
