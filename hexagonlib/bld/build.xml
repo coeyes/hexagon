@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*********************************************************************************************
+	Buildfile for hexagonlib
+	Nov 24, 2009
+*********************************************************************************************
+-->
+<project name="hexagonlib" default="Init Project" basedir="..">
+	
+	<!-- application information -->
+	<property name="app.name"			value="hexagonlib"/>
+	<property name="app.version"		value="0.3.0"/>
+	<property name="app.releasestage"	value="beta"/>
+	<property name="app.copyright"	value="Copyright(c) Hexagon Star Softworks"/>
+	
+	<!-- version of the used flex sdk -->
+	<property name="sdk.version"		value="3.4.0"/>
+	
+	<!-- version of the targetted flash player (9.0.124 or 10.0.12) -->
+	<property name="fpv.version"		value="10.0.12"/>
+	
+	<!-- advanced compiler options -->
+	<property name="max.recursiondepth"	value="1000"/>
+	<property name="max.executiontime"	value="60"/>
+	
+	<!-- default project folders -->
+	<property name="bin"				value="bin"/>
+	<property name="swc"				value="swc"/>
+	<property name="doc"				value="doc"/>
+	<property name="src"				value="src"/>
+	
+	<!-- eclipse workspace & additional source/swc pathes -->
+	<property name="workspace"			value="${eclipse.workspace}"/>
+	<property name="swcpath.alcon"		value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
+	
+	<!-- sdk pathes -->
+	<property name="sdk"				value="${flex.sdk.basepath}/${sdk.version}"/>
+	<property name="FLEX_HOME"		value="${sdk}"/>
+	<property name="fcsh"				value="${sdk}/bin/fcsh.exe"/>
+	<property name="mxmlc"			value="${sdk}/bin/mxmlc.exe"/>
+	<property name="compc"			value="${sdk}/bin/compc.exe"/>
+	<property name="asdoc"			value="${sdk}/bin/asdoc.exe"/>
+	<property name="debugplayer"		value="${flashplayer.debug}"/>
+	<property name="flashplayer"		value="${flashplayer.release}"/>
+	
+	
+	<!-- ==================================================================================== -->
+	<!-- TARGETS                                                                              -->
+	<!-- ==================================================================================== -->
+	
+	<target name="Init Project" description="Does nothing.">
+	</target>
+	
+	
+	<target name="flash swc" description="Generates the SWC of the Flash branch classes.">
+		<prepareBuild/>
+		<echo message="Generating hexagonlib Flash SWC ..." level="info"/>
+		<flextasks.compc
+			output="${basedir}/${swc}/hexagonlib_flash.swc"
+			target-player="${fpv.version}"
+			debug="false"
+			optimize="true"
+		>
+			<source-path path-element="${basedir}/${src}/flash"/>
+			<include-sources dir="${basedir}/${src}/flash" includes="**/*.as"/>
+		</flextasks.compc>
+	</target>
+	
+	
+	<target name="flash docs" description="Generates the docs for the Flash branch classes.">
+		<echo message="Generating Flash Docs ..." level="info"/>
+		<exec executable="${asdoc}" spawn="false">
+			<arg value="-source-path"/>
+			<arg path="${basedir}/${src}/flash"/>
+			<arg value="-doc-sources"/>
+			<arg path="${basedir}/${src}/flash"/>
+			<arg value="-main-title"/>
+			<arg path="hexagonlib API Documentation"/>
+			<arg value="-window-title"/>
+			<arg path="hexagonlib API Documentation"/>
+			<arg value="-output"/>
+			<arg path="${basedir}/${doc}/flash"/>
+			<arg line="-target-player=10.0.0"/>
+		</exec>
+	</target>
+	
+	
+	<!-- ==================================================================================== -->
+	<!-- MACRODEFS                                                                            -->
+	<!-- ==================================================================================== -->
+	
+	<macrodef name="prepareBuild">
+		<sequential>
+			<buildnumber file="bld/build.number"/>
+			<tstamp>
+				<format property="build.date" pattern="dd-MMMM-yyyy HH:mm" unit="minute" locale="en"/>
+			</tstamp>
+			<echo message="*** ${ant.project.name} version: ${app.version} build #${build.number}, ${build.date} ***" level="info"/>
+			<generateAppInfo buildnr="${build.number}" builddate="${build.date}" releasestage="${app.releasestage}"/>
+		</sequential>
+	</macrodef>
+	
+	
+	<macrodef name="generateAppInfo">
+		<attribute name="buildnr" default=""/>
+		<attribute name="builddate" default=""/>
+		<attribute name="releasestage" default=""/>
+		<sequential>
+			<echo message="Generating HexagonLib.as ..." level="info"/>
+			<echo file="${src}/flash/com/hexagonstar/HexagonLib.as" append="false"><![CDATA[/*
+/*
+ * hexagonlib - Multi-Purpose ActionScript 3 Library.
+ *       __    __
+ *    __/  \__/  \__    __
+ *   /  \__/HEXAGON \__/  \
+ *   \__/  \__/  LIBRARY _/
+ *            \__/  \__/
+ *
+ * Licensed under the MIT License
+ * 
+ * Copyright (c) 2007-2008 Sascha Balkau / Hexagon Star Softworks
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+package com.hexagonstar
+{
+	/**
+	 * Contains constants that describe version information about the library.
+	 */
+	public class HexagonLib
+	{
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Constants                                                                          //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		public static const NAME:String			= "${app.name}";
+		public static const VERSION:String		= "${app.version}";
+		public static const BUILD:String			= "@{buildnr}";
+		public static const RELEASE_STAGE:String	= "@{releasestage}";
+		public static const DATE:String			= "@{builddate}";
+		public static const COPYRIGHT:String		= "${app.copyright}";
+	}
+}]]>
+</echo>
+		</sequential>
+	</macrodef>
+	
+</project>
