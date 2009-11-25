@@ -67,7 +67,7 @@ package com.hexagonstar.framework.model
 			updateURL = "";
 			
 			localePath = "locale";
-			//defaultLocale = Locale.ENGLISH;
+			defaultLocale = Locale.ENGLISH;
 			currentLocale = defaultLocale;
 			
 			dataIndexFile = "data/datafiles.xml";

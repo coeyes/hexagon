@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *********************************************************************************************
-	Buildfile for hexagonlib
-	Nov 24, 2009
+	Buildfile for tetragon App
+	Aug 17, 2009
+	Universal build file for ActionScript 3 Projects.
 *********************************************************************************************
 -->
-<project name="hexagonlib" default="Init Project" basedir="..">
+<project name="tetragon App" default="Init Project" basedir="..">
 	
 	<!-- application information -->
-	<property name="app.name"			value="hexagonlib"/>
-	<property name="app.version"		value="0.3.0"/>
-	<property name="app.releasestage"	value="beta"/>
+	<property name="app.id"			value="com.hexagonstar.tetragon.app"/>
+	<property name="app.name"			value="tetragon App"/>
+	<property name="app.version"		value="1.0.0"/>
 	<property name="app.copyright"	value="Copyright(c) Hexagon Star Softworks"/>
+	<property name="app.year"			value="2009"/>
+	<property name="app.website"		value="http://www.hexagonstar.com/"/>
+	<property name="app.language"		value="EN"/>
+	<property name="app.description"	value=""/>
+	
+	<!-- AIR-only application information -->
+	<property name="air.windowtitle"	value="tetragon App"/>
+	<property name="air.filename"		value="app"/>
+	<property name="air.minimizable"	value="true"/>
+	<property name="air.maximizable"	value="false"/>
+	<property name="air.resizable"	value="false"/>
+	<property name="air.minsize"		value="640 480"/>
+	
+	<!-- swf properties -->
+	<property name="swf.bgcolor"		value="0x000000"/>
+	<property name="swf.framerate"	value="60"/>
+	<property name="swf.width"		value="1024"/>
+	<property name="swf.height"		value="640"/>
+	<property name="swf.targetname"	value="app.swf"/>
+	<property name="air.targetname"	value="tetragonapp.air"/>
+	
+	<!-- swf meta tags -->
+	<property name="meta.title"		value="tetragon App"/>
+	<property name="meta.publisher"	value="Hexagon Star Softworks"/>
+	<property name="meta.creator"		value="Hexagon Star Softworks"/>
+	<property name="meta.contributor"	value=""/>
+	<property name="meta.description"	value="${app.description}"/>
 	
 	<!-- version of the used flex sdk -->
 	<property name="sdk.version"		value="3.4.0"/>
@@ -25,13 +53,21 @@
 	
 	<!-- default project folders -->
 	<property name="bin"				value="bin"/>
-	<property name="swc"				value="swc"/>
-	<property name="doc"				value="doc"/>
-	<property name="src"				value="src"/>
+	<property name="doc"				value="${lib}/doc"/>
+	<property name="pub"				value="pub"/>
+	<property name="src"				value="src/tetragon/app"/>
 	
-	<!-- eclipse workspace & additional source/swc pathes -->
-	<property name="workspace"			value="${eclipse.workspace}"/>
-	<property name="swcpath.alcon"		value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
+	<!-- eclipse workspace & additional source pathes -->
+	<property name="workspace"				value="${eclipse.workspace}"/>
+	<property name="srcpath.hexagonlib.air"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagon/air"/>
+	<property name="srcpath.hexagonlib.flash"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagon/flash"/>
+	<property name="srcpath.hexagonlib.flex"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagon/flex"/>
+	<property name="srcpath.tetragon"			value="${workspace}/com.hexagonstar.hexagonlib/src/tetragon/framework"/>
+	
+	<!-- eclipse workspace & additional swc pathes -->
+	<property name="swcpath.hexagonlib"		value="${workspace}/com.hexagonstar.hexagonlib/swc"/>
+	<property name="swcpath.alcon"			value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
+	<property name="swcpath.library"			value="${src}/assets"/>
 	
 	<!-- sdk pathes -->
 	<property name="sdk"				value="${flex.sdk.basepath}/${sdk.version}"/>
@@ -52,36 +88,75 @@
 	</target>
 	
 	
-	<target name="flash swc" description="Generates the SWC of the Flash branch classes.">
-		<prepareBuild/>
-		<echo message="Generating hexagonlib Flash SWC ..." level="info"/>
-		<flextasks.compc
-			output="${basedir}/${swc}/hexagonlib_flash.swc"
-			target-player="${fpv.version}"
-			debug="false"
-			optimize="true"
-		>
-			<source-path path-element="${basedir}/${src}/flash"/>
-			<include-sources dir="${basedir}/${src}/flash" includes="**/*.as"/>
-		</flextasks.compc>
+	<target name="Flash Compile Debug" description="Compiles a debug version of the Flash Application.">
+		<prepareBuild releasetype="web" debug="true"/>
+		<compile debug="true" config="flex-config.xml" mainclass="App.as" isflash="true" isflex="false" isair="false"/>
 	</target>
 	
 	
-	<target name="flash docs" description="Generates the docs for the Flash branch classes.">
-		<echo message="Generating Flash Docs ..." level="info"/>
-		<exec executable="${asdoc}" spawn="false">
-			<arg value="-source-path"/>
-			<arg path="${basedir}/${src}/flash"/>
-			<arg value="-doc-sources"/>
-			<arg path="${basedir}/${src}/flash"/>
-			<arg value="-main-title"/>
-			<arg path="hexagonlib API Documentation"/>
-			<arg value="-window-title"/>
-			<arg path="hexagonlib API Documentation"/>
-			<arg value="-output"/>
-			<arg path="${basedir}/${doc}/flash"/>
-			<arg line="-target-player=10.0.0"/>
-		</exec>
+	<target name="Flash Compile" description="Compiles the Flash Application.">
+		<prepareBuild releasetype="web" debug="false"/>
+		<compile debug="false" config="flex-config.xml" mainclass="App.as" isflash="true" isflex="false" isair="false"/>
+	</target>
+	
+	
+	<target name="Flex Compile Debug" description="Compiles a debug version of the Flex Application.">
+		<prepareBuild releasetype="web" debug="true"/>
+		<compile debug="true" config="flex-config.xml" mainclass="App.mxml" isflash="false" isflex="true" isair="false"/>
+	</target>
+	
+	
+	<target name="Flex Compile" description="Compiles the Flex Application.">
+		<prepareBuild releasetype="web" debug="false"/>
+		<compile debug="false" config="flex-config.xml" mainclass="App.mxml" isflash="false" isflex="true" isair="false"/>
+	</target>
+	
+	
+	<target name="Launch Debug" description="Launches the Flash or Flex Application in debug runtime.">
+		<launchFlashDebug/>
+	</target>
+	
+	
+	<target name="Launch" description="Launches the Flash or Flex Application.">
+		<launchFlashRelease/>
+	</target>
+	
+	
+	<target name="Launch AIR" description="Launches the Flash or Flex AIR Application.">
+		<LaunchAIR/>
+	</target>
+	
+	
+	<target name="AIR Flash Compile Debug" description="Compiles a debug version of the Flash AIR Application.">
+		<prepareBuild releasetype="desktop" debug="true"/>
+		<generateAIRDescriptor/>
+		<compile debug="true" config="air-config.xml" mainclass="AppAIR.as" isflash="true" isflex="false" isair="true"/>
+	</target>
+	
+	
+	<target name="AIR Flash Compile" description="Compiles the Flash AIR Application.">
+		<prepareBuild releasetype="desktop" debug="false"/>
+		<generateAIRDescriptor/>
+		<compile debug="false" config="air-config.xml" mainclass="AppAIR.as" isflash="true" isflex="false" isair="true"/>
+	</target>
+	
+	
+	<target name="AIR Flex Compile Debug" description="Compiles a debug version of the Flex AIR Application.">
+		<prepareBuild releasetype="desktop" debug="true"/>
+		<generateAIRDescriptor/>
+		<compile debug="true" config="air-config.xml" mainclass="App.mxml" isflash="false" isflex="true" isair="true"/>
+	</target>
+	
+	
+	<target name="AIR Flex Compile" description="Compiles the Flex AIR Application.">
+		<prepareBuild releasetype="desktop" debug="false"/>
+		<generateAIRDescriptor/>
+		<compile debug="false" config="air-config.xml" mainclass="App.mxml" isflash="false" isflex="true" isair="true"/>
+	</target>
+	
+	
+	<target name="Publish AIR" description="Publishes the AIR Application for release.">
+		<publishAIR/>
 	</target>
 	
 	
@@ -90,13 +165,15 @@
 	<!-- ==================================================================================== -->
 	
 	<macrodef name="prepareBuild">
+		<attribute name="releasetype" default="web"/>
+		<attribute name="debug" default="true"/>
 		<sequential>
 			<buildnumber file="bld/build.number"/>
 			<tstamp>
 				<format property="build.date" pattern="dd-MMMM-yyyy HH:mm" unit="minute" locale="en"/>
 			</tstamp>
-			<echo message="*** ${ant.project.name} version: ${app.version} build #${build.number}, ${build.date} ***" level="info"/>
-			<generateAppInfo buildnr="${build.number}" builddate="${build.date}" releasestage="${app.releasestage}"/>
+			<echo message="*** ${ant.project.name} version: ${app.version} build #${build.number} (@{releasetype}), ${build.date} ***" level="info"/>
+			<!-- <generateAppInfo buildnr="${build.number}" builddate="${build.date}" releasetype="@{releasetype}" debug="@{debug}"/> -->
 		</sequential>
 	</macrodef>
 	
@@ -104,59 +181,243 @@
 	<macrodef name="generateAppInfo">
 		<attribute name="buildnr" default=""/>
 		<attribute name="builddate" default=""/>
-		<attribute name="releasestage" default=""/>
+		<attribute name="releasetype" default=""/>
+		<attribute name="debug" default=""/>
 		<sequential>
-			<echo message="Generating HexagonLib.as ..." level="info"/>
-			<echo file="${src}/flash/com/hexagonstar/HexagonLib.as" append="false"><![CDATA[/*
-/*
- * hexagonlib - Multi-Purpose ActionScript 3 Library.
- *       __    __
- *    __/  \__/  \__    __
- *   /  \__/HEXAGON \__/  \
- *   \__/  \__/  LIBRARY _/
- *            \__/  \__/
- *
- * Licensed under the MIT License
- * 
- * Copyright (c) 2007-2008 Sascha Balkau / Hexagon Star Softworks
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- * the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+			<echo message="Generating AppInfo.as ..." level="info"/>
+			<echo file="${src}/AppInfo.as" append="false"><![CDATA[/*
+ * ${ant.project.name} v${app.version}
+ * ${app.copyright}
  */
-package com.hexagonstar
+package
 {
-	/**
-	 * Contains constants that describe version information about the library.
-	 */
-	public class HexagonLib
+	/**************************************************************************
+	 * AppInfo.as
+	 * Ant auto-generated application information file.
+	 **************************************************************************/
+	public final class AppInfo
 	{
-		////////////////////////////////////////////////////////////////////////////////////////
-		// Constants                                                                          //
-		////////////////////////////////////////////////////////////////////////////////////////
-		
-		public static const NAME:String			= "${app.name}";
-		public static const VERSION:String		= "${app.version}";
-		public static const BUILD:String			= "@{buildnr}";
-		public static const RELEASE_STAGE:String	= "@{releasestage}";
-		public static const DATE:String			= "@{builddate}";
-		public static const COPYRIGHT:String		= "${app.copyright}";
+		public static const APP_ID:String			= "${app.id}";
+		public static const APP_NAME:String			= "${app.name}";
+		public static const APP_VERSION:String		= "${app.version}";
+		public static const APP_BUILD:String			= "@{buildnr}";
+		public static const APP_BUILD_DATE:String	= "@{builddate}";
+		public static const APP_RELEASE_TYPE:String	= "@{releasetype}";
+		public static const APP_COPYRIGHT:String		= "${app.copyright}";
+		public static const APP_YEAR:String			= "${app.year}";
+		public static const APP_WEBSITE:String		= "${app.website}";
+		public static const APP_LANGUAGE:String		= "${app.language}";
+		public static const APP_DEBUG:Boolean		= @{debug};
 	}
 }]]>
 </echo>
+		</sequential>
+	</macrodef>
+	
+	
+	<macrodef name="generateAIRDescriptor">
+		<sequential>
+			<echo message="Generating AIR descriptor file ..." level="info"/>
+			<echo file="${src}/App-app.xml" append="false"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/1.5.1">
+	<id>${app.id}</id>
+	<filename>${air.filename}</filename>
+	<name>${app.name}</name>
+	<version>${app.version}.${build.number}</version>
+	<description>${app.description}</description>
+	<copyright>${app.copyright}</copyright>
+	<initialWindow>
+		<content>${swf.targetname}</content>
+		<title>${air.windowtitle}</title>
+		<systemChrome>standard</systemChrome>
+		<transparent>false</transparent>
+		<visible>false</visible>
+		<minimizable>${air.minimizable}</minimizable>
+		<maximizable>${air.maximizable}</maximizable>
+		<resizable>${air.resizable}</resizable>
+		<minSize>${air.minsize}</minSize>
+	</initialWindow>
+	<installFolder>${meta.publisher}</installFolder>
+	<programMenuFolder>${meta.publisher}</programMenuFolder>
+	
+	<!-- The icon the system uses for the application. For at least one resolution,
+		 specify the path to a PNG file included in the AIR package. Optional. -->
+	<!--
+	<icon>
+		<image16x16>icons/icon_16x16.png</image16x16>
+		<image32x32>icons/icon_32x32.png</image32x32>
+		<image48x48>icons/icon_48x48.png</image48x48>
+		<image128x128>icons/icon_128x128.png</image128x128>
+	</icon>
+	-->
+	
+	<!-- Whether the application handles the update when a user double-clicks an update version
+	of the AIR file (true), or the default AIR application installer handles the update (false).
+	Optional. Default false. -->
+	<!-- <customUpdateUI></customUpdateUI> -->
+	
+	<!-- Whether the application can be launched when the user clicks a link in a web browser.
+	Optional. Default false. -->
+	<!-- <allowBrowserInvocation></allowBrowserInvocation> -->
+
+	<!-- Listing of file types for which the application can register. Optional. -->
+	<!-- <fileTypes> -->
+
+		<!-- Defines one file type. Optional. -->
+		<!-- <fileType> -->
+
+			<!-- The name that the system displays for the registered file type. Required. -->
+			<!-- <name></name> -->
+
+			<!-- The extension to register. Required. -->
+			<!-- <extension></extension> -->
+			
+			<!-- The description of the file type. Optional. -->
+			<!-- <description></description> -->
+			
+			<!-- The MIME content type. -->
+			<!-- <contentType></contentType> -->
+			
+			<!-- The icon to display for the file type. Optional. -->
+			<!-- <icon>
+				<image16x16></image16x16>
+				<image32x32></image32x32>
+				<image48x48></image48x48>
+				<image128x128></image128x128>
+			</icon> -->
+			
+		<!-- </fileType> -->
+	<!-- </fileTypes> -->
+
+</application>]]>
+</echo>
+		</sequential>
+	</macrodef>
+	
+	
+	<macrodef name="compile">
+		<attribute name="debug" default="true"/>
+		<attribute name="config" default="flex-config.xml"/>
+		<attribute name="mainclass" default="App.as"/>
+		<attribute name="isflash" default="true"/>
+		<attribute name="isflex" default="false"/>
+		<attribute name="isair" default="false"/>
+		<sequential>
+			<echo message="Compiling ${swf.targetname} for Runtime v${fpv.version} ..." level="info"/>
+			<flextasks.mxmlc
+				show-unused-type-selector-warnings="false"
+				file="${basedir}/${src}/@{mainclass}"
+				output="${basedir}/${bin}/${swf.targetname}"
+				incremental="false"
+				locale="en_US"
+				default-frame-rate="${swf.framerate}"
+				default-background-color="${swf.bgcolor}"
+				target-player="${fpv.version}"
+				debug="@{debug}"
+			>
+				<load-config filename="${FLEX_HOME}/frameworks/@{config}"/>
+				<default-size width="${swf.width}" height="${swf.height}"/>
+				<default-script-limits
+					max-recursion-depth="${max.recursiondepth}"
+					max-execution-time="${max.executiontime}"
+				/>
+				<metadata
+					title="${meta.title}"
+					description="${meta.description}"
+					date="${build.date}"
+				>
+					<language code="${app.language}"/>
+					<publisher name="${meta.publisher}"/>
+					<creator name="${meta.creator}"/>
+					<contributor name="${meta.contributor}"/>
+				</metadata>
+				
+				<!-- Conditional Compilation Constants Definitions -->
+				<define name="CONFIG::IS_FLASH" value="@{isflash}"/>
+				<define name="CONFIG::IS_FLEX" value="@{isflex}"/>
+				<define name="CONFIG::IS_AIR" value="@{isair}"/>
+				
+				<!-- Source Paths -->
+				<source-path path-element="${srcpath.hexagonlib.air}"/>
+				<source-path path-element="${srcpath.hexagonlib.flash}"/>
+				<source-path path-element="${srcpath.hexagonlib.flex}"/>
+				<source-path path-element="${srcpath.tetragon}"/>
+				
+				<!-- Library Paths -->
+				<compiler.library-path dir="${swcpath.library}" append="true">
+					<include name="library.swc"/>
+				</compiler.library-path>
+				<!--<compiler.library-path dir="${swcpath.hexagonlib}" append="true">
+					<include name="hexagonlib_flash.swc"/>
+				</compiler.library-path> -->
+				<compiler.library-path dir="${swcpath.alcon}" append="true">
+					<include name="alcon.swc"/>
+				</compiler.library-path>
+				
+			</flextasks.mxmlc>
+		</sequential>
+	</macrodef>
+	
+	
+	<macrodef name="publishAIR">
+		<sequential>
+			<echo message="Publishing AIR application of ${app.name} ${app.version} ..." level="info"/>
+				<java jar="${air.developertool}" fork="true" failonerror="true">
+					<arg value="-package"/>
+					<arg value="-storetype"/>
+					<arg value="pkcs12"/>
+					<arg value="-keystore"/>
+					<arg value="${air.certificate.path}"/>
+					<arg value="-storepass"/>
+					<arg value="${air.certificate.password}"/>
+					<arg value="${basedir}/${pub}/${air.targetname}"/>
+					<arg value="${basedir}/${src}/App-app.xml"/>
+					<arg value="-C"/>
+					<arg value="${basedir}/${bin}"/>
+					<arg value="${swf.targetname}"/>
+					<arg value="-C"/>
+					<arg value="${basedir}/${bin}"/>
+					<arg value="app.ini"/>
+					<arg value="-C"/>
+					<arg value="${basedir}/${bin}"/>
+					<arg value="data"/>
+					<arg value="-C"/>
+					<arg value="${basedir}/${bin}"/>
+					<arg value="icons"/>
+					<arg value="-C"/>
+					<arg value="${basedir}/${bin}"/>
+					<arg value="locale"/>
+				</java>
+		</sequential>
+	</macrodef>
+	
+	
+	<macrodef name="launchFlashDebug">
+		<sequential>
+			<echo message="Opening ${swf.targetname} in Flash Player (Debug) ..." level="info"/>
+			<exec executable="${debugplayer}" spawn="true">
+				<arg value="${basedir}\${bin}\${swf.targetname}"/>
+			</exec>
+		</sequential>
+	</macrodef>
+	
+	
+	<macrodef name="launchFlashRelease">
+		<sequential>
+			<echo message="Opening ${swf.targetname} in Flash Player (Release) ..." level="info"/>
+			<exec executable="${flashplayer}" spawn="true">
+				<arg value="${basedir}\${bin}\${swf.targetname}"/>
+			</exec>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="LaunchAIR">
+		<sequential>
+			<echo message="Opening ${swf.targetname} in AIR Debug Launcher ..." level="info"/>
+			<exec executable="${air.debuglauncher}" spawn="true">
+				<arg value="${basedir}\${src}\App-app.xml"/>
+				<arg value="${basedir}\${bin}"/>
+			</exec>
 		</sequential>
 	</macrodef>
 	

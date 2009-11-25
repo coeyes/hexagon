@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	layout="absolute"
+	width="100%"
+	height="100%"
+	horizontalScrollPolicy="off"
+	verticalScrollPolicy="off"
+	applicationComplete="onApplicationComplete();"
+	>
+	<mx:Script>
+	<![CDATA[
+		import com.hexagonstar.framework.Main;
+		private function onApplicationComplete():void
+		{
+			Main.instance.onApplicationLoaded(this);
+		}
+		]]>
+	</mx:Script>
+</mx:Application>

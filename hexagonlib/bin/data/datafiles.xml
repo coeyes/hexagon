@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files>
+	<file parserID="example" path="data/data1.xml"/>
+	<file parserID="example" path="data/data2.xml"/>
+	<file parserID="example" path="data/data3.xml"/>
+</files>
