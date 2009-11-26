@@ -1,8 +1,6 @@
 /*
- * tetragon - Application framework for Flash, Flash/AIR, Flex & Flex/AIR.
- * 
  * Licensed under the MIT License
- * Copyright (c) 2008-2009 Sascha Balkau / Hexagon Star Softworks
+ * Copyright (c) 2009 Sascha Balkau <sascha@hexagonstar.com>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -21,34 +19,25 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package 
+package com.hexagonstar.framework 
 {
-	import com.hexagonstar.framework.Main;
-
-	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
-
-	
 	/**
-	 * The 'front door' of the application.
-	 * 
-	 * This class is only used for AIR-based Flash applications that don't
-	 * require a preloader.
-	 * 
-	 * @author Sascha Balkau
+	 * IAppInfo class
+	 * @author Sascha Balkau <sascha@hexagonstar.com>
 	 */
-	public class AppAIR extends Sprite
+	public interface IAppInfo 
 	{
-		/**
-		 * Creates a new AppFlashAIR instance.
-		 */
-		public function AppAIR()
-		{
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.align = StageAlign.TOP_LEFT;
-			
-			Main.instance.onApplicationLoaded(this, new AppInfo());
-		}
+		function get id():String;
+		function get name():String;
+		function get version():String;
+		function get build():String;
+		function get buildDate():String;
+		function get releaseStage():String;
+		function get releaseType():String;
+		function get copyright():String;
+		function get year():String;
+		function get website():String;
+		function get language():String;
+		function get isDebug():Boolean;
 	}
 }

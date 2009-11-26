@@ -45,8 +45,6 @@ package
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/** @private */
-		//private var _appInfo:AppInfo;
-		/** @private */
 		//private var _embeddedAssets:EmbeddedAssets;
 		
 		
@@ -59,7 +57,6 @@ package
 		 */
 		public function App()
 		{
-			//_appInfo = new AppInfo();
 			//_embeddedAssets = new EmbeddedAssets();
 		}
 
@@ -71,7 +68,7 @@ package
 		 */
 		public function onApplicationPreloaded(preloader:Preloader):void
 		{
-			Main.instance.onApplicationLoaded(preloader);
+			Main.instance.onApplicationLoaded(preloader, new AppInfo());
 		}
 	}
 }

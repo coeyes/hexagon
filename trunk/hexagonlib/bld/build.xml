@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *********************************************************************************************
-	Buildfile for tetragon App
+	Buildfile for tetragon app
 	Aug 17, 2009
 	Universal build file for ActionScript 3 Projects.
 *********************************************************************************************
 -->
-<project name="tetragon App" default="Init Project" basedir="..">
+<project name="tetragon app" default="Init Project" basedir="..">
 	
 	<!-- application information -->
 	<property name="app.id"			value="com.hexagonstar.tetragon.app"/>
 	<property name="app.name"			value="tetragon App"/>
 	<property name="app.version"		value="1.0.0"/>
+	<property name="app.releasestage"	value="beta"/>
 	<property name="app.copyright"	value="Copyright(c) Hexagon Star Softworks"/>
 	<property name="app.year"			value="2009"/>
 	<property name="app.website"		value="http://www.hexagonstar.com/"/>
 	<property name="app.language"		value="EN"/>
 	<property name="app.description"	value=""/>
 	
-	<!-- AIR-only application information -->
-	<property name="air.windowtitle"	value="tetragon App"/>
+	<!-- air-only application information -->
+	<property name="air.windowtitle"	value="tetragon app"/>
 	<property name="air.filename"		value="app"/>
 	<property name="air.minimizable"	value="true"/>
-	<property name="air.maximizable"	value="false"/>
-	<property name="air.resizable"	value="false"/>
+	<property name="air.maximizable"	value="true"/>
+	<property name="air.resizable"	value="true"/>
 	<property name="air.minsize"		value="640 480"/>
 	
 	<!-- swf properties -->
@@ -35,7 +36,7 @@
 	<property name="air.targetname"	value="tetragonapp.air"/>
 	
 	<!-- swf meta tags -->
-	<property name="meta.title"		value="tetragon App"/>
+	<property name="meta.title"		value="tetragon app"/>
 	<property name="meta.publisher"	value="Hexagon Star Softworks"/>
 	<property name="meta.creator"		value="Hexagon Star Softworks"/>
 	<property name="meta.contributor"	value=""/>
@@ -51,11 +52,15 @@
 	<property name="max.recursiondepth"	value="1000"/>
 	<property name="max.executiontime"	value="60"/>
 	
+	<!-- default class names -->
+	<property name="class.app.flash"	value="App.as"/>
+	<property name="class.app.air"	value="AppAIR.as"/>
+	<property name="class.app.flex"	value="App.mxml"/>
+	
 	<!-- default project folders -->
-	<property name="bin"				value="bin"/>
-	<property name="doc"				value="${lib}/doc"/>
-	<property name="pub"				value="pub"/>
 	<property name="src"				value="src/tetragon/app"/>
+	<property name="bin"				value="bin"/>
+	<property name="pub"				value="pub"/>
 	
 	<!-- eclipse workspace & additional source pathes -->
 	<property name="workspace"				value="${eclipse.workspace}"/>
@@ -173,7 +178,7 @@
 				<format property="build.date" pattern="dd-MMMM-yyyy HH:mm" unit="minute" locale="en"/>
 			</tstamp>
 			<echo message="*** ${ant.project.name} version: ${app.version} build #${build.number} (@{releasetype}), ${build.date} ***" level="info"/>
-			<!-- <generateAppInfo buildnr="${build.number}" builddate="${build.date}" releasetype="@{releasetype}" debug="@{debug}"/> -->
+			<generateAppInfo buildnr="${build.number}" builddate="${build.date}" releasetype="@{releasetype}" debug="@{debug}"/>
 		</sequential>
 	</macrodef>
 	
@@ -191,23 +196,26 @@
  */
 package
 {
+	import com.hexagonstar.framework.IAppInfo;
+	
 	/**************************************************************************
-	 * AppInfo.as
+	 * AppInfo
 	 * Ant auto-generated application information file.
 	 **************************************************************************/
-	public final class AppInfo
+	public final class AppInfo implements IAppInfo
 	{
-		public static const APP_ID:String			= "${app.id}";
-		public static const APP_NAME:String			= "${app.name}";
-		public static const APP_VERSION:String		= "${app.version}";
-		public static const APP_BUILD:String			= "@{buildnr}";
-		public static const APP_BUILD_DATE:String	= "@{builddate}";
-		public static const APP_RELEASE_TYPE:String	= "@{releasetype}";
-		public static const APP_COPYRIGHT:String		= "${app.copyright}";
-		public static const APP_YEAR:String			= "${app.year}";
-		public static const APP_WEBSITE:String		= "${app.website}";
-		public static const APP_LANGUAGE:String		= "${app.language}";
-		public static const APP_DEBUG:Boolean		= @{debug};
+		public function get id():String {return "${app.id}";}
+		public function get name():String {return "${app.name}";}
+		public function get version():String {return "${app.version}";}
+		public function get build():String {return "@{buildnr}";}
+		public function get buildDate():String {return "@{builddate}";}
+		public function get releaseStage():String {return "${app.releasestage}";}
+		public function get releaseType():String {return "@{releasetype}";}
+		public function get copyright():String {return "${app.copyright}";}
+		public function get year():String {return "${app.year}";}
+		public function get website():String {return "${app.website}";}
+		public function get language():String {return "${app.language}";}
+		public function get isDebug():Boolean {return @{debug};}
 	}
 }]]>
 </echo>

@@ -3,18 +3,18 @@
 	<id>com.hexagonstar.tetragon.app</id>
 	<filename>app</filename>
 	<name>tetragon App</name>
-	<version>1.0.0.34</version>
+	<version>1.0.0.39</version>
 	<description></description>
 	<copyright>Copyright(c) Hexagon Star Softworks</copyright>
 	<initialWindow>
 		<content>app.swf</content>
-		<title>tetragon App</title>
+		<title>tetragon app</title>
 		<systemChrome>standard</systemChrome>
 		<transparent>false</transparent>
 		<visible>false</visible>
 		<minimizable>true</minimizable>
-		<maximizable>false</maximizable>
-		<resizable>false</resizable>
+		<maximizable>true</maximizable>
+		<resizable>true</resizable>
 		<minSize>640 480</minSize>
 	</initialWindow>
 	<installFolder>Hexagon Star Softworks</installFolder>
