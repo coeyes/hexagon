@@ -13,7 +13,7 @@
 		import com.hexagonstar.framework.Main;
 		private function onApplicationComplete():void
 		{
-			Main.instance.onApplicationLoaded(this);
+			Main.instance.onApplicationLoaded(this, new AppInfo());
 		}
 		]]>
 	</mx:Script>
