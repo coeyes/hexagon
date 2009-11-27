@@ -1,3 +1,26 @@
+/*
+ * tetragon - Application framework for Flash, Flash/AIR, Flex & Flex/AIR.
+ * 
+ * Licensed under the MIT License
+ * Copyright (c) 2008-2009 Sascha Balkau / Hexagon Star Softworks
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.hexagonstar.framework.io.loaders
 {
 	import com.hexagonstar.data.structures.IIterator;
@@ -12,12 +35,13 @@ package com.hexagonstar.framework.io.loaders
 
 	
 	/**
-	 * Can be used to load a set of XML data files that are parsed into data model object
+	 * Can be used to load a set of XML data files that are parsed into data model objects
 	 * by use of a specific data file parser. You provide the path to an index XML file
 	 * which contains entries with a parserID and a path to any of the files that are
 	 * being loaded and parsed.
 	 * 
 	 * @author Sascha Balkau
+	 * @version 1.0.0
 	 */
 	public class DataFileLoader extends AbstractLoader implements ILoader
 	{
@@ -25,11 +49,17 @@ package com.hexagonstar.framework.io.loaders
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
+		/** @private */
 		protected var _indexFilePath:String;
+		/** @private */
 		protected var _indexFileID:String;
+		/** @private */
 		protected var _indexFile:XMLFile;
+		/** @private */
 		protected var _files:Queue;
+		/** @private */
 		protected var _parsers:Dictionary;
+		/** @private */
 		protected var _parser:IFileParser;
 		
 		

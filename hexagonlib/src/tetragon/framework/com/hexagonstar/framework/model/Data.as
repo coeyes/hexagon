@@ -1,6 +1,8 @@
 /*
+ * tetragon - Application framework for Flash, Flash/AIR, Flex & Flex/AIR.
+ * 
  * Licensed under the MIT License
- * Copyright (c) 2009 Sascha Balkau <sascha@hexagonstar.com>
+ * Copyright (c) 2008-2009 Sascha Balkau / Hexagon Star Softworks
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -25,7 +27,9 @@ package com.hexagonstar.framework.model
 	
 	/**
 	 * Data class
-	 * @author Sascha Balkau <sascha@hexagonstar.com>
+	 * 
+	 * @author Sascha Balkau
+	 * @version 1.0.0
 	 */
 	public class Data 
 	{
