@@ -1,8 +1,31 @@
-package com.hexagonstar.framework.setup
+/*
+ * tetragon - Application framework for Flash, Flash/AIR, Flex & Flex/AIR.
+ * 
+ * Licensed under the MIT License
+ * Copyright (c) 2008-2009 Sascha Balkau / Hexagon Star Softworks
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+package setup
 {
 	import com.hexagonstar.env.WindowBoundsManager;
-	import com.hexagonstar.framework.Main;
 	import com.hexagonstar.framework.command.env.CloseApplicationCommand;
+	import com.hexagonstar.framework.setup.ISetup;
 
 	import flash.desktop.NativeApplication;
 	import flash.display.Sprite;
@@ -65,15 +88,6 @@ package com.hexagonstar.framework.setup
 			_app.stage.nativeWindow.addEventListener(Event.CLOSE, onApplicationClose);
 			
 			_app.stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFullScreen);
-		}
-		
-		
-		/**
-		 * Executes setup tasks that need to be done after the application init process
-		 * has been initiated and right after the application config was loaded.
-		 */
-		public function intermediateSetup():void
-		{
 		}
 		
 		
