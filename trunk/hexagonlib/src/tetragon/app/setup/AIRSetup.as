@@ -36,8 +36,11 @@ package setup
 
 	
 	/**
-	 * AIRSetup Class
-	 * @author Sascha Balkau <sascha@hexagonstar.com>
+	 * Branch-specific setup class that contains setup instructions that are being
+	 * executed if the application is an AIR app.
+	 * 
+	 * @author Sascha Balkau
+	 * @version 1.0.0
 	 */
 	public class AIRSetup implements ISetup
 	{

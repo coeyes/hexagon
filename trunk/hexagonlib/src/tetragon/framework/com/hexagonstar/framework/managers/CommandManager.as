@@ -1,3 +1,26 @@
+/*
+ * tetragon - Application framework for Flash, Flash/AIR, Flex & Flex/AIR.
+ * 
+ * Licensed under the MIT License
+ * Copyright (c) 2008-2009 Sascha Balkau / Hexagon Star Softworks
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.hexagonstar.framework.managers
 {
 	import com.hexagonstar.event.CommandEvent;
@@ -8,6 +31,7 @@ package com.hexagonstar.framework.managers
 	
 	/**
 	 * @author Sascha Balkau
+	 * @version 1.0.0
 	 */
 	public class CommandManager implements ICommandListener
 	{
@@ -15,9 +39,12 @@ package com.hexagonstar.framework.managers
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
+		/** @private */
 		private static var _instance:CommandManager;
+		/** @private */
 		private static var _singletonLock:Boolean = false;
 		
+		/** @private */
 		private var _executingCommands:Vector.<CommandDO>;
 		
 		
@@ -113,6 +140,7 @@ package com.hexagonstar.framework.managers
 		
 		/**
 		 * Returns a String Representation of CommandManager.
+		 * 
 		 * @return A String Representation of CommandManager.
 		 */
 		public function toString():String
@@ -311,6 +339,7 @@ import com.hexagonstar.pattern.cmd.Command;
 
 /**
  * Command Data Object
+ * @private
  */
 class CommandDO
 {

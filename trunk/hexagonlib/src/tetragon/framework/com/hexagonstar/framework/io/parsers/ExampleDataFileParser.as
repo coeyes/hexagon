@@ -29,7 +29,9 @@ package com.hexagonstar.framework.io.parsers
 	
 	/**
 	 * ExampleDataFileParser Class
-	 * @author Sascha Balkau <sascha@hexagonstar.com>
+	 * 
+	 * @author Sascha Balkau
+	 * @version 1.0.0
 	 */
 	public class ExampleDataFileParser extends AbstractFileParser implements IFileParser
 	{
