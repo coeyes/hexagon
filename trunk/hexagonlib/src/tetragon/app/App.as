@@ -25,7 +25,6 @@ package
 {
 	import com.hexagonstar.env.preload.IPreloadable;
 	import com.hexagonstar.env.preload.Preloader;
-	import com.hexagonstar.framework.Main;
 
 	/**
 	 * The 'front door' of the application.
@@ -57,7 +56,6 @@ package
 		 */
 		public function App()
 		{
-			//_embeddedAssets = new EmbeddedAssets();
 		}
 
 		

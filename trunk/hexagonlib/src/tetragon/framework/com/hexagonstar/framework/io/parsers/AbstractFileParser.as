@@ -1,6 +1,5 @@
 package com.hexagonstar.framework.io.parsers
 {
-	import com.hexagonstar.framework.Main;
 	import com.hexagonstar.framework.model.Data;
 	import com.hexagonstar.framework.util.Log;
 	import com.hexagonstar.io.file.types.IFile;

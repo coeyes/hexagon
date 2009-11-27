@@ -1,6 +1,5 @@
 package com.hexagonstar.framework.command.file
 {
-	import com.hexagonstar.framework.Main;
 	import com.hexagonstar.framework.io.loaders.LocaleLoader;
 	import com.hexagonstar.framework.model.Locale;
 

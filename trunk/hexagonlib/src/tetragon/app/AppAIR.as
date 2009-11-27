@@ -23,8 +23,6 @@
  */
 package 
 {
-	import com.hexagonstar.framework.Main;
-
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;

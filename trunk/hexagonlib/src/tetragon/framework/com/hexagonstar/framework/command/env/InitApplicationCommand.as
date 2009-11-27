@@ -1,6 +1,5 @@
 package com.hexagonstar.framework.command.env
 {
-	import com.hexagonstar.framework.Main;
 	import com.hexagonstar.framework.command.file.LoadConfigCommand;
 	import com.hexagonstar.framework.command.file.LoadLocaleCommand;
 	import com.hexagonstar.pattern.cmd.CompositeCommand;
