@@ -43,7 +43,7 @@ package com.hexagonstar.io.key
 		 */
 		public function KeyManager()
 		{
-			// TODO There is still a bug with KeyCombination when more than 2 keys are used!
+			// TODO There is still a bug with KeyCombination when more than 3 keys are used!
 			
 			if (!_singletonLock)
 			{
@@ -75,8 +75,14 @@ package com.hexagonstar.io.key
 												  isRelease:Boolean = false):void
 		{
 			var c:KeyCombination = new KeyCombination(keyCodes);
-			if (isRelease) _assignmentsRelease[c] = callback;
-			else _assignmentsDown[c] = callback;
+			if (isRelease)
+			{
+				_assignmentsRelease[c] = callback;
+			}
+			else
+			{
+				_assignmentsDown[c] = callback;
+			}
 			_key.addKeyCombination(c);
 		}
 		
@@ -90,14 +96,18 @@ package com.hexagonstar.io.key
 			for (c in _assignmentsDown)
 			{
 				if (c is KeyCombination)
-					_key.removeKeyCombination(c as KeyCombination);
+				{
+					_key.removeKeyCombination(KeyCombination(c));
+				}
 			}
 			_assignmentsDown = new Dictionary();
 			
 			for (c in _assignmentsRelease)
 			{
 				if (c is KeyCombination)
-					_key.removeKeyCombination(c as KeyCombination);
+				{
+					_key.removeKeyCombination(KeyCombination(c));
+				}
 			}
 			_assignmentsRelease = new Dictionary();
 		}
@@ -135,10 +145,11 @@ package com.hexagonstar.io.key
 			{
 				if (c is KeyCombination)
 				{
-					if (e.keyCombination.equals(c as KeyCombination))
+					if (e.keyCombination.equals(KeyCombination(c)))
 					{
 						var callback:Function = _assignmentsDown[c];
 						callback.apply(null);
+						break;
 					}
 				}
 			}
@@ -154,10 +165,11 @@ package com.hexagonstar.io.key
 			{
 				if (c is KeyCombination)
 				{
-					if (e.keyCombination.equals(c as KeyCombination))
+					if (e.keyCombination.equals(KeyCombination(c)))
 					{
 						var callback:Function = _assignmentsRelease[c];
 						callback.apply(null);
+						break;
 					}
 				}
 			}
