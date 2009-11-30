@@ -23,6 +23,7 @@
  */
 package setup
 {
+	import com.hexagonstar.display.StageReference;
 	import com.hexagonstar.env.WindowBoundsManager;
 	import com.hexagonstar.framework.command.env.CloseApplicationCommand;
 	import com.hexagonstar.framework.setup.ISetup;
@@ -101,11 +102,16 @@ package setup
 		 */
 		public function finalSetup():void
 		{
-			// TODO make fullScreenSourceRect size dynamic calculated!
-			_app.stage.fullScreenSourceRect = new Rectangle(0, 0, 1024, 640);
-			_app.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			_app.stage.fullScreenSourceRect = new Rectangle(0, 0,
+				StageReference.stage.stageWidth, StageReference.stage.stageHeight);
 			
-			/* Make application visible */
+			/* Check if app should run in fullscreen mode. */
+			if (Main.config.useFullscreen)
+			{
+				_app.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+			}
+			
+			/* Make application visible. */
 			_app.stage.nativeWindow.visible = true;
 			_app.stage.nativeWindow.activate();
 		}
