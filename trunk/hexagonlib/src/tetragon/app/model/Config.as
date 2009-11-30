@@ -21,7 +21,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hexagonstar.framework.model
+package model
 {
 	/**
 	 * A data model that is used to store config properties loaded by ConfigLoader
@@ -43,6 +43,7 @@ package com.hexagonstar.framework.model
 		
 		public var loggingEnabled:Boolean;
 		public var loggingFilterLevel:int;
+		
 		public var consoleEnabled:Boolean;
 		public var consoleAutoOpen:Boolean;
 		public var consoleKey:String;
@@ -54,14 +55,16 @@ package com.hexagonstar.framework.model
 		public var fpsMonitorPollInterval:Number;
 		public var fpsMonitorKey:String;
 		
-		public var autoCheckForUpdates:Boolean;
-		public var updateURL:String;
-		
 		public var localePath:String;
 		public var defaultLocale:String;
 		public var currentLocale:String;
 		
 		public var dataIndexFile:String;
+		
+		/* AIR app only settings */
+		public var autoCheckForUpdates:Boolean;
+		public var updateURL:String;
+		public var useFullscreen:Boolean;
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -86,14 +89,16 @@ package com.hexagonstar.framework.model
 			fpsMonitorPollInterval = 0.5;
 			fpsMonitorKey = "F9";
 			
-			autoCheckForUpdates = true;
-			updateURL = "";
-			
 			localePath = "locale";
 			defaultLocale = Locale.ENGLISH;
 			currentLocale = defaultLocale;
 			
 			dataIndexFile = "data/datafiles.xml";
+			
+			autoCheckForUpdates = true;
+			updateURL = "";
+			
+			useFullscreen = false;
 		}
 	}
 }

@@ -23,8 +23,9 @@
  */
 package com.hexagonstar.framework.command.file
 {
+	import model.Locale;
+
 	import com.hexagonstar.framework.io.loaders.LocaleLoader;
-	import com.hexagonstar.framework.model.Locale;
 
 	
 	/**

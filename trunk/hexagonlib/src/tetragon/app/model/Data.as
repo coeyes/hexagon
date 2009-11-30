@@ -21,10 +21,8 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hexagonstar.framework.model 
+package model 
 {
-
-	
 	/**
 	 * Data class
 	 * 
@@ -33,6 +31,15 @@ package com.hexagonstar.framework.model
 	 */
 	public class Data 
 	{
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Properties                                                                         //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Public Methods                                                                     //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
 		/**
 		 * initializes the model data.
 		 */

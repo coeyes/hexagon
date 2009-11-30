@@ -23,7 +23,8 @@
  */
 package com.hexagonstar.framework.io.parsers
 {
-	import com.hexagonstar.framework.model.Data;
+	import model.Data;
+
 	import com.hexagonstar.framework.util.Log;
 	import com.hexagonstar.io.file.types.IFile;
 	import com.hexagonstar.util.VectorUtil;
