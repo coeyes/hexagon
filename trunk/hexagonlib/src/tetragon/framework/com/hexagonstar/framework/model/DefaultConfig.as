@@ -21,11 +21,8 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package model
+package com.hexagonstar.framework.model
 {
-	import com.hexagonstar.framework.model.DefaultConfig;
-
-	
 	/**
 	 * A data model that is used to store config properties loaded by ConfigLoader
 	 * from the application config file (app.ini). This class must define all the
@@ -38,22 +35,28 @@ package model
 	 * 
 	 * @author Sascha Balkau
 	 */
-	public class Config extends DefaultConfig
+	public class DefaultConfig
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Config Data                                                                        //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
-		/* AIR app only settings */
-		public var autoCheckForUpdates:Boolean;
-		public var updateURL:String;
-		public var useFullscreen:Boolean;
+		/* Logging */
+		public var loggingEnabled:Boolean;
+		public var loggingFilterLevel:int;
 		
-		public var localePath:String;
-		public var defaultLocale:String;
-		public var currentLocale:String;
+		/* Console */
+		public var consoleEnabled:Boolean;
+		public var consoleAutoOpen:Boolean;
+		public var consoleKey:String;
+		public var consoleTransparency:Number;
+		public var consoleFontSize:int;
+		public var consoleMaxBufferSize:int;
 		
-		public var dataIndexFile:String;
+		/* FPS Moniror */
+		public var fpsMonitorEnabled:Boolean;
+		public var fpsMonitorPollInterval:Number;
+		public var fpsMonitorKey:String;
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -61,21 +64,23 @@ package model
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Initializes the model data. Be sure to call super.init first!
+		 * initializes the model data.
 		 */
-		override public function init():void
+		public function init():void
 		{
-			super.init();
+			loggingEnabled = true;
+			loggingFilterLevel = 0;
 			
-			autoCheckForUpdates = true;
-			updateURL = "";
-			useFullscreen = false;
+			consoleEnabled = true;
+			consoleAutoOpen = false;
+			consoleKey = "F8";
+			consoleTransparency = 0.8;
+			consoleFontSize = 11;
+			consoleMaxBufferSize = 40000;
 			
-			localePath = "locale";
-			defaultLocale = Locale.ENGLISH;
-			currentLocale = defaultLocale;
-			
-			dataIndexFile = "data/datafiles.xml";
+			fpsMonitorEnabled = true;
+			fpsMonitorPollInterval = 0.5;
+			fpsMonitorKey = "SHIFT+F8";
 		}
 	}
 }
