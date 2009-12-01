@@ -30,6 +30,18 @@ package com.hexagonstar.framework.managers
 
 	
 	/**
+	 * A Singleton that can be used to manage command execution. You call the execute
+	 * method and specify a command and any handler methods that should be notified of
+	 * broadcasted command events. After the command has finished execution all it's
+	 * event listeners are automatically removed. The CommandManager also makes sure
+	 * that the same command is not executed more than once at the same time.
+	 * 
+	 * @see com.hexagonstar.pattern.cmd.Command
+	 * @see com.hexagonstar.pattern.cmd.CompositeCommand
+	 * @see com.hexagonstar.pattern.cmd.PausableCommand
+	 * @see com.hexagonstar.pattern.cmd.ICommandListener
+	 * @see com.hexagonstar.event.CommandEvent
+	 * 
 	 * @author Sascha Balkau
 	 * @version 1.0.0
 	 */
@@ -105,9 +117,7 @@ package com.hexagonstar.framework.managers
 			}
 			else
 			{
-				// TODO Add log!
-				//Log.warn(toString() + " The command [" + cmd.name
-				//	+ "] is already being executed.");
+				/* Do nothing else if specified command is currently in execution. */
 				return false;
 			}
 		}
@@ -178,8 +188,8 @@ package com.hexagonstar.framework.managers
 		
 		
 		/**
-		 * Pauses or unpauses all currently executed commands that support being
-		 * paused and unpaused.
+		 * Pauses or unpauses all currently executed commands that support being paused and
+		 * unpaused.
 		 */
 		public function set paused(v:Boolean):void
 		{
@@ -197,6 +207,9 @@ package com.hexagonstar.framework.managers
 		// Event Handlers                                                                     //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
+		/**
+		 * @private
+		 */
 		public function onCommandComplete(e:CommandEvent):void
 		{
 			/* After complete remove the command from the executing commands queue */
@@ -204,21 +217,28 @@ package com.hexagonstar.framework.managers
 		}
 		
 		
+		/**
+		 * @private
+		 */
 		public function onCommandAbort(e:CommandEvent):void
 		{
 			/* After abort remove the command from the executing commands queue */
-			// TODO Add log!
-			//Log.debug(toString() + " Aborted command: " + e.command.toString());
 			removeCommand(e.command);
 		}
 		
 		
+		/**
+		 * @private
+		 */
 		public function onCommandError(e:CommandEvent):void
 		{
 			/* Only used for debugging! */
 		}
 		
 		
+		/**
+		 * @private
+		 */
 		public function onCommandProgress(e:CommandEvent):void
 		{
 			/* Only used for debugging! */
@@ -230,16 +250,14 @@ package com.hexagonstar.framework.managers
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Adds event listeners for the command in the specified commandDO.
-		 * If the command's listener property has a listener object assigned
-		 * this will add event listeners to that listener object. Otherwise
-		 * it will check if any of the optional event handlers were specified
-		 * with a call to CommandManager.execute() and if any of them are
-		 * assigned this method adds event listeners to these.
+		 * Adds event listeners for the command in the specified commandDO. If the command's
+		 * listener property has a listener object assigned this will add event listeners to
+		 * that listener object. Otherwise it will check if any of the optional event
+		 * handlers were specified with a call to CommandManager.execute() and if any of
+		 * them are assigned this method adds event listeners to these.
 		 * 
-		 * @param cmdDO The command data object with the command that
-		 *         needs listeners added.
 		 * @private
+		 * @param cmdDO The command data object with the command that needs listeners added.
 		 */
 		private function addCommandListeners(cmdDO:CommandDO):void
 		{
@@ -276,12 +294,12 @@ package com.hexagonstar.framework.managers
 		
 		
 		/**
-		 * First tries to find the commandDO that is associated with the specified
-		 * command and removes it from the executing commands queue. After that
-		 * any event listeners are removed from the command.
+		 * First tries to find the commandDO that is associated with the specified command
+		 * and removes it from the executing commands queue. After that any event listeners
+		 * are removed from the command.
 		 * 
-		 * @param c The command to remove.
 		 * @private
+		 * @param c The command to remove.
 		 */
 		private function removeCommand(c:Command):void
 		{
