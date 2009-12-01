@@ -1,3 +1,32 @@
+/*
+ * hexagonlib - Multi-Purpose ActionScript 3 Library.
+ *       __    __
+ *    __/  \__/  \__    __
+ *   /  \__/HEXAGON \__/  \
+ *   \__/  \__/  LIBRARY _/
+ *            \__/  \__/
+ *
+ * Licensed under the MIT License
+ * 
+ * Copyright (c) 2007-2008 Sascha Balkau / Hexagon Star Softworks
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.hexagonstar.event
 {
 	import com.hexagonstar.pattern.cmd.Command;
@@ -6,8 +35,16 @@ package com.hexagonstar.event
 
 	
 	/**
-	 * An event that is used to be broadcast from commands to indicate the
-	 * state of the command.
+	 * An event that is used to be broadcast from commands to indicate the state of the
+	 * command.
+	 * 
+	 * @see com.hexagonstar.pattern.cmd.Command
+	 * @see com.hexagonstar.pattern.cmd.CompositeCommand
+	 * @see com.hexagonstar.pattern.cmd.PausableCommand
+	 * @see com.hexagonstar.pattern.cmd.ICommandListener
+	 * 
+	 * @author Sascha Balkau
+	 * @version 1.0.0
 	 */
 	public class CommandEvent extends Event
 	{
@@ -15,9 +52,26 @@ package com.hexagonstar.event
 		// Constants                                                                          //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
+		/**
+		 * A constant for command events which signals that the command has completed
+		 * execution.
+		 */
 		public static const COMPLETE:String	= "commandComplete";
+		
+		/**
+		 * A constant for command events which signals that the command is progressing.
+		 */
 		public static const PROGRESS:String	= "commandProgress";
+		
+		/**
+		 * A constant for command events which signals that the command has been aborted.
+		 */
 		public static const ABORT:String		= "commandAbort";
+		
+		/**
+		 * A constant for command events which signals that an error occured during the the
+		 * command execution.
+		 */
 		public static const ERROR:String		= "commandError";
 		
 		
@@ -25,8 +79,11 @@ package com.hexagonstar.event
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
+		/** @private */
 		protected var _command:Command;
+		/** @private */
 		protected var _message:String;
+		/** @private */
 		protected var _progress:int;
 		
 		
@@ -69,7 +126,7 @@ package com.hexagonstar.event
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * @return The command that broadcasted the event.
+		 * The command that broadcasted the event.
 		 */
 		public function get command():Command
 		{
@@ -78,8 +135,8 @@ package com.hexagonstar.event
 		
 		
 		/**
-		 * @return For an error event the error message and for a progress event
-		 *          the message string associated with the command progress.
+		 * For an error event the error message and for a progress event the message string
+		 * associated with the command progress.
 		 */
 		public function get message():String
 		{
@@ -88,7 +145,7 @@ package com.hexagonstar.event
 		
 		
 		/**
-		 * @return The progress value of the command.
+		 * The progress value of the command.
 		 */
 		public function get progress():int
 		{
