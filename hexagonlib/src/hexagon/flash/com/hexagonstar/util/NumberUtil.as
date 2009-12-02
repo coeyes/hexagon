@@ -38,18 +38,6 @@ package com.hexagonstar.util
 	public class NumberUtil
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
-		// Constants                                                                          //
-		////////////////////////////////////////////////////////////////////////////////////////
-		
-		/** @private */
-		private static const MATH_MIN:Function		= Math.min;
-		/** @private */
-		private static const MATH_MAX:Function		= Math.max;
-		/** @private */
-		private static const MATH_SQRT:Function		= Math.sqrt;
-		
-		
-		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -138,7 +126,7 @@ package com.hexagonstar.util
 			if (value == 1 || value == 2) return true;
 			if (isEven(value)) return false;
 			
-			var s:Number = MATH_SQRT(value);
+			var s:Number = Math.sqrt(value);
 			for (var i:int = 3; i <= s; i++)
 			{
 				if (value % i == 0) return false;
@@ -207,7 +195,7 @@ package com.hexagonstar.util
 		 */
 		public static function isBetween(value:Number, start:Number, end:Number):Boolean 
 		{
-			return !(value < MATH_MIN(start, end) || value > MATH_MAX(start, end));
+			return !(value < Math.min(start, end) || value > Math.max(start, end));
 		}
 		
 		
@@ -229,7 +217,7 @@ package com.hexagonstar.util
 		 */
 		public static function constrain(value:Number, start:Number, end:Number):Number 
 		{
-			return MATH_MIN(MATH_MAX(value, MATH_MIN(start, end)), MATH_MAX(start, end));
+			return Math.min(Math.max(value, Math.min(start, end)), Math.max(start, end));
 		}
 		
 		
