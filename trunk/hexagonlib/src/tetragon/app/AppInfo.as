@@ -15,8 +15,8 @@ package
 		public function get id():String {return "com.hexagonstar.tetragon.app";}
 		public function get name():String {return "tetragon App";}
 		public function get version():String {return "1.0.0";}
-		public function get build():String {return "180";}
-		public function get buildDate():String {return "02-December-2009 00:26";}
+		public function get build():String {return "181";}
+		public function get buildDate():String {return "02-December-2009 23:50";}
 		public function get releaseStage():String {return "beta";}
 		public function get releaseType():String {return "web";}
 		public function get copyright():String {return "Copyright(c) Hexagon Star Softworks";}
