@@ -1,1 +1,0 @@
-package io.parsers{	import com.hexagonstar.io.file.types.IFile;	import flash.events.IEventDispatcher;		/**	 * IFileParser Interface	 * @author Sascha Balkau <sascha@hexagonstar.com>	 */	public interface IFileParser extends IEventDispatcher	{		function parse(file:IFile):void	}}
