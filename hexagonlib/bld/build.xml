@@ -64,9 +64,9 @@
 	
 	<!-- eclipse workspace & additional source pathes -->
 	<property name="workspace"				value="${eclipse.workspace}"/>
-	<property name="srcpath.hexagonlib.air"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagon/air"/>
-	<property name="srcpath.hexagonlib.flash"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagon/flash"/>
-	<property name="srcpath.hexagonlib.flex"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagon/flex"/>
+	<property name="srcpath.hexagonlib.air"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagonlib/air"/>
+	<property name="srcpath.hexagonlib.flash"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagonlib/flash"/>
+	<property name="srcpath.hexagonlib.flex"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagonlib/flex"/>
 	<property name="srcpath.tetragon"			value="${workspace}/com.hexagonstar.hexagonlib/src/tetragon/framework"/>
 	
 	<!-- eclipse workspace & additional swc pathes -->
