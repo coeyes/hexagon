@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *********************************************************************************************
-	Buildfile for tetragon app
-	Aug 17, 2009
+	Buildfile for rhombus app
+	Dec 05, 2009
 	Universal build file for ActionScript 3 Projects.
 *********************************************************************************************
 -->
-<project name="tetragon app" default="Init Project" basedir="..">
+<project name="rhombus app" default="Init Project" basedir="..">
 	
 	<!-- application information -->
-	<property name="app.id"			value="com.hexagonstar.tetragon.app"/>
-	<property name="app.name"			value="tetragon App"/>
+	<property name="app.id"			value="com.hexagonstar.rhombus.app"/>
+	<property name="app.name"			value="rhombus app"/>
 	<property name="app.version"		value="1.0.0"/>
 	<property name="app.releasestage"	value="beta"/>
 	<property name="app.copyright"	value="Copyright(c) Hexagon Star Softworks"/>
@@ -20,7 +20,7 @@
 	<property name="app.description"	value=""/>
 	
 	<!-- air-only application information -->
-	<property name="air.windowtitle"	value="tetragon app"/>
+	<property name="air.windowtitle"	value="rhombus app"/>
 	<property name="air.filename"		value="app"/>
 	<property name="air.minimizable"	value="true"/>
 	<property name="air.maximizable"	value="true"/>
@@ -33,10 +33,10 @@
 	<property name="swf.width"		value="1024"/>
 	<property name="swf.height"		value="640"/>
 	<property name="swf.targetname"	value="app.swf"/>
-	<property name="air.targetname"	value="tetragonapp.air"/>
+	<property name="air.targetname"	value="rhombus_app.air"/>
 	
 	<!-- swf meta tags -->
-	<property name="meta.title"		value="tetragon app"/>
+	<property name="meta.title"		value="rhombus app"/>
 	<property name="meta.publisher"	value="Hexagon Star Softworks"/>
 	<property name="meta.creator"		value="Hexagon Star Softworks"/>
 	<property name="meta.contributor"	value=""/>
@@ -58,7 +58,7 @@
 	<property name="class.app.flex"	value="App.mxml"/>
 	
 	<!-- default project folders -->
-	<property name="src"				value="src/tetragon/app"/>
+	<property name="src"				value="src/rhombus/app"/>
 	<property name="bin"				value="bin"/>
 	<property name="pub"				value="pub"/>
 	
@@ -67,7 +67,7 @@
 	<property name="srcpath.hexagonlib.air"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagonlib/air"/>
 	<property name="srcpath.hexagonlib.flash"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagonlib/flash"/>
 	<property name="srcpath.hexagonlib.flex"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagonlib/flex"/>
-	<property name="srcpath.tetragon"			value="${workspace}/com.hexagonstar.hexagonlib/src/tetragon/framework"/>
+	<property name="srcpath.rhombus"			value="${workspace}/com.hexagonstar.hexagonlib/src/rhombus/framework"/>
 	
 	<!-- eclipse workspace & additional swc pathes -->
 	<property name="swcpath.hexagonlib"		value="${workspace}/com.hexagonstar.hexagonlib/swc"/>
@@ -340,7 +340,7 @@ package
 					<contributor name="${meta.contributor}"/>
 				</metadata>
 				
-				<!-- Conditional Compilation Constants Definitions -->
+				<!-- Conditional Compilation Constant Definitions -->
 				<define name="CONFIG::IS_FLASH" value="@{isflash}"/>
 				<define name="CONFIG::IS_FLEX" value="@{isflex}"/>
 				<define name="CONFIG::IS_AIR" value="@{isair}"/>
@@ -349,7 +349,7 @@ package
 				<source-path path-element="${srcpath.hexagonlib.air}"/>
 				<source-path path-element="${srcpath.hexagonlib.flash}"/>
 				<source-path path-element="${srcpath.hexagonlib.flex}"/>
-				<source-path path-element="${srcpath.tetragon}"/>
+				<source-path path-element="${srcpath.rhombus}"/>
 				
 				<!-- Library Paths -->
 				<compiler.library-path dir="${swcpath.library}" append="true">

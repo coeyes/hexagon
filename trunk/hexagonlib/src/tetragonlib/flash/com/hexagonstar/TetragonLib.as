@@ -1,14 +1,12 @@
 /*
- * hexagonlib - Multi-Purpose ActionScript 3 Library.
- *       __    __
- *    __/  \__/  \__    __
- *   /  \__/HEXAGON \__/  \
- *   \__/  \__/  LIBRARY _/
- *            \__/  \__/
- *
+ * tetragonlib - ActionScript 3 Game Library.
+ *    ____
+ *   /    / TETRAGON
+ *  /____/  LIBRARY
+ * 
  * Licensed under the MIT License
  * 
- * Copyright (c) 2007-2008 Sascha Balkau / Hexagon Star Softworks
+ * Copyright (c) 2009 Sascha Balkau / Hexagon Star Softworks
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -32,16 +30,16 @@ package com.hexagonstar
 	/**
 	 * Contains constants that describe version information about the library.
 	 */
-	public class HexagonLib
+	public class TetragonLib
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Constants                                                                          //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
-		public static const NAME:String			= "hexagonlib";
-		public static const VERSION:String		= "0.3.0";
-		public static const BUILD:String			= "54";
-		public static const RELEASE_STAGE:String	= "beta";
+		public static const NAME:String			= "tetragonlib";
+		public static const VERSION:String		= "0.1.0";
+		public static const BUILD:String			= "6";
+		public static const RELEASE_STAGE:String	= "alpha";
 		public static const DATE:String			= "05-December-2009 02:09";
 		public static const COPYRIGHT:String		= "Copyright(c) Hexagon Star Softworks";
 	}
