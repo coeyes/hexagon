@@ -1,15 +1,12 @@
 /*
-/*
- * hexagonlib - Multi-Purpose ActionScript 3 Library.
- *       __    __
- *    __/  \__/  \__    __
- *   /  \__/HEXAGON \__/  \
- *   \__/  \__/  LIBRARY _/
- *            \__/  \__/
- *
+ * rhombuslib - ActionScript 3 Game Library.
+ * 
+ *  /\ RHOMBUS
+ *  \/ LIBRARY
+ * 
  * Licensed under the MIT License
  * 
- * Copyright (c) 2007-2008 Sascha Balkau / Hexagon Star Softworks
+ * Copyright (c) 2009 Sascha Balkau / Hexagon Star Softworks
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -33,17 +30,17 @@ package com.hexagonstar
 	/**
 	 * Contains constants that describe version information about the library.
 	 */
-	public class HexagonLib
+	public class RhombusLib
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Constants                                                                          //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
-		public static const NAME:String			= "hexagonlib";
-		public static const VERSION:String		= "0.3.0";
-		public static const BUILD:String			= "40";
-		public static const RELEASE_STAGE:String	= "beta";
-		public static const DATE:String			= "02-December-2009 23:50";
+		public static const NAME:String			= "rhombuslib";
+		public static const VERSION:String		= "0.1.0";
+		public static const BUILD:String			= "3";
+		public static const RELEASE_STAGE:String	= "alpha";
+		public static const DATE:String			= "05-December-2009 00:19";
 		public static const COPYRIGHT:String		= "Copyright(c) Hexagon Star Softworks";
 	}
 }
