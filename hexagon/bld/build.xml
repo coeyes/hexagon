@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *********************************************************************************************
-	Buildfile for rhombus app
-	Dec 05, 2009
-	Universal build file for ActionScript 3 Projects.
+	Buildfile for rhombus framework-based applications
+	
+	rhombus - Application framework for web/desktop-based Flash & Flex projects.
+	
+	/\ RHOMBUS
+	\/ FRAMEWORK
+ 
+	Licensed under the MIT License
+	Copyright (c) 2008 Sascha Balkau / Hexagon Star Softworks
+	
+	Requires Adobe FlexTasks.
 *********************************************************************************************
 -->
-<project name="rhombus app" default="Init Project" basedir="..">
+<project name="rhombus app" default="init" basedir="..">
 	
 	<!-- application information -->
 	<property name="app.id"			value="com.hexagonstar.rhombus.app"/>
 	<property name="app.name"			value="rhombus app"/>
 	<property name="app.version"		value="1.0.0"/>
 	<property name="app.releasestage"	value="beta"/>
-	<property name="app.copyright"	value="Copyright(c) Hexagon Star Softworks"/>
+	<property name="app.copyright"	value="Hexagon Star Softworks"/>
 	<property name="app.year"			value="2009"/>
 	<property name="app.website"		value="http://www.hexagonstar.com/"/>
 	<property name="app.language"		value="EN"/>
 	<property name="app.description"	value=""/>
 	
 	<!-- air-only application information -->
-	<property name="air.windowtitle"	value="rhombus app"/>
+	<property name="air.windowtitle"	value="Rhombus"/>
 	<property name="air.filename"		value="app"/>
 	<property name="air.minimizable"	value="true"/>
 	<property name="air.maximizable"	value="true"/>
 	<property name="air.resizable"	value="true"/>
 	<property name="air.minsize"		value="640 480"/>
+	<property name="air.targetname"	value="rhombus_app.air"/>
 	
 	<!-- swf properties -->
 	<property name="swf.bgcolor"		value="0x000000"/>
@@ -33,63 +42,64 @@
 	<property name="swf.width"		value="1024"/>
 	<property name="swf.height"		value="640"/>
 	<property name="swf.targetname"	value="app.swf"/>
-	<property name="air.targetname"	value="rhombus_app.air"/>
 	
 	<!-- swf meta tags -->
-	<property name="meta.title"		value="rhombus app"/>
-	<property name="meta.publisher"	value="Hexagon Star Softworks"/>
-	<property name="meta.creator"		value="Hexagon Star Softworks"/>
-	<property name="meta.contributor"	value=""/>
+	<property name="meta.title"		value="${app.name}"/>
 	<property name="meta.description"	value="${app.description}"/>
+	<property name="meta.publisher"	value="${app.copyright}"/>
+	<property name="meta.creator"		value="${app.copyright}"/>
+	<property name="meta.contributor"	value="${app.copyright}"/>
 	
 	<!-- version of the used flex sdk -->
 	<property name="sdk.version"		value="3.4.0"/>
 	
-	<!-- version of the targetted flash player (9.0.124 or 10.0.12) -->
-	<property name="fpv.version"		value="10.0.12"/>
+	<!-- version of the targetted flash player or air platform -->
+	<property name="fpv.version"		value="10.0.0"/>
+	<property name="air.version"		value="1.5.1"/>
 	
-	<!-- advanced compiler options -->
-	<property name="max.recursiondepth"	value="1000"/>
-	<property name="max.executiontime"	value="60"/>
+	<!-- default project folders (path.bin.fp is used for flash player launch) -->
+	<property name="path.src"			value="${basedir}/src/rhombus/app"/>
+	<property name="path.bin"			value="${basedir}/bin"/>
+	<property name="path.bin.fp"		value="${basedir}\\bin\\"/>
+	<property name="path.pub"			value="${basedir}/pub"/>
+	
+	<!-- ==================================================================================== -->
 	
 	<!-- default class names -->
 	<property name="class.app.flash"	value="App.as"/>
 	<property name="class.app.air"	value="AppAIR.as"/>
 	<property name="class.app.flex"	value="App.mxml"/>
 	
-	<!-- default project folders -->
-	<property name="src"				value="src/rhombus/app"/>
-	<property name="bin"				value="bin"/>
-	<property name="pub"				value="pub"/>
-	
 	<!-- eclipse workspace & additional source pathes -->
-	<property name="workspace"				value="${eclipse.workspace}"/>
-	<property name="srcpath.hexagonlib.air"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagonlib/air"/>
-	<property name="srcpath.hexagonlib.flash"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagonlib/flash"/>
-	<property name="srcpath.hexagonlib.flex"	value="${workspace}/com.hexagonstar.hexagonlib/src/hexagonlib/flex"/>
-	<property name="srcpath.rhombus"			value="${workspace}/com.hexagonstar.hexagonlib/src/rhombus/framework"/>
+	<property name="workspace"				  value="${eclipse.workspace}"/>
+	<property name="path.src.hexagon"			  value="${workspace}/com.hexagonstar.hexagon/src"/>
+	<property name="path.src.hexagonlib.air"	  value="${path.src.hexagon}/hexagonlib/air"/>
+	<property name="path.src.hexagonlib.flash"  value="${path.src.hexagon}/hexagonlib/flash"/>
+	<property name="path.src.hexagonlib.flex"	  value="${path.src.hexagon}/hexagonlib/flex"/>
+	<property name="path.src.tetragonlib.flash" value="${path.src.hexagon}/tetragonlib/flash"/>
+	<property name="path.src.rhombus.framework" value="${path.src.hexagon}/rhombus/framework"/>
 	
-	<!-- eclipse workspace & additional swc pathes -->
-	<property name="swcpath.hexagonlib"		value="${workspace}/com.hexagonstar.hexagonlib/swc"/>
-	<property name="swcpath.alcon"			value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
-	<property name="swcpath.library"			value="${src}/assets"/>
+	<!-- additional swc pathes -->
+	<property name="path.swc.hexagon"	value="${workspace}/com.hexagonstar.hexagon/swc"/>
+	<property name="path.swc.alcon"	value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
+	<property name="path.swc.library"	value="${path.src}/assets"/>
 	
-	<!-- sdk pathes -->
+	<!-- sdk & tool pathes -->
 	<property name="sdk"				value="${flex.sdk.basepath}/${sdk.version}"/>
 	<property name="FLEX_HOME"		value="${sdk}"/>
-	<property name="fcsh"				value="${sdk}/bin/fcsh.exe"/>
-	<property name="mxmlc"			value="${sdk}/bin/mxmlc.exe"/>
-	<property name="compc"			value="${sdk}/bin/compc.exe"/>
 	<property name="asdoc"			value="${sdk}/bin/asdoc.exe"/>
-	<property name="debugplayer"		value="${flashplayer.debug}"/>
-	<property name="flashplayer"		value="${flashplayer.release}"/>
+	<property name="player.debug"		value="${flashplayer.debug}"/>
+	<property name="player.release"	value="${flashplayer.release}"/>
 	
+	<!-- advanced compiler options -->
+	<property name="max.recursiondepth"	value="1000"/>
+	<property name="max.executiontime"	value="60"/>
 	
 	<!-- ==================================================================================== -->
 	<!-- TARGETS                                                                              -->
 	<!-- ==================================================================================== -->
 	
-	<target name="Init Project" description="Does nothing.">
+	<target name="init" description="Does nothing.">
 	</target>
 	
 	
@@ -190,7 +200,7 @@
 		<attribute name="debug" default=""/>
 		<sequential>
 			<echo message="Generating AppInfo.as ..." level="info"/>
-			<echo file="${src}/AppInfo.as" append="false"><![CDATA[/*
+			<echo file="${path.src}/AppInfo.as" append="false"><![CDATA[/*
  * ${ant.project.name} v${app.version}
  * ${app.copyright}
  */
@@ -226,8 +236,8 @@ package
 	<macrodef name="generateAIRDescriptor">
 		<sequential>
 			<echo message="Generating AIR descriptor file ..." level="info"/>
-			<echo file="${src}/App-app.xml" append="false"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://ns.adobe.com/air/application/1.5.1">
+			<echo file="${path.src}/App-app.xml" append="false"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/${air.version}">
 	<id>${app.id}</id>
 	<filename>${air.filename}</filename>
 	<name>${app.name}</name>
@@ -247,17 +257,12 @@ package
 	</initialWindow>
 	<installFolder>${meta.publisher}</installFolder>
 	<programMenuFolder>${meta.publisher}</programMenuFolder>
-	
-	<!-- The icon the system uses for the application. For at least one resolution,
-		 specify the path to a PNG file included in the AIR package. Optional. -->
-	<!--
 	<icon>
 		<image16x16>icons/icon_16x16.png</image16x16>
 		<image32x32>icons/icon_32x32.png</image32x32>
 		<image48x48>icons/icon_48x48.png</image48x48>
 		<image128x128>icons/icon_128x128.png</image128x128>
 	</icon>
-	-->
 	
 	<!-- Whether the application handles the update when a user double-clicks an update version
 	of the AIR file (true), or the default AIR application installer handles the update (false).
@@ -311,29 +316,27 @@ package
 		<attribute name="isflex" default="false"/>
 		<attribute name="isair" default="false"/>
 		<sequential>
-			<echo message="Compiling ${swf.targetname} for Runtime v${fpv.version} ..." level="info"/>
+			<echo message="Compiling ${swf.targetname} for runtime v${fpv.version} ..." level="info"/>
 			<flextasks.mxmlc
 				show-unused-type-selector-warnings="false"
-				file="${basedir}/${src}/@{mainclass}"
-				output="${basedir}/${bin}/${swf.targetname}"
+				file="${path.src}/@{mainclass}"
+				output="${path.bin}/${swf.targetname}"
 				incremental="false"
 				locale="en_US"
 				default-frame-rate="${swf.framerate}"
 				default-background-color="${swf.bgcolor}"
 				target-player="${fpv.version}"
-				debug="@{debug}"
-			>
+				debug="@{debug}">
 				<load-config filename="${FLEX_HOME}/frameworks/@{config}"/>
 				<default-size width="${swf.width}" height="${swf.height}"/>
 				<default-script-limits
 					max-recursion-depth="${max.recursiondepth}"
-					max-execution-time="${max.executiontime}"
-				/>
+					max-execution-time="${max.executiontime}"	/>
+				
 				<metadata
 					title="${meta.title}"
 					description="${meta.description}"
-					date="${build.date}"
-				>
+					date="${build.date}">
 					<language code="${app.language}"/>
 					<publisher name="${meta.publisher}"/>
 					<creator name="${meta.creator}"/>
@@ -346,21 +349,36 @@ package
 				<define name="CONFIG::IS_AIR" value="@{isair}"/>
 				
 				<!-- Source Paths -->
-				<source-path path-element="${srcpath.hexagonlib.air}"/>
-				<source-path path-element="${srcpath.hexagonlib.flash}"/>
-				<source-path path-element="${srcpath.hexagonlib.flex}"/>
-				<source-path path-element="${srcpath.rhombus}"/>
+				<source-path path-element="${path.src.hexagonlib.air}"/>
+				<source-path path-element="${path.src.hexagonlib.flash}"/>
+				<source-path path-element="${path.src.hexagonlib.flex}"/>
+				<source-path path-element="${path.src.tetragonlib.flash}"/>
+				<source-path path-element="${path.src.rhombus.framework}"/>
 				
 				<!-- Library Paths -->
-				<compiler.library-path dir="${swcpath.library}" append="true">
+				<compiler.library-path dir="${path.swc.library}" append="true">
 					<include name="library.swc"/>
 				</compiler.library-path>
-				<!--<compiler.library-path dir="${swcpath.hexagonlib}" append="true">
-					<include name="hexagonlib_flash.swc"/>
-				</compiler.library-path> -->
-				<compiler.library-path dir="${swcpath.alcon}" append="true">
+				
+				<compiler.library-path dir="${path.swc.alcon}" append="true">
 					<include name="alcon.swc"/>
 				</compiler.library-path>
+				
+				<!--<compiler.library-path dir="${path.swc.hexagon}" append="true">
+					<include name="hexagonlib_air.swc"/>
+				</compiler.library-path> -->
+				
+				<!--<compiler.library-path dir="${path.swc.hexagon}" append="true">
+					<include name="hexagonlib_flash.swc"/>
+				</compiler.library-path> -->
+				
+				<!--<compiler.library-path dir="${path.swc.hexagon}" append="true">
+					<include name="hexagonlib_flex.swc"/>
+				</compiler.library-path> -->
+				
+				<!--<compiler.library-path dir="${path.swc.hexagon}" append="true">
+					<include name="tetragonlib_flash.swc"/>
+				</compiler.library-path> -->
 				
 			</flextasks.mxmlc>
 		</sequential>
@@ -378,22 +396,22 @@ package
 					<arg value="${air.certificate.path}"/>
 					<arg value="-storepass"/>
 					<arg value="${air.certificate.password}"/>
-					<arg value="${basedir}/${pub}/${air.targetname}"/>
-					<arg value="${basedir}/${src}/App-app.xml"/>
+					<arg value="${path.pub}/${air.targetname}"/>
+					<arg value="/${path.src}/App-app.xml"/>
 					<arg value="-C"/>
-					<arg value="${basedir}/${bin}"/>
+					<arg value="${path.bin}"/>
 					<arg value="${swf.targetname}"/>
 					<arg value="-C"/>
-					<arg value="${basedir}/${bin}"/>
+					<arg value="${path.bin}"/>
 					<arg value="app.ini"/>
 					<arg value="-C"/>
-					<arg value="${basedir}/${bin}"/>
+					<arg value="${path.bin}"/>
 					<arg value="data"/>
 					<arg value="-C"/>
-					<arg value="${basedir}/${bin}"/>
+					<arg value="${path.bin}"/>
 					<arg value="icons"/>
 					<arg value="-C"/>
-					<arg value="${basedir}/${bin}"/>
+					<arg value="${path.bin}"/>
 					<arg value="locale"/>
 				</java>
 		</sequential>
@@ -403,8 +421,8 @@ package
 	<macrodef name="launchFlashDebug">
 		<sequential>
 			<echo message="Opening ${swf.targetname} in Flash Player (Debug) ..." level="info"/>
-			<exec executable="${debugplayer}" spawn="true">
-				<arg value="${basedir}\${bin}\${swf.targetname}"/>
+			<exec executable="${player.debug}" spawn="true">
+				<arg value="${path.bin.fp}${swf.targetname}"/>
 			</exec>
 		</sequential>
 	</macrodef>
@@ -413,8 +431,8 @@ package
 	<macrodef name="launchFlashRelease">
 		<sequential>
 			<echo message="Opening ${swf.targetname} in Flash Player (Release) ..." level="info"/>
-			<exec executable="${flashplayer}" spawn="true">
-				<arg value="${basedir}\${bin}\${swf.targetname}"/>
+			<exec executable="${player.release}" spawn="true">
+				<arg value="${path.bin.fp}${swf.targetname}"/>
 			</exec>
 		</sequential>
 	</macrodef>
@@ -423,8 +441,8 @@ package
 		<sequential>
 			<echo message="Opening ${swf.targetname} in AIR Debug Launcher ..." level="info"/>
 			<exec executable="${air.debuglauncher}" spawn="true">
-				<arg value="${basedir}\${src}\App-app.xml"/>
-				<arg value="${basedir}\${bin}"/>
+				<arg value="${path.src}\App-app.xml"/>
+				<arg value="${path.bin}"/>
 			</exec>
 		</sequential>
 	</macrodef>
