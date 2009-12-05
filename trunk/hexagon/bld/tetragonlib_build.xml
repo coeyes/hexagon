@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *********************************************************************************************
-	Buildfile for tetragonlib
-	Nov 24, 2009
+	Buildfile for SWC files
 *********************************************************************************************
 -->
-<project name="tetragonlib" default="Init Project" basedir="..">
+<project name="tetragonlib" default="init" basedir="..">
 	
 	<!-- application information -->
 	<property name="app.name"			value="tetragonlib"/>
@@ -13,51 +12,96 @@
 	<property name="app.releasestage"	value="alpha"/>
 	<property name="app.copyright"	value="Copyright(c) Hexagon Star Softworks"/>
 	
+	<!-- swc properties -->
+	<property name="swc.targetname.air"	value="tetragonlib_air.swc"/>
+	<property name="swc.targetname.flash"	value="tetragonlib_flash.swc"/>
+	
 	<!-- version of the used flex sdk -->
 	<property name="sdk.version"		value="3.4.0"/>
 	
-	<!-- version of the targetted flash player (9.0.124 or 10.0.12) -->
-	<property name="fpv.version"		value="10.0.12"/>
+	<!-- version of the targetted flash player -->
+	<property name="fpv.version"		value="10.0.0"/>
 	
 	<!-- default project folders -->
-	<property name="src"				value="src"/>
-	<property name="swc"				value="swc"/>
-	<property name="doc"				value="doc"/>
+	<property name="path.src"			value="${basedir}/src/tetragonlib"/>
+	<property name="path.src.air"		value="${path.src}/air"/>
+	<property name="path.src.flash"	value="${path.src}/flash"/>
+	<property name="path.swc"			value="${basedir}/swc"/>
+	<property name="path.doc"			value="${basedir}/doc"/>
 	
-	<!-- eclipse workspace & additional source/swc pathes -->
+	<!-- needed for swc building because this lib uses hexagonlib -->
+	<property name="path.src.hexagonlib.air"		value="${basedir}/src/hexagonlib/air"/>
+	<property name="path.src.hexagonlib.flash"	value="${basedir}/src/hexagonlib/flash"/>
+	
+	<!-- workspace & sdk pathes -->
 	<property name="workspace"		value="${eclipse.workspace}"/>
-	
-	<!-- sdk pathes -->
 	<property name="sdk"				value="${flex.sdk.basepath}/${sdk.version}"/>
 	<property name="FLEX_HOME"		value="${sdk}"/>
-	<property name="fcsh"				value="${sdk}/bin/fcsh.exe"/>
-	<property name="mxmlc"			value="${sdk}/bin/mxmlc.exe"/>
-	<property name="compc"			value="${sdk}/bin/compc.exe"/>
-	<property name="asdoc"			value="${sdk}/bin/asdoc.exe"/>
+	<property name="path.asdoc"		value="${sdk}/bin/asdoc.exe"/>
+	<property name="path.cfg.flex"	value="${sdk}/frameworks/flex-config.xml"/>
+	<property name="path.cfg.air"		value="${sdk}/frameworks/air-config.xml"/>
+	<property name="path.buildnumber"	value="bld/tetragonlib_build.number"/>
 	
 	
 	<!-- ==================================================================================== -->
 	<!-- TARGETS                                                                              -->
 	<!-- ==================================================================================== -->
 	
-	<target name="Init Project" description="Does nothing.">
+	<target name="init" description="Does nothing.">
 	</target>
 	
 	
-	<target name="flash swc" description="Generates the SWC of the tetragonlib Flash classes.">
+	<target name="swc air" description="Builds the SWC of the tetragonlib AIR branch.">
 		<prepareBuild/>
-		<echo message="Generating tetragonlib Flash SWC ..." level="info"/>
+		<echo message="Building tetragonlib AIR SWC ..." level="info"/>
 		<flextasks.compc
-			output="${basedir}/${swc}/tetragonlib_flash.swc"
+			output="${path.swc}/${swc.targetname.air}"
 			target-player="${fpv.version}"
 			debug="false"
 			optimize="true"
 		>
-			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
-			<source-path path-element="${basedir}/${src}/tetragonlib/flash"/>
-			<source-path path-element="${basedir}/${src}/hexagonlib/flash"/>
-			<include-sources dir="${basedir}/${src}/tetragonlib/flash" includes="**/*.as"/>
+			<load-config filename="${path.cfg.air}"/>
+			<source-path path-element="${path.src.air}"/>
+			<source-path path-element="${path.src.flash}"/>
+			<source-path path-element="${path.src.hexagonlib.air}"/>
+			<source-path path-element="${path.src.hexagonlib.flash}"/>
+			<include-sources dir="${path.src.air}" includes="**/*.as"/>
 		</flextasks.compc>
+	</target>
+	
+	
+	<target name="swc flash" description="Builds the SWC of the tetragonlib Flash branch.">
+		<prepareBuild/>
+		<echo message="Building tetragonlib Flash SWC ..." level="info"/>
+		<flextasks.compc
+			output="${path.swc}/${swc.targetname.flash}"
+			target-player="${fpv.version}"
+			debug="false"
+			optimize="true"
+		>
+			<load-config filename="${path.cfg.flex}"/>
+			<source-path path-element="${path.src.flash}"/>
+			<source-path path-element="${path.src.hexagonlib.flash}"/>
+			<include-sources dir="${path.src.flash}" includes="**/*.as"/>
+		</flextasks.compc>
+	</target>
+	
+	
+	<target name="docs" description="Generates the docs for the tetragonlib.">
+		<echo message="Generating tetragonlib docs ..." level="info"/>
+		<exec executable="${path.asdoc}" spawn="false">
+			<arg value="-source-path"/>
+			<arg path="${path.src.flash}"/>
+			<arg value="-doc-sources"/>
+			<arg path="${path.src.flash}"/>
+			<arg value="-main-title"/>
+			<arg path="tetragonlib API Documentation"/>
+			<arg value="-window-title"/>
+			<arg path="tetragonlib API Documentation"/>
+			<arg value="-output"/>
+			<arg path="${path.doc}/tetragonlib"/>
+			<arg line="-target-player=${fpv.version}"/>
+		</exec>
 	</target>
 	
 	
@@ -67,7 +111,7 @@
 	
 	<macrodef name="prepareBuild">
 		<sequential>
-			<buildnumber file="bld/tetragonlib_build.number"/>
+			<buildnumber file="${path.buildnumber}"/>
 			<tstamp>
 				<format property="build.date" pattern="dd-MMMM-yyyy HH:mm" unit="minute" locale="en"/>
 			</tstamp>
@@ -83,7 +127,7 @@
 		<attribute name="releasestage" default=""/>
 		<sequential>
 			<echo message="Generating TetragonLib.as ..." level="info"/>
-			<echo file="${src}/tetragonlib/flash/com/hexagonstar/TetragonLib.as" append="false"><![CDATA[/*
+			<echo file="${path.src.flash}/com/hexagonstar/TetragonLib.as" append="false"><![CDATA[/*
  * tetragonlib - ActionScript 3 Game Library.
  *    ____
  *   /    / TETRAGON

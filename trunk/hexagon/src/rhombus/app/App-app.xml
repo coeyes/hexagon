@@ -3,12 +3,12 @@
 	<id>com.hexagonstar.rhombus.app</id>
 	<filename>app</filename>
 	<name>rhombus app</name>
-	<version>1.0.0.193</version>
+	<version>1.0.0.213</version>
 	<description></description>
-	<copyright>Copyright(c) Hexagon Star Softworks</copyright>
+	<copyright>Hexagon Star Softworks</copyright>
 	<initialWindow>
 		<content>app.swf</content>
-		<title>rhombus app</title>
+		<title>Rhombus</title>
 		<systemChrome>standard</systemChrome>
 		<transparent>false</transparent>
 		<visible>false</visible>
@@ -19,17 +19,12 @@
 	</initialWindow>
 	<installFolder>Hexagon Star Softworks</installFolder>
 	<programMenuFolder>Hexagon Star Softworks</programMenuFolder>
-	
-	<!-- The icon the system uses for the application. For at least one resolution,
-		 specify the path to a PNG file included in the AIR package. Optional. -->
-	<!--
 	<icon>
 		<image16x16>icons/icon_16x16.png</image16x16>
 		<image32x32>icons/icon_32x32.png</image32x32>
 		<image48x48>icons/icon_48x48.png</image48x48>
 		<image128x128>icons/icon_128x128.png</image128x128>
 	</icon>
-	-->
 	
 	<!-- Whether the application handles the update when a user double-clicks an update version
 	of the AIR file (true), or the default AIR application installer handles the update (false).
