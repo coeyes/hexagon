@@ -41,14 +41,26 @@ package com.hexagonstar.framework.command.file
 	public class LoadLocaleCommand extends AbstractLoadCommand
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
+		// Properties                                                                         //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/** @private */
+		protected var _localeID:String;
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
 		 * Creates a new LoadConfigCommand instance.
+		 * 
+		 * @param localeID Optional locale ID String. If this is empty the loader
+		 *         uses the defaultLocale property from the app config.
 		 */
-		public function LoadLocaleCommand()
+		public function LoadLocaleCommand(localeID:String = "")
 		{
+			_localeID = localeID;
 			super();
 		}
 		
@@ -61,8 +73,13 @@ package com.hexagonstar.framework.command.file
 			/* Initialize the locale model before we load any locale data. */
 			Main.locale.init();
 			
-			var path:String = Main.config.localePath + "/" + Main.config.currentLocale
-				+ ".locale";
+			/* If no locale id was provided we use the default one. */
+			if (_localeID == "")
+			{
+				_localeID = Main.config.currentLocale;
+			}
+			
+			var path:String = Main.config.localePath + "/" + _localeID + ".locale";
 			_loader = new LocaleLoader(path, "localeFile");
 			
 			super.execute();
@@ -79,6 +96,15 @@ package com.hexagonstar.framework.command.file
 		override public function get name():String
 		{
 			return "loadLocale";
+		}
+		
+		
+		/**
+		 * Locale ID with that the loader loaded the locale file.
+		 */
+		public function get localeID():String
+		{
+			return _localeID;
 		}
 	}
 }
