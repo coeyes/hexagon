@@ -26,8 +26,6 @@
  */
 package com.hexagonstar.framework.command.file
 {
-	import model.Locale;
-
 	import com.hexagonstar.framework.io.loaders.LocaleLoader;
 
 	
@@ -60,11 +58,11 @@ package com.hexagonstar.framework.command.file
 		 */ 
 		override public function execute():void
 		{
-			/* Initialize the locale model before we load any locale data */
-			Locale.init();
+			/* Initialize the locale model before we load any locale data. */
+			Main.locale.init();
 			
-			var path:String = Main.config.localePath + "/"
-				+ Main.config.currentLocale + ".locale";
+			var path:String = Main.config.localePath + "/" + Main.config.currentLocale
+				+ ".locale";
 			_loader = new LocaleLoader(path, "localeFile");
 			
 			super.execute();

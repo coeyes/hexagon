@@ -2,5 +2,5 @@
 # Part of the hexagon Application Template
 # Copyright (c) 2009 Hexagon Star Softworks
 
-mainMenuStart = Start
-mainMenuExit = Exit
+mainMenuStart = 開始
+mainMenuExit = 終了
