@@ -26,9 +26,10 @@
  */
 package setup
 {
+	import command.env.CloseApplicationCommand;
+
 	import com.hexagonstar.display.StageReference;
 	import com.hexagonstar.env.WindowBoundsManager;
-	import com.hexagonstar.framework.command.env.CloseApplicationCommand;
 	import com.hexagonstar.framework.setup.ISetup;
 
 	import flash.desktop.NativeApplication;
