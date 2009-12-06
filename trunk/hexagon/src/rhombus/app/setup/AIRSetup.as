@@ -28,16 +28,13 @@ package setup
 {
 	import command.env.CloseApplicationCommand;
 
-	import com.hexagonstar.display.StageReference;
 	import com.hexagonstar.env.WindowBoundsManager;
 	import com.hexagonstar.framework.setup.ISetup;
 
 	import flash.desktop.NativeApplication;
 	import flash.display.Sprite;
-	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
-	import flash.geom.Rectangle;
 
 	
 	/**
@@ -106,15 +103,6 @@ package setup
 		 */
 		public function finalSetup():void
 		{
-			_app.stage.fullScreenSourceRect = new Rectangle(0, 0,
-				StageReference.stage.stageWidth, StageReference.stage.stageHeight);
-			
-			/* Check if app should run in fullscreen mode. */
-			if (Main.config.useFullscreen)
-			{
-				_app.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
-			}
-			
 			/* Make application visible. */
 			_app.stage.nativeWindow.visible = true;
 			_app.stage.nativeWindow.activate();

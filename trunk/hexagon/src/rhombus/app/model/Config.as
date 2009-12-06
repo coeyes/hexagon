@@ -50,7 +50,6 @@ package model
 		/* AIR app only settings */
 		public var autoCheckForUpdates:Boolean;
 		public var updateURL:String;
-		public var useFullscreen:Boolean;
 		
 		public var localePath:String;
 		public var defaultLocale:String;
@@ -72,7 +71,6 @@ package model
 			
 			autoCheckForUpdates = true;
 			updateURL = "";
-			useFullscreen = false;
 			
 			localePath = "locale";
 			defaultLocale = Locale.ENGLISH;
