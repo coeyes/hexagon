@@ -61,6 +61,9 @@ package com.hexagonstar.framework.model
 		public var fpsMonitorPollInterval:Number;
 		public var fpsMonitorKey:String;
 		
+		/* Screen */
+		public var useFullscreen:Boolean;
+		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
@@ -84,6 +87,8 @@ package com.hexagonstar.framework.model
 			fpsMonitorEnabled = true;
 			fpsMonitorPollInterval = 0.5;
 			fpsMonitorKey = "SHIFT+F8";
+			
+			useFullscreen = false;
 		}
 	}
 }
