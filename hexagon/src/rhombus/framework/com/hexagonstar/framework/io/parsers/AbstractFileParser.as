@@ -166,7 +166,7 @@ package com.hexagonstar.framework.io.parsers
 		protected static function parseIDString(string:String):Vector.<String>
 		{
 			if (string == null) return null;
-			string = unwrapText(string);
+			string = string.split(" ").join("");
 			return VectorUtil.createStringVector(string.split(","));
 		}
 		
