@@ -43,6 +43,9 @@ package com.hexagonstar.framework
 		function get releaseStage():String;
 		function get releaseType():String;
 		function get copyright():String;
+		function get publisher():String;
+		function get creator():String;
+		function get contributor():String;
 		function get year():String;
 		function get website():String;
 		function get language():String;

@@ -202,7 +202,7 @@
 			<echo message="Generating AppInfo.as ..." level="info"/>
 			<echo file="${path.src}/AppInfo.as" append="false"><![CDATA[/*
  * ${ant.project.name} v${app.version}
- * ${app.copyright}
+ * Copyright (c) ${app.copyright}
  */
 package
 {
@@ -222,6 +222,9 @@ package
 		public function get releaseStage():String {return "${app.releasestage}";}
 		public function get releaseType():String {return "@{releasetype}";}
 		public function get copyright():String {return "${app.copyright}";}
+		public function get publisher():String {return "${meta.publisher}";}
+		public function get creator():String {return "${meta.creator}";}
+		public function get contributor():String {return "${meta.contributor}";}
 		public function get year():String {return "${app.year}";}
 		public function get website():String {return "${app.website}";}
 		public function get language():String {return "${app.language}";}
