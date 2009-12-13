@@ -37,7 +37,7 @@ package com.hexagonstar.motion.tween.plugins
 	 * <br/>
 	 * Supports the following <code>pluginData</code> properties:
 	 * <UL>
-	 * <LI>SnappingEnabled: overrides the enabled property for the plugin on a per tween
+	 * <LI>snappingEnabled: overrides the enabled property for the plugin on a per tween
 	 * basis.
 	 * </UL>
 	 */
@@ -53,9 +53,9 @@ package com.hexagonstar.motion.tween.plugins
 		public static var enabled:Boolean = true;
 		
 		/** @private */
-		protected static var instance:HTweenSnapping;
+		protected static var _instance:HTweenSnapping;
 		/** @private */
-		protected static var tweenProperties:Array = ["x", "y"];
+		protected static var _tweenProperties:Array = ["x", "y"];
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -70,9 +70,9 @@ package com.hexagonstar.motion.tween.plugins
 		 */
 		public static function install(properties:Array = null):void
 		{
-			if (instance) return;
-			instance = new HTweenSnapping();
-			HTween.installPlugin(instance, properties || tweenProperties, true);
+			if (_instance) return;
+			_instance = new HTweenSnapping();
+			HTween.installPlugin(_instance, properties || _tweenProperties, true);
 		}
 		
 		
@@ -110,8 +110,8 @@ package com.hexagonstar.motion.tween.plugins
 								 ratio:Number,
 								 end:Boolean):Number
 		{
-			if (!((enabled && tween.pluginData.SnappingEnabled == null)
-				|| tween.pluginData.SnappingEnabled))
+			if (!((enabled && tween.pluginData.snappingEnabled == null)
+				|| tween.pluginData.snappingEnabled))
 			{
 				return value;
 			}

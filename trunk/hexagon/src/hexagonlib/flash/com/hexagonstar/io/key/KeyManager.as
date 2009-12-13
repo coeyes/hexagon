@@ -92,21 +92,20 @@ package com.hexagonstar.io.key
 		 */
 		public function clearAssignments():void
 		{
-			var c:Object;
-			for (c in _assignmentsDown)
+			for (var c1:Object in _assignmentsDown)
 			{
-				if (c is KeyCombination)
+				if (c1 is KeyCombination)
 				{
-					_key.removeKeyCombination(KeyCombination(c));
+					_key.removeKeyCombination(KeyCombination(c1));
 				}
 			}
 			_assignmentsDown = new Dictionary();
 			
-			for (c in _assignmentsRelease)
+			for (var c2:Object in _assignmentsRelease)
 			{
-				if (c is KeyCombination)
+				if (c2 is KeyCombination)
 				{
-					_key.removeKeyCombination(KeyCombination(c));
+					_key.removeKeyCombination(KeyCombination(c2));
 				}
 			}
 			_assignmentsRelease = new Dictionary();

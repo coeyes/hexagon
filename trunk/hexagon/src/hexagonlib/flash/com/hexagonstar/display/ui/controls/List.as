@@ -614,7 +614,6 @@ package com.hexagonstar.display.ui.controls
 		{
 			var pageSize:int = Math.max(Math.floor(calculateAvailableHeight() / rowHeight), 1);
 			var newCaretIndex:int = -1;
-			var dir:int = 0;
 			
 			switch (code)
 			{

@@ -74,6 +74,7 @@ package com.hexagonstar.framework.io.parsers
 				 * 
 				 * _data.exampleDataModels.push(d);
 				 */
+				x = x; // To prevent local var warning in FDT!
 			}
 			
 			complete();
