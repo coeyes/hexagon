@@ -144,8 +144,8 @@ package com.hexagonstar.game.tile
 		{
 			var tile:ITile;
 			var tileID:int;
-			var xPos:int;
-			var yPos:int;
+			//var xPos:int;
+			//var yPos:int;
 			
 			_sectorWidth = _tileWidth / 4 * 3;
 			_sectorHeight = _tileHeight;

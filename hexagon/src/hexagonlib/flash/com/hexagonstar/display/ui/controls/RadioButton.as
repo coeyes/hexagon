@@ -471,7 +471,6 @@ package com.hexagonstar.display.ui.controls
 			var fm:IFocusManager = focusManager;
 			if (fm) fm.showFocusIndicator = true;
 			var indexNumber:int = g.getRadioButtonIndex(this);
-			var radioButtonCount:Number = g.numRadioButtons;
 			var counter:int = indexNumber;
 			
 			if (indexNumber != -1)

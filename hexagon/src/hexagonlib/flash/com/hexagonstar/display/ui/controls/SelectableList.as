@@ -34,11 +34,10 @@ package com.hexagonstar.display.ui.controls
 	import com.hexagonstar.display.ui.controls.listclasses.ICellRenderer;
 	import com.hexagonstar.display.ui.core.InvalidationType;
 	import com.hexagonstar.display.ui.data.UIDataProvider;
-	import com.hexagonstar.display.ui.data.UISimpleCollectionItem;
-	import com.hexagonstar.display.ui.event.UIDataChangeType;
 	import com.hexagonstar.display.ui.event.UIDataChangeEvent;
-	import com.hexagonstar.display.ui.event.UIScrollEvent;
+	import com.hexagonstar.display.ui.event.UIDataChangeType;
 	import com.hexagonstar.display.ui.event.UIListEvent;
+	import com.hexagonstar.display.ui.event.UIScrollEvent;
 	import com.hexagonstar.display.ui.managers.IFocusManagerComponent;
 
 	import flash.display.DisplayObject;
@@ -155,8 +154,6 @@ package com.hexagonstar.display.ui.controls
 		
 		protected var _rendererStyles:Object;
 		protected var _updatedRendererStyles:Object;
-		
-		private var _collectionItemImport:UISimpleCollectionItem;
 		
 		private static var _defaultStyles:Object =
 		{
