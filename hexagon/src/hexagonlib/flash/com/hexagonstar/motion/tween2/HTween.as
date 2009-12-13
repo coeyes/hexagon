@@ -106,11 +106,6 @@ package com.hexagonstar.motion.tween2
 	public class HTween extends EventDispatcher 
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
-		// Constants                                                                          //
-		////////////////////////////////////////////////////////////////////////////////////////
-		
-		
-		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -126,13 +121,13 @@ package com.hexagonstar.motion.tween2
 		/**
 		 * Sets the default value of dispatchEvents for new instances.
 		 */
-		public static var defaultDispatchEvents:Boolean = false;
+		public static var defaultDispatchEvents:Boolean = true;
 		
 		/**
 		 * Specifies the default easing function to use with new tweens. Set to
 		 * HTween.linearEase by default.
 		 */
-		public static var defaultEasing:Function = linearEasing;
+		public static var defaultEasing:Function;
 		
 		/**
 		 * Setting this to true pauses all tween instances. This does not affect individual
@@ -147,11 +142,6 @@ package com.hexagonstar.motion.tween2
 		 * timeScaleAll is set to 0.5.
 		 */
 		public static var timeScaleAll:Number = 1;
-		
-		/**
-		 * Indicates whether the tween should automatically play when an end value is changed.
-		 */
-		public var autoPlay:Boolean = true;
 		
 		/**
 		 * Allows you to associate arbitrary data with your tween. For example, you might
@@ -169,10 +159,10 @@ package com.hexagonstar.motion.tween2
 		/**
 		 * The easing function to use for calculating the tween. This can be any standard
 		 * tween function, such as the tween functions in fl.motion.easing.* that come with
-		 * Flash CS3. New tweens will have this set to <code>defaultTween</code>. Setting
+		 * Flash CS3. New tweens will have this set to <code>defaultEasing</code>. Setting
 		 * this to null will cause HTween to throw null reference errors.
 		 */
-		public var ease:Function;
+		public var easing:Function;
 		
 		/**
 		 * Specifies another HTween instance that will have <code>paused=false</code> set on
@@ -192,10 +182,11 @@ package com.hexagonstar.motion.tween2
 		public var pluginData:Object;
 		
 		/**
-		 * Indicates whether the tween should use the reflect mode when repeating. If
-		 * reflect is set to true, then the tween will play backwards on every other repeat.
+		 * The target object to tween. This can be any kind of object. You can retarget a
+		 * tween at any time, but changing the target in mid-tween may result in unusual
+		 * behaviour.
 		 */
-		public var reflect:Boolean;
+		public var target:Object;
 		
 		/**
 		 * The number of times this tween will run. If 1, the tween will only run once. If 2
@@ -205,11 +196,25 @@ package com.hexagonstar.motion.tween2
 		public var repeatCount:int = 1;
 		
 		/**
-		 * The target object to tween. This can be any kind of object. You can retarget a
-		 * tween at any time, but changing the target in mid-tween may result in unusual
-		 * behaviour.
+		 * Allows you to scale the passage of time for a tween. For example, a tween with a
+		 * duration of 5 seconds, and a timeScale of 2 will complete in 2.5 seconds. With a
+		 * timeScale of 0.5 the same tween would complete in 10 seconds.
 		 */
-		public var target:Object;
+		public var timeScale:Number = 1;
+		
+		/**
+		 * Indicates whether the tween should automatically play when an end value is changed.
+		 * If this is set to true the tween will start playing as soon as it is created. By
+		 * default this is set to false which means that either play() has to be called or
+		 * the paused property is set to false to start the tween.
+		 */
+		public var autoPlay:Boolean = false;
+		
+		/**
+		 * Indicates whether the tween should use the reflect mode when repeating. If
+		 * reflect is set to true, then the tween will play backwards on every other repeat.
+		 */
+		public var reflect:Boolean;
 		
 		/**
 		 * If true, durations and positions can be set in frames. If false, they are
@@ -218,51 +223,11 @@ package com.hexagonstar.motion.tween2
 		public var useFrames:Boolean;
 		
 		/**
-		 * Allows you to scale the passage of time for a tween. For example, a tween with a
-		 * duration of 5 seconds, and a timeScale of 2 will complete in 2.5 seconds. With a
-		 * timeScale of 0.5 the same tween would complete in 10 seconds.
-		 */
-		public var timeScale:Number = 1;
-		
-		/**
-		 * The position of the tween at the previous change. This should not be set directly.
-		 */
-		public var positionOld:Number;
-		
-		/**
-		 * The eased ratio (generally between 0-1) of the tween at the current position.
-		 * This should not be set directly.
-		 */
-		public var ratio:Number;
-		
-		/**
-		 * The eased ratio (generally between 0-1) of the tween at the previous position.
-		 * This should not be set directly.
-		 */
-		public var ratioOld:Number;
-		
-		/**
-		 * The current calculated position of the tween. This is a deterministic value
-		 * between 0 and duration calculated from the current position based on the
-		 * duration, repeatCount, and reflect properties. This is always a value between 0
-		 * and duration, whereas <code>.position</code> can range between -delay and
-		 * repeatCount*duration. This should not be set directly.
-		 */
-		public var calculatedPosition:Number;
-		
-		/**
-		 * The previous calculated position of the tween. See
-		 * <code>.calculatedPosition</code> for more information. This should not be set
-		 * directly.
-		 */
-		public var calculatedPositionOld:Number;
-		
-		/**
 		 * If true, events/callbacks will not be called. As well as allowing for more
 		 * control over events, and providing flexibility for extension, this results in a
 		 * slight performance increase, particularly if useCallbacks is false.
 		 */
-		public var suppressEvents:Boolean;
+		public var suppressEvents:Boolean = false;
 		
 		/**
 		 * If true, it will dispatch init, change, and complete events in addition to
@@ -303,18 +268,56 @@ package com.hexagonstar.motion.tween2
 		 */
 		public var onInit:Function;
 		
+		/**
+		 * The position of the tween at the previous change. This should not be set directly.
+		 * @private
+		 */
+		public var positionOld:Number;
+		
+		/**
+		 * The eased ratio (generally between 0-1) of the tween at the current position.
+		 * This should not be set directly.
+		 * @private
+		 */
+		public var ratio:Number;
+		
+		/**
+		 * The eased ratio (generally between 0-1) of the tween at the previous position.
+		 * This should not be set directly.
+		 * @private
+		 */
+		public var ratioOld:Number;
+		
+		/**
+		 * The current calculated position of the tween. This is a deterministic value
+		 * between 0 and duration calculated from the current position based on the
+		 * duration, repeatCount, and reflect properties. This is always a value between 0
+		 * and duration, whereas <code>.position</code> can range between -delay and
+		 * repeatCount*duration. This should not be set directly.
+		 * @private
+		 */
+		public var calculatedPosition:Number;
+		
+		/**
+		 * The previous calculated position of the tween. See
+		 * <code>.calculatedPosition</code> for more information. This should not be set
+		 * directly.
+		 * @private
+		 */
+		public var calculatedPositionOld:Number;
+		
 		/** @private */
-		protected static var hasStarPlugins:Boolean = false;
+		protected static var _hasStarPlugins:Boolean = false;
 		/** @private */
-		protected static var plugins:Object = {};
+		protected static var _plugins:Object = {};
 		/** @private */
-		protected static var shape:Shape;
+		protected static var _shape:Shape;
 		/** @private */
-		protected static var time:Number;
+		protected static var _time:Number;
 		/** @private */
-		protected static var tickList:Dictionary = new Dictionary(true);
+		protected static var _tickList:Dictionary = new Dictionary(true);
 		/** @private */
-		protected static var gcLockList:Dictionary = new Dictionary(false);
+		protected static var _gcLockList:Dictionary = new Dictionary(false);
 		
 		/** @private */
 		protected var _delay:Number = 0;
@@ -362,7 +365,7 @@ package com.hexagonstar.motion.tween2
 									properties:Object = null,
 									pluginData:Object = null)
 		{
-			ease = defaultEasing;
+			easing = defaultEasing || linearEasing;
 			dispatchEvents = defaultDispatchEvents;
 			this.target = target;
 			this.duration = duration;
@@ -391,6 +394,11 @@ package com.hexagonstar.motion.tween2
 		
 		/**
 		 * The default easing function used by HTween.
+		 * 
+		 * @param t time
+		 * @param b begin position (not used)
+		 * @param c change amount (not used)
+		 * @param d duration (not used)
 		 */
 		public static function linearEasing(t:Number, b:Number, c:Number, d:Number):Number
 		{
@@ -426,20 +434,20 @@ package com.hexagonstar.motion.tween2
 				var propertyName:String = propertyNames[i];
 				if (propertyName == "*")
 				{
-					hasStarPlugins = true;
+					_hasStarPlugins = true;
 				}
-				if (plugins[propertyName] == null)
+				if (_plugins[propertyName] == null)
 				{
-					plugins[propertyName] = [plugin];
+					_plugins[propertyName] = [plugin];
 					continue;
 				}
 				if (highPriority)
 				{
-					plugins[propertyName].unshift(plugin);
+					_plugins[propertyName].unshift(plugin);
 				}
 				else
 				{
-					plugins[propertyName].push(plugin);
+					_plugins[propertyName].push(plugin);
 				}
 			}
 		}
@@ -595,9 +603,9 @@ package com.hexagonstar.motion.tween2
 			
 			for (var n:String in _values)
 			{
-				if (plugins[n])
+				if (_plugins[n])
 				{
-					var pluginArr:Array = plugins[n];
+					var pluginArr:Array = _plugins[n];
 					var l:int = pluginArr.length;
 					var value:Number = (n in target) ? target[n] : NaN;
 					
@@ -617,9 +625,9 @@ package com.hexagonstar.motion.tween2
 				}
 			}
 			
-			if (hasStarPlugins)
+			if (_hasStarPlugins)
 			{
-				pluginArr = plugins["*"];
+				pluginArr = _plugins["*"];
 				l = pluginArr.length;
 				
 				for (i = 0; i < l; i++)
@@ -632,7 +640,7 @@ package com.hexagonstar.motion.tween2
 			{
 				if (dispatchEvents)
 				{
-					dispatchEvt("init");
+					dispatchEvt(Event.INIT);
 				}
 				if (onInit != null)
 				{
@@ -660,6 +668,16 @@ package com.hexagonstar.motion.tween2
 		public function end():void
 		{
 			position = (repeatCount > 0) ? repeatCount * duration : duration;
+		}
+		
+		
+		
+		/**
+		 * Starts playing the tween.
+		 */
+		public function play():void
+		{
+			paused = false;
 		}
 		
 		
@@ -696,12 +714,12 @@ package com.hexagonstar.motion.tween2
 			
 			if (_paused)
 			{
-				delete(tickList[this]);
+				delete(_tickList[this]);
 				if (target is IEventDispatcher)
 				{
 					target.removeEventListener("_", invalidate);
 				}
-				delete(gcLockList[this]);
+				delete(_gcLockList[this]);
 			}
 			else
 			{
@@ -717,7 +735,7 @@ package com.hexagonstar.motion.tween2
 					_position = -delay;
 				}
 				
-				tickList[this] = true;
+				_tickList[this] = true;
 				
 				/* prevent garbage collection */
 				if (target is IEventDispatcher)
@@ -726,7 +744,7 @@ package com.hexagonstar.motion.tween2
 				}
 				else
 				{
-					gcLockList[this] = true;
+					_gcLockList[this] = true;
 				}
 			}
 		}
@@ -783,7 +801,7 @@ package com.hexagonstar.motion.tween2
 			
 			ratio = (duration == 0 && _position >= 0)
 				? 1
-				: ease(calculatedPosition / duration, 0, 1, 1);
+				: easing(calculatedPosition / duration, 0, 1, 1);
 			
 			if (target && (_position >= 0 || positionOld >= 0)
 				&& calculatedPosition != calculatedPositionOld)
@@ -798,14 +816,15 @@ package com.hexagonstar.motion.tween2
 					var initVal:Number = _initValues[n];
 					var rangeVal:Number = _rangeValues[n];
 					var val:Number = initVal + rangeVal * ratio;
-					var pluginArr:Array = plugins[n];
+					var pluginArray:Array = _plugins[n];
 					
-					if (pluginArr)
+					if (pluginArray)
 					{
-						var l:int = pluginArr.length;
+						var l:int = pluginArray.length;
 						for (var i:int = 0; i < l; i++)
 						{
-							val = pluginArr[i].tween(this, n, val, initVal, rangeVal, ratio, end);
+							val = pluginArray[i].tween(this, n, val, initVal, rangeVal,
+								ratio, end);
 						}
 						
 						if (!isNaN(val))
@@ -820,13 +839,13 @@ package com.hexagonstar.motion.tween2
 				}
 			}
 			
-			if (hasStarPlugins)
+			if (_hasStarPlugins)
 			{
-				pluginArr = plugins["*"];
-				l = pluginArr.length;
+				pluginArray = _plugins["*"];
+				l = pluginArray.length;
 				for (i = 0; i < l; i++)
 				{
-					pluginArr[i].tween(this, "*", NaN, NaN, NaN, ratio, end);
+					pluginArray[i].tween(this, "*", NaN, NaN, NaN, ratio, end);
 				}
 			}
 			
@@ -834,7 +853,7 @@ package com.hexagonstar.motion.tween2
 			{
 				if (dispatchEvents)
 				{
-					dispatchEvt("change");
+					dispatchEvt(Event.CHANGE);
 				}
 				if (onChange != null)
 				{
@@ -853,7 +872,7 @@ package com.hexagonstar.motion.tween2
 				{
 					if (dispatchEvents)
 					{
-						dispatchEvt("complete");
+						dispatchEvt(Event.COMPLETE);
 					}
 					if (onComplete != null)
 					{
@@ -948,17 +967,17 @@ package com.hexagonstar.motion.tween2
 		 */
 		protected static function onStaticTick(e:Event):void
 		{
-			var t:Number = time;
-			time = getTimer() / 1000;
+			var t:Number = _time;
+			_time = getTimer() / 1000;
 			
 			if (pauseAll)
 			{
 				return;
 			}
 			
-			var dt:Number = (time - t) * timeScaleAll;
+			var dt:Number = (_time - t) * timeScaleAll;
 			
-			for (var o:Object in tickList)
+			for (var o:Object in _tickList)
 			{
 				var tween:HTween = o as HTween;
 				tween.position = tween._position + (tween.useFrames ? timeScaleAll : dt)
@@ -976,8 +995,8 @@ package com.hexagonstar.motion.tween2
 		 */
 		protected static function staticInit():void
 		{
-			(shape = new Shape()).addEventListener(Event.ENTER_FRAME, onStaticTick);
-			time = getTimer() / 1000;
+			(_shape = new Shape()).addEventListener(Event.ENTER_FRAME, onStaticTick);
+			_time = getTimer() / 1000;
 		}
 		
 		
@@ -1001,7 +1020,7 @@ package com.hexagonstar.motion.tween2
 		/**
 		 * @private
 		 */
-		protected function copy(o1:Object,o2:Object,smart:Boolean = false):Object
+		protected function copy(o1:Object, o2:Object, smart:Boolean = false):Object
 		{
 			for (var n:String in o1)
 			{
@@ -1031,12 +1050,17 @@ package com.hexagonstar.motion.tween2
 	}
 }
 
-
-/* --------------------------------------------------------------------------------------- */
+import com.hexagonstar.motion.tween2.HTween;
 
 import flash.utils.Proxy;
 import flash.utils.flash_proxy;
-import com.hexagonstar.motion.tween2.HTween;
+
+
+/* --------------------------------------------------------------------------------------- */
+
+
+
+
 
 /**
  * @private
