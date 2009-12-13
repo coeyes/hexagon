@@ -31,8 +31,8 @@ package com.hexagonstar.display.ui.controls
 {
 	import com.hexagonstar.display.ui.core.InvalidationType;
 	import com.hexagonstar.display.ui.core.UIComponent;
-	import com.hexagonstar.display.ui.event.UIScrollEvent;
 	import com.hexagonstar.display.ui.event.UIComponentEvent;
+	import com.hexagonstar.display.ui.event.UIScrollEvent;
 
 	import flash.events.MouseEvent;
 
@@ -566,6 +566,7 @@ package com.hexagonstar.display.ui.controls
 			_thumb.label = "";
 			_thumb.setSize(WIDTH - 2, 15);
 			_thumb.move(0, 15);
+			_thumb.useHandCursor = false;
 			_thumb.focusEnabled = false;
 			addChild(_thumb);
 			
