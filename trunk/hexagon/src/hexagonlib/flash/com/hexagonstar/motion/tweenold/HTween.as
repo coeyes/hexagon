@@ -27,7 +27,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hexagonstar.motion.tween 
+package com.hexagonstar.motion.tweenold 
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -1238,7 +1238,7 @@ package com.hexagonstar.motion.tween
 	}
 }
 
-import com.hexagonstar.motion.tween.HTween;
+import com.hexagonstar.motion.tweenold.HTween;
 
 import flash.display.Shape;
 import flash.events.Event;
