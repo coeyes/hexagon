@@ -25,17 +25,23 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hexagonstar.game.tile
+package com.hexagonstar.game.tile.hex
 {
 	import com.hexagonstar.data.structures.grids.Grid2D;
+	import com.hexagonstar.game.tile.AnimTile;
+	import com.hexagonstar.game.tile.ITile;
+	import com.hexagonstar.game.tile.ITileLayer;
+	import com.hexagonstar.game.tile.Tile;
+	import com.hexagonstar.game.tile.TileSet;
 	import com.hexagonstar.game.tile.ds.PropertyMap;
-	
+
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;	
+	import flash.geom.Rectangle;
+
 	
 	/**
 	 * HexLayer Class

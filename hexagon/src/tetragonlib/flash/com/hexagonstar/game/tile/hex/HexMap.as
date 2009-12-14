@@ -25,11 +25,13 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hexagonstar.game.tile
+package com.hexagonstar.game.tile.hex
 {
 	import com.hexagonstar.core.BasicClass;
 	import com.hexagonstar.data.types.MetaData;
-	import com.hexagonstar.game.tile.ds.PropertyMap;	
+	import com.hexagonstar.game.tile.ITileLayer;
+	import com.hexagonstar.game.tile.ITileMap;
+	import com.hexagonstar.game.tile.ds.PropertyMap;
 
 	
 	/**
