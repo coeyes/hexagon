@@ -28,7 +28,8 @@
 package com.hexagonstar.game.tile
 {
 	import com.hexagonstar.data.structures.grids.Grid2D;
-	import com.hexagonstar.game.tile.ds.PropertyMap;		
+	import com.hexagonstar.game.tile.ds.PropertyMap;
+
 	
 	/**
 	 * ITileLayer Interface
@@ -59,14 +60,20 @@ package com.hexagonstar.game.tile
 		/**
 		 * Initializes TileLayer.
 		 */
-		function init(tileSetsMap:PropertyMap, winWidth:int, winHeight:int):void
+		function init(tileSetsMap:PropertyMap, viewWidth:int, viewHeight:int):void
 		
 		
 		/**
 		 * Draws the layer.
 		 */
-		function draw():void
+		function draw(xPos:int, yPos:int):void;
 
+		
+		/**
+		 * scroll
+		 */
+		function scroll(left:Boolean, right:Boolean, up:Boolean, down:Boolean):void;
+		
 		
 		/**
 		 * Returns a String Representation of the Layer.
@@ -87,6 +94,11 @@ package com.hexagonstar.game.tile
 		function set tileAnimFPS(v:int):void;
 		function get grid():Grid2D;
 		function get properties():PropertyMap;
+		
+		function get widthTiles():int;
+		function get heightTiles():int;
+		function get widthPixel():uint;
+		function get heightPixel():uint;
 		
 		function get filters():Array;
 		function set filters(v:Array):void;

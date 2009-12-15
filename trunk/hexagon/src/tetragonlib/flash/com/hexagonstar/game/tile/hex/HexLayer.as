@@ -59,11 +59,14 @@ package com.hexagonstar.game.tile.hex
 		protected var _properties:PropertyMap;
 		protected var _grid:Grid2D;
 		
-		protected var _windowWidth:int;
-		protected var _windowHeight:int;
+		protected var _viewWidth:int;
+		protected var _viewHeight:int;
 		
 		protected var _tileWidth:int;
 		protected var _tileHeight:int;
+		
+		protected var _widthPixel:uint;
+		protected var _heightPixel:uint;
 		
 		protected var _sectorWidth:Number;
 		protected var _sectorHeight:Number;
@@ -124,14 +127,17 @@ package com.hexagonstar.game.tile.hex
 		/**
 		 * Initializes TileLayer.
 		 */
-		public function init(tileSetsMap:PropertyMap, winWidth:int, winHeight:int):void
+		public function init(tileSetsMap:PropertyMap, viewWidth:int, viewHeight:int):void
 		{
 			_tileSet = tileSetsMap.getValue(_tileSetID);
 			_tileWidth = _tileSet.tileWidth;
 			_tileHeight = _tileSet.tileHeight;
 			
-			_windowWidth = winWidth;
-			_windowHeight = winHeight;
+			_widthPixel = widthTiles * _tileWidth;
+			_heightPixel = heightTiles * _tileHeight;
+			
+			_viewWidth = viewWidth;
+			_viewHeight = viewHeight;
 			
 			calculateBufferSize();
 			
@@ -146,7 +152,7 @@ package com.hexagonstar.game.tile.hex
 		/**
 		 * Draws the layer.
 		 */
-		public function draw():void
+		public function draw(xPos:int, yPos:int):void
 		{
 			var tile:ITile;
 			var tileID:int;
@@ -188,6 +194,15 @@ package com.hexagonstar.game.tile.hex
 			}
 		}
 
+		
+		/**
+		 * scroll
+		 */
+		public function scroll(left:Boolean, right:Boolean, up:Boolean, down:Boolean):void
+		{
+			
+		}
+		
 		
 		/**
 		 * Returns a String Representation of TileLayer.
@@ -265,6 +280,36 @@ package com.hexagonstar.game.tile.hex
 		}
 		
 		
+		/**
+		 * The width of the TileLayer measured in tiles.
+		 */
+		public function get widthTiles():int
+		{
+			return _grid.width;
+		}
+		
+		
+		/**
+		 * The height of the TileLayer measured in tiles.
+		 */
+		public function get heightTiles():int
+		{
+			return _grid.height;
+		}
+		
+		
+		public function get widthPixel():uint
+		{
+			return _widthPixel;
+		}
+		
+		
+		public function get heightPixel():uint
+		{
+			return _heightPixel;
+		}
+		
+		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Event Handlers                                                                     //
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -289,22 +334,22 @@ package com.hexagonstar.game.tile.hex
 			 * can be the same as the grid size since no scrolling is necessary but if
 			 * the grid is larger, the buffer needs to be the window size + one column
 			 * and row of a tile width/height */
-			if (gridW <= _windowWidth)
+			if (gridW <= _viewWidth)
 			{
 				_bufferWidth = gridW;
 			}
 			else
 			{
-				_bufferWidth = _windowWidth - (_windowWidth % _tileWidth) + _tileWidth;
+				_bufferWidth = _viewWidth - (_viewWidth % _tileWidth) + _tileWidth;
 			}
 			
-			if (gridH <= _windowHeight)
+			if (gridH <= _viewHeight)
 			{
 				_bufferHeight = gridH;
 			}
 			else
 			{
-				_bufferHeight = _windowHeight - (_windowHeight % _tileHeight) + _tileHeight;
+				_bufferHeight = _viewHeight - (_viewHeight % _tileHeight) + _tileHeight;
 			}
 			
 			_bufferWidthTiles = _bufferWidth / _tileWidth;

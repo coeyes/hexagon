@@ -44,8 +44,10 @@ package com.hexagonstar.game.tile.hex
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		protected var _id:String;
-		protected var _width:int;
-		protected var _height:int;
+		protected var _widthTiles:int;
+		protected var _heightTiles:int;
+		protected var _widthPixel:uint;
+		protected var _heightPixel:uint;
 		
 		protected var _metaData:MetaData;
 		
@@ -87,6 +89,14 @@ package com.hexagonstar.game.tile.hex
 		 */
 		public function addLayer(layer:ITileLayer):void
 		{
+			/* We only need to get the dimensions of the first layer since all
+			 * layer and tiles sizes must be the same. */
+			if (_layers.length == 0)
+			{
+				_widthPixel = _widthTiles * layer.tileSet.tileWidth;
+				_heightPixel = _heightTiles * layer.tileSet.tileHeight;
+			}
+			
 			_layers[layer.index] = layer;
 		}
 		
@@ -126,7 +136,8 @@ package com.hexagonstar.game.tile.hex
 		 */
 		override public function toString(...args):String
 		{
-			return super.toString("id=" + _id, "width=" + _width, "height=" + _height);
+			return super.toString("id=" + _id, "widthTiles=" + _widthTiles,
+				"heightTiles=" + _heightTiles);
 		}
 		
 		
@@ -150,26 +161,46 @@ package com.hexagonstar.game.tile.hex
 		/**
 		 * The width of the TileMap measured in tiles.
 		 */
-		public function get width():int
+		public function get widthTiles():int
 		{
-			return _width;
+			return _widthTiles;
 		}
-		public function set width(v:int):void
+		public function set widthTiles(v:int):void
 		{
-			_width = v;
+			_widthTiles = v;
 		}
-		
+
 		
 		/**
 		 * The height of the TileMap measured in tiles.
 		 */
-		public function get height():int
+		public function get heightTiles():int
 		{
-			return _height;
+			return _heightTiles;
 		}
-		public function set height(v:int):void
+		public function set heightTiles(v:int):void
 		{
-			_height = v;
+			_heightTiles = v;
+		}
+		
+		
+		/**
+		 * The width of the entire map in pixels. This is calculated from
+		 * mapWidth measured in tiles * tileWidth of the tileset with largest tiles.
+		 */
+		public function get widthPixel():uint
+		{
+			return _widthPixel;
+		}
+		
+		
+		/**
+		 * The height of the entire map in pixels. This is calculated from
+		 * mapHeight measured in tiles * tileHeight of the tileset with largest tiles.
+		 */
+		public function get heightPixel():uint
+		{
+			return _heightPixel;
 		}
 		
 		
