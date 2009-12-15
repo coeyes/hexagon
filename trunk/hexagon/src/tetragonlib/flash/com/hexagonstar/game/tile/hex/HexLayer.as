@@ -65,9 +65,6 @@ package com.hexagonstar.game.tile.hex
 		protected var _tileWidth:int;
 		protected var _tileHeight:int;
 		
-		protected var _widthPixel:uint;
-		protected var _heightPixel:uint;
-		
 		protected var _sectorWidth:Number;
 		protected var _sectorHeight:Number;
 		protected var _gradient:Number;
@@ -132,9 +129,6 @@ package com.hexagonstar.game.tile.hex
 			_tileSet = tileSetsMap.getValue(_tileSetID);
 			_tileWidth = _tileSet.tileWidth;
 			_tileHeight = _tileSet.tileHeight;
-			
-			_widthPixel = widthTiles * _tileWidth;
-			_heightPixel = heightTiles * _tileHeight;
 			
 			_viewWidth = viewWidth;
 			_viewHeight = viewHeight;
@@ -277,36 +271,6 @@ package com.hexagonstar.game.tile.hex
 		public function get properties():PropertyMap
 		{
 			return _properties;
-		}
-		
-		
-		/**
-		 * The width of the TileLayer measured in tiles.
-		 */
-		public function get widthTiles():int
-		{
-			return _grid.width;
-		}
-		
-		
-		/**
-		 * The height of the TileLayer measured in tiles.
-		 */
-		public function get heightTiles():int
-		{
-			return _grid.height;
-		}
-		
-		
-		public function get widthPixel():uint
-		{
-			return _widthPixel;
-		}
-		
-		
-		public function get heightPixel():uint
-		{
-			return _heightPixel;
 		}
 		
 		
