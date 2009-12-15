@@ -95,11 +95,6 @@ package com.hexagonstar.game.tile
 		function get grid():Grid2D;
 		function get properties():PropertyMap;
 		
-		function get widthTiles():int;
-		function get heightTiles():int;
-		function get widthPixel():uint;
-		function get heightPixel():uint;
-		
 		function get filters():Array;
 		function set filters(v:Array):void;
 	}
