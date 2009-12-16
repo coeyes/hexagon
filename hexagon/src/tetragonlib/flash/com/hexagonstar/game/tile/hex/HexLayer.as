@@ -187,15 +187,6 @@ package com.hexagonstar.game.tile.hex
 				}
 			}
 		}
-
-		
-		/**
-		 * scroll
-		 */
-		public function scroll(left:Boolean, right:Boolean, up:Boolean, down:Boolean):void
-		{
-			
-		}
 		
 		
 		/**
