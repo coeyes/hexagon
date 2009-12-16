@@ -70,12 +70,6 @@ package com.hexagonstar.game.tile
 
 		
 		/**
-		 * scroll
-		 */
-		function scroll(left:Boolean, right:Boolean, up:Boolean, down:Boolean):void;
-		
-		
-		/**
 		 * Returns a String Representation of the Layer.
 		 * @return A String Representation of the Layer.
 		 */
