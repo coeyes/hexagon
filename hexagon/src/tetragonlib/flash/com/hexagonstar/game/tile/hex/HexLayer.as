@@ -176,7 +176,6 @@ package com.hexagonstar.game.tile.hex
 							tile.x = _point.x;
 							tile.y = _point.y;
 							addChild(tile as DisplayObject);
-							(tile as AnimTile).play();
 						}
 						else
 						{
