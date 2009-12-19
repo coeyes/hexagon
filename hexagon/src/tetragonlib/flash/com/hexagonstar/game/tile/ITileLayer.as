@@ -86,6 +86,10 @@ package com.hexagonstar.game.tile
 		function set tileSet(v:TileSet):void;
 		function get tileAnimFPS():int;
 		function set tileAnimFPS(v:int):void;
+		function get transparent():Boolean
+		function set transparent(v:Boolean):void
+		function get fillColor():uint;
+		function set fillColor(v:uint):void;
 		function get grid():Grid2D;
 		function get properties():PropertyMap;
 		

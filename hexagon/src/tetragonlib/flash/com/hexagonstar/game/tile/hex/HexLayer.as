@@ -56,6 +56,8 @@ package com.hexagonstar.game.tile.hex
 		protected var _name:String;
 		protected var _tileSetID:String;
 		protected var _tileAnimFPS:int;
+		protected var _transparent:Boolean;
+		protected var _fillColor:uint;
 		protected var _properties:PropertyMap;
 		protected var _grid:Grid2D;
 		
@@ -249,6 +251,26 @@ package com.hexagonstar.game.tile.hex
 		public function set tileAnimFPS(v:int):void
 		{
 			_tileAnimFPS = v;
+		}
+		
+		
+		public function get transparent():Boolean
+		{
+			return _transparent;
+		}
+		public function set transparent(v:Boolean):void
+		{
+			_transparent = v;
+		}
+		
+		
+		public function get fillColor():uint
+		{
+			return _fillColor;
+		}
+		public function set fillColor(v:uint):void
+		{
+			_fillColor = v;
 		}
 		
 		
