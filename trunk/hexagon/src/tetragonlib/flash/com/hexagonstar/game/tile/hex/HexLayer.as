@@ -82,6 +82,12 @@ package com.hexagonstar.game.tile.hex
 		protected var _rectangle:Rectangle;
 		protected var _point:Point;
 		
+		/**
+		 * If false also renders the buffer to the screen. Only used for debugging.
+		 * @private
+		 */
+		protected var _masked:Boolean = true;
+		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
@@ -285,6 +291,15 @@ package com.hexagonstar.game.tile.hex
 			return _properties;
 		}
 		
+		
+		public function get masked():Boolean
+		{
+			return _masked;
+		}
+		public function set masked(v:Boolean):void
+		{
+			_masked = v;
+		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Event Handlers                                                                     //
