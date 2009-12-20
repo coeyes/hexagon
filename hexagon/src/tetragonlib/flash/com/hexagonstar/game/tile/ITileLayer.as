@@ -92,6 +92,8 @@ package com.hexagonstar.game.tile
 		function set fillColor(v:uint):void;
 		function get grid():Grid2D;
 		function get properties():PropertyMap;
+		function get masked():Boolean;
+		function set masked(v:Boolean):void;
 		
 		function get filters():Array;
 		function set filters(v:Array):void;
