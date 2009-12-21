@@ -58,6 +58,10 @@ package com.hexagonstar.game.tile.hex
 		protected var _tileAnimFPS:int;
 		protected var _transparent:Boolean;
 		protected var _fillColor:uint;
+		protected var _wrapping:String;
+		protected var _autoScroll:String;
+		protected var _autoScrollSpeed:int;
+		
 		protected var _properties:PropertyMap;
 		protected var _grid:Grid2D;
 		
@@ -277,6 +281,36 @@ package com.hexagonstar.game.tile.hex
 		public function set fillColor(v:uint):void
 		{
 			_fillColor = v;
+		}
+		
+		
+		public function get wrapping():String
+		{
+			return _wrapping;
+		}
+		public function set wrapping(v:String):void
+		{
+			_wrapping = v;
+		}
+		
+		
+		public function get autoScroll():String
+		{
+			return _autoScroll;
+		}
+		public function set autoScroll(v:String):void
+		{
+			_autoScroll = v;
+		}
+		
+		
+		public function get autoScrollSpeed():int
+		{
+			return _autoScrollSpeed;
+		}
+		public function set autoScrollSpeed(v:int):void
+		{
+			_autoScrollSpeed = v;
 		}
 		
 		

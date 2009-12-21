@@ -90,6 +90,12 @@ package com.hexagonstar.game.tile
 		function set transparent(v:Boolean):void
 		function get fillColor():uint;
 		function set fillColor(v:uint):void;
+		function get wrapping():String;
+		function set wrapping(v:String):void;
+		function get autoScroll():String;
+		function set autoScroll(v:String):void;
+		function get autoScrollSpeed():int;
+		function set autoScrollSpeed(v:int):void;
 		function get grid():Grid2D;
 		function get properties():PropertyMap;
 		function get masked():Boolean;
