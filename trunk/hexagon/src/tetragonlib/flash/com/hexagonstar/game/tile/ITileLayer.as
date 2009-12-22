@@ -27,8 +27,8 @@
  */
 package com.hexagonstar.game.tile
 {
-	import com.hexagonstar.data.structures.grids.Grid2D;
 	import com.hexagonstar.game.tile.ds.PropertyMap;
+	import com.hexagonstar.game.tile.ds.TileGrid;
 
 	
 	/**
@@ -96,7 +96,7 @@ package com.hexagonstar.game.tile
 		function set autoScroll(v:String):void;
 		function get autoScrollSpeed():int;
 		function set autoScrollSpeed(v:int):void;
-		function get grid():Grid2D;
+		function get grid():TileGrid;
 		function get properties():PropertyMap;
 		function get masked():Boolean;
 		function set masked(v:Boolean):void;

@@ -27,6 +27,8 @@
  */
 package com.hexagonstar.game.tile.ds
 {
+
+	
 	/**
 	 * A two-dimensional array.
 	 */
@@ -37,7 +39,7 @@ package com.hexagonstar.game.tile.ds
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		// TODO change to int Vector!
-		private var _a:Array;
+		private var _a:Vector.<int>;
 		private var _w:int, _h:int;
 		
 		
@@ -60,8 +62,10 @@ package com.hexagonstar.game.tile.ds
 				throw new Error("illegal size");
 			}
 			
-			_a = new Array(_w = w, _h = h);
-			fill(null);
+			_w = w;
+			_h = h;
+			
+			clear();
 		}
 		
 		
@@ -72,25 +76,12 @@ package com.hexagonstar.game.tile.ds
 		 * 
 		 * @param item The item to be written into each cell.
 		 */
-		public function fill(obj:*):void
+		public function fill(value:int):void
 		{
-			var k:int = _w * _h;
-			var i:int;
-			
-			if (obj is Class)
+			var l:int = _w * _h;
+			for (var i:int = 0; i < l; i++)
 			{
-				var c:Class = obj as Class;
-				for (i = 0; i < k; i++)
-				{
-					_a[i] = new c();	
-				}
-			}
-			else
-			{
-				for (i = 0; i < k; i++)
-				{
-					_a[i] = obj;
-				}
+				_a[i] = value;
 			}
 		}
 		
@@ -105,7 +96,7 @@ package com.hexagonstar.game.tile.ds
 		 * 
 		 * @return The value at the given x/y index.
 		 */
-		public function getCell(x:int, y:int):*
+		public function getCell(x:int, y:int):int
 		{
 			return _a[int(y * _w + x)];
 		}
@@ -121,9 +112,9 @@ package com.hexagonstar.game.tile.ds
 		 * @param y   The y index (row).
 		 * @param obj The item to be written into the cell.
 		 */
-		public function setCell(x:int, y:int, obj:*):void
+		public function setCell(x:int, y:int, value:int):void
 		{
-			_a[int(y * _w + x)] = obj;
+			_a[int(y * _w + x)] = value;
 		}
 		
 		
@@ -143,7 +134,7 @@ package com.hexagonstar.game.tile.ds
 				throw new Error("illegal size");
 			}
 			
-			var copy:Array = _a.concat();
+			var copy:Vector.<int> = _a.concat();
 			
 			_a.length = 0;
 			_a.length = w * h;
@@ -175,7 +166,7 @@ package com.hexagonstar.game.tile.ds
 		 * 
 		 * @return An array storing the values of the row.
 		 */
-		public function getRow(y:int):Array
+		public function getRow(y:int):Vector.<int>
 		{
 			var offset:int = y * _w;
 			return _a.slice(offset, offset + _w);
@@ -189,7 +180,7 @@ package com.hexagonstar.game.tile.ds
 		 * @param y The row index.
 		 * @param a The row's new values.
 		 */
-		public function setRow(y:uint, a:Array):void
+		public function setRow(y:int, a:Vector.<int>):void
 		{
 			if (y < 0 || y > _h) throw new Error("row index out of bounds");
 			
@@ -208,9 +199,9 @@ package com.hexagonstar.game.tile.ds
 		 * 
 		 * @return An array storing the values of the column.
 		 */
-		public function getCol(x:int):Array
+		public function getCol(x:int):Vector.<int>
 		{
-			var t:Array = [];
+			var t:Vector.<int> = new Vector.<int>();
 			for (var i:int = 0; i < _h; i++)
 			{
 				t[i] = _a[int(i * _w + x)];
@@ -226,7 +217,7 @@ package com.hexagonstar.game.tile.ds
 		 * @param x The column index.
 		 * @param a The column's new values.
 		 */
-		public function setCol(x:int, a:Array):void
+		public function setCol(x:int, a:Vector.<int>):void
 		{
 			if (x < 0 || x > _w) throw new Error("column index out of bounds");
 			
@@ -307,7 +298,7 @@ package com.hexagonstar.game.tile.ds
 		 *
 		 * @param a The row to append.
 		 */
-		public function appendRow(a:Array):void
+		public function appendRow(a:Vector.<int>):void
 		{
 			a.length = _w;
 			_a = _a.concat(a);
@@ -322,7 +313,7 @@ package com.hexagonstar.game.tile.ds
 		 *
 		 * @param a The row to prepend.
 		 */
-		public function prependRow(a:Array):void
+		public function prependRow(a:Vector.<int>):void
 		{
 			a.length = _w;
 			_a = a.concat(_a);
@@ -337,7 +328,7 @@ package com.hexagonstar.game.tile.ds
 		 *
 		 * @param a The column to append.
 		 */
-		public function appendCol(a:Array):void
+		public function appendCol(a:Vector.<int>):void
 		{
 			a.length = _h;
 			for (var y:int = 0; y < _h; y++)
@@ -355,7 +346,7 @@ package com.hexagonstar.game.tile.ds
 		 *
 		 * @param a The column to prepend.
 		 */
-		public function prependCol(a:Array):void
+		public function prependCol(a:Vector.<int>):void
 		{	
 			a.length = _h;
 			for (var y:int = 0; y < _h; y++)
@@ -371,7 +362,7 @@ package com.hexagonstar.game.tile.ds
 		 */
 		public function transpose():void
 		{
-			var a:Array = _a.concat();
+			var a:Vector.<int> = _a.concat();
 			for (var y:int = 0; y < _h; y++)
 			{
 				for (var x:int = 0; x < _w; x++)
@@ -387,7 +378,7 @@ package com.hexagonstar.game.tile.ds
 		 * store the data in the two-dimensional array. Use with care for
 		 * advanced operations.
 		 */
-		public function getArray():Array
+		public function getVector():Vector.<int>
 		{
 			return _a;
 		}
@@ -396,12 +387,12 @@ package com.hexagonstar.game.tile.ds
 		/**
 		 * @inheritDoc
 		 */
-		public function contains(obj:*):Boolean
+		public function contains(value:int):Boolean
 		{
 			var k:int = size;
 			for (var i:int = 0;i < k; i++)
 			{
-				if (_a[i] === obj)
+				if (_a[i] === value)
 					return true;
 			}
 			return false;
@@ -413,20 +404,44 @@ package com.hexagonstar.game.tile.ds
 		 */
 		public function clear():void
 		{
-			_a = new Array(size);
+			_a = new Vector.<int>(size, true);
+			fill(0);
 		}
 
+		
+		/**
+		 * fromArray
+		 */
+		public function fromArray(source:Array):void
+		{
+			_h = source.length;
+			_w = (source[0] as Array).length;
+			
+			clear();
+			
+			for (var y:int = 0; y < _h; y++)
+			{
+				var row:Array = source[y];
+				for (var x:int = 0; x < _w; x++)
+				{
+					setCell(x, y, row[x]);
+				}
+			}
+		}
+		
 		
 		/**
 		 * @inheritDoc
 		 */
 		public function toArray():Array
 		{
-			var a:Array = _a.concat();
-			
-			var k:int = size;
-			if (a.length > k) a.length = k;
-			return a;
+			// TODO
+			//var a:Array = _a.concat();
+			//
+			//var k:int = size;
+			//if (a.length > k) a.length = k;
+			//return a;
+			return null;
 		}
 
 		

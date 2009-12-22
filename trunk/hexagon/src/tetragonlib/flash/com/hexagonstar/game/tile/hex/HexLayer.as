@@ -27,13 +27,13 @@
  */
 package com.hexagonstar.game.tile.hex
 {
-	import com.hexagonstar.data.structures.grids.Grid2D;
 	import com.hexagonstar.game.tile.AnimTile;
 	import com.hexagonstar.game.tile.ITile;
 	import com.hexagonstar.game.tile.ITileLayer;
 	import com.hexagonstar.game.tile.Tile;
 	import com.hexagonstar.game.tile.TileSet;
 	import com.hexagonstar.game.tile.ds.PropertyMap;
+	import com.hexagonstar.game.tile.ds.TileGrid;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -63,7 +63,7 @@ package com.hexagonstar.game.tile.hex
 		protected var _autoScrollSpeed:int;
 		
 		protected var _properties:PropertyMap;
-		protected var _grid:Grid2D;
+		protected var _grid:TileGrid;
 		
 		protected var _viewWidth:int;
 		protected var _viewHeight:int;
@@ -103,7 +103,7 @@ package com.hexagonstar.game.tile.hex
 		public function HexLayer(width:int = 0, height:int = 0)
 		{
 			_properties = new PropertyMap(10);
-			_grid = new Grid2D(width, height);
+			_grid = new TileGrid(width, height);
 		}
 
 		
@@ -314,7 +314,7 @@ package com.hexagonstar.game.tile.hex
 		}
 		
 		
-		public function get grid():Grid2D
+		public function get grid():TileGrid
 		{
 			return _grid;
 		}
