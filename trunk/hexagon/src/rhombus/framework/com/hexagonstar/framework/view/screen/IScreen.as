@@ -30,15 +30,36 @@ package com.hexagonstar.framework.view.screen
 
 	
 	/**
-	 * IScreen class
+	 * Interface for screen classes. Screens are like displays with the difference that
+	 * they are automatically handled by the screen manager. Screens always occupy a
+	 * whole screen for themselves and typically contain several displays as child
+	 * objects.
 	 * 
 	 * @author Sascha Balkau
 	 * @version 0.9.0
+	 * 
+	 * @see com.hexagonstar.framework.view.display.IDisplay
 	 */
 	public interface IScreen extends IDisplay
 	{
 		/**
-		 * Loads assets that are required for the screen.
+		 * Used to load any assets that the screen might require. ScreenManager calls this
+		 * method automatically after the screen has been instantiated. If the screen
+		 * doesn't need to load any assets this method doesn't need to be overriden since
+		 * AbstractScreen will automatically progress to setup the screen without any
+		 * loading operation.<p>
+		 * 
+		 * If you need to load any assets for the screen you should override this method
+		 * and use a command which loads all the necessary screen assets, e.g.:
+		 * 
+		 * @example
+		 * <pre>
+		 * public function load():void
+		 * {
+		 * 		Main.commandManager.execute(new LoadScreenAssetsCommand(),
+		 * 			onScreenAssetsLoadComplete, onScreenAssetsLoadError);
+		 * }
+		 * </pre>
 		 */
 		function load():void
 	}
