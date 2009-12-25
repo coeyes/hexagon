@@ -33,20 +33,51 @@ package com.hexagonstar.framework.view.display
 	 * IDisplay is the base interface for all display classes.
 	 * 
 	 * @author Sascha Balkau
-	 * @version 0.9.0
+	 * @version 0.9.5
 	 */
 	public interface IDisplay extends IView
 	{
 		
 		/**
-		 * Activates the display's functionality.
+		 * Can be used to start the display, if this is a requirement of the display. E.g. a
+		 * display may contain animated display children that should not start playing right
+		 * after the display was opened but after the start method was called.
 		 */
-		function activate():void;
+		function start():void;
 		
 		
 		/**
-		 * Deactivates the display's functionality.
+		 * Can be used to stop the display after it has been started by calling start().
 		 */
-		function deactivate():void;
+		function stop():void;
+		
+		
+		/**
+		 * Used to put the display into it's initial default state as it was right after the
+		 * display has been instantiated for the first time. This method should be used the
+		 * reset properties in case the play can be re-used wiothout the need to be
+		 * re-created.
+		 */
+		function reset():void;
+		
+		
+		/**
+		 * Determines if the display is enabled or disabled. On a disabled display any
+		 * display children are disabled so that no user interaction may take place until
+		 * the display is enabled again. Set this property to either true (enabled) or false
+		 * (disabled).
+		 */
+		function set enabled(v:Boolean):void;
+		function get enabled():Boolean;
+		
+		
+		/**
+		 * Determines if the display is paused or not. If paused any child display objects
+		 * need to be paused too. This property should be used if the display needs to be
+		 * pausable, for example if it contains any animation that should not run while the
+		 * application is in a paused state.
+		 */
+		function get paused():Boolean;
+		function set paused(v:Boolean):void;
 	}
 }

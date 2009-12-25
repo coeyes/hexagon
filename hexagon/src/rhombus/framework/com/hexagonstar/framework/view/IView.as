@@ -38,9 +38,9 @@ package com.hexagonstar.framework.view
 	public interface IView extends IEventDispatcher
 	{
 		/**
-		 * Updates the view. This method should be called only if children
-		 * of the view need to be updated, e.g. after localization has been
-		 * changed or if the children need to be re-layouted.
+		 * Updates the view. This method should be called only if children of the view need
+		 * to be updated, e.g. after localization has been changed or if the display
+		 * children need to be re-layouted.
 		 */
 		function update():void;
 		
