@@ -67,6 +67,7 @@ package view.display
 		 */
 		override public function start():void
 		{
+			super.start();
 		}
 		
 		
@@ -75,6 +76,7 @@ package view.display
 		 */
 		override public function stop():void
 		{
+			super.stop();
 		}
 		
 		
