@@ -72,6 +72,14 @@ package com.hexagonstar.framework.view.display
 		
 		
 		/**
+		 * Determines if the display has been started, i.e. if it's start method has been
+		 * called. Returns true if the display has been started or false if the display
+		 * has either been stopped or was not yet started.
+		 */
+		function get started():Boolean;
+		
+		
+		/**
 		 * Determines if the display is paused or not. If paused any child display objects
 		 * need to be paused too. This property should be used if the display needs to be
 		 * pausable, for example if it contains any animation that should not run while the
