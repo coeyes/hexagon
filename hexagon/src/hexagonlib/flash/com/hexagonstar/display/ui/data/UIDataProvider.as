@@ -160,7 +160,6 @@ package com.hexagonstar.display.ui.data
 		 * Appends an item to the end of the data provider.
 		 * 
 		 * @param item The item to be appended to the end of the current data provider.
-		 * @includeExample examples/DataProvider.constructor.1.as -noswf
 		 * @see #addItemAt()
 		 * @see #addItems()
 		 * @see #addItemsAt()
@@ -202,7 +201,6 @@ package com.hexagonstar.display.ui.data
 		 * they are specified.
 		 * 
 		 * @param items The items to be appended to the data provider.
-		 * @includeExample examples/DataProvider.addItems.1.as -noswf
 		 * @see #addItem()
 		 * @see #addItemAt()
 		 * @see #addItemsAt()
