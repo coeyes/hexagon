@@ -37,6 +37,26 @@ package com.hexagonstar.framework.view.display
 	 */
 	public interface IDisplay extends IView
 	{
+		/**
+		 * Used to load any assets that the display might require. On screens ScreenManager
+		 * calls this method automatically after the screen has been instantiated. If the
+		 * display doesn't need to load any assets this method doesn't need to be overriden
+		 * since AbstractScreen will automatically progress to setup the display without any
+		 * loading operation.
+		 * <p>
+		 * If you need to load any assets for the display you should override this method
+		 * and use a command which loads all the necessary display assets, e.g.:
+		 * 
+		 * @example <pre>
+		 * public function load():void
+		 * {
+		 * 		Main.commandManager.execute(new LoadDisplayAssetsCommand(),
+		 * 			onDisplayAssetsLoadComplete, onDisplayAssetsLoadError);
+		 * }
+		 * </pre>
+		 */
+		function load():void
+		
 		
 		/**
 		 * Can be used to start the display, if this is a requirement of the display. E.g. a
