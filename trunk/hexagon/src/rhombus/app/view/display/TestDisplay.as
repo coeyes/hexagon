@@ -27,6 +27,8 @@
 package view.display
 {
 	import com.hexagonstar.display.ui.controls.TextArea;
+	import com.hexagonstar.framework.io.resource.ImageResource;
+	import com.hexagonstar.framework.io.resource.ResourceManager;
 	import com.hexagonstar.framework.view.display.AbstractDisplay;
 	import com.hexagonstar.framework.view.display.IDisplay;
 
@@ -68,6 +70,9 @@ package view.display
 		override public function start():void
 		{
 			super.start();
+			
+			ResourceManager.instance.load("icons/icon_128x128.png", ImageResource,
+				onResourceLoaded, onResourceFailed);
 		}
 		
 		
@@ -96,6 +101,23 @@ package view.display
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Event Handlers                                                                     //
 		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/**
+		 * onResourceLoaded
+		 */
+		public function onResourceLoaded():void
+		{
+			
+		}
+		
+		
+		/**
+		 * onResourceFailed
+		 */
+		public function onResourceFailed():void
+		{
+			
+		}
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
