@@ -24,7 +24,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hexagonstar.framework.managers
+package com.hexagonstar.framework.command
 {
 	import com.hexagonstar.event.CommandEvent;
 	import com.hexagonstar.pattern.cmd.Command;
