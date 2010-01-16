@@ -336,6 +336,10 @@ package
 					max-recursion-depth="${max.recursiondepth}"
 					max-execution-time="${max.executiontime}"	/>
 				
+				<keep-as3-metadata name="TypeHint"/>
+				<keep-as3-metadata name="EditorData"/>
+				<keep-as3-metadata name="Embed"/>
+			
 				<metadata
 					title="${meta.title}"
 					description="${meta.description}"

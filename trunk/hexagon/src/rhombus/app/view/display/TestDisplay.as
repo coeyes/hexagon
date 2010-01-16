@@ -71,7 +71,7 @@ package view.display
 		{
 			super.start();
 			
-			ResourceManager.instance.load("icons/icon_128x128.png", ImageResource,
+			ResourceManager.instance.load("../../../bin/icons/icon_128x128.png", ImageResource,
 				onResourceLoaded, onResourceFailed);
 		}
 		
@@ -105,16 +105,16 @@ package view.display
 		/**
 		 * onResourceLoaded
 		 */
-		public function onResourceLoaded():void
+		public function onResourceLoaded(resource:ImageResource):void
 		{
-			
+			addChild(resource.bitmap);
 		}
 		
 		
 		/**
 		 * onResourceFailed
 		 */
-		public function onResourceFailed():void
+		public function onResourceFailed(resource:ImageResource):void
 		{
 			
 		}
