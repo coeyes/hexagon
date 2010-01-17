@@ -36,9 +36,9 @@ package com.hexagonstar.io.file.types
 
 	
 	/**
-	 * ResourceFile class
+	 * ResourceIndexFile class
 	 */
-	public class ResourceFile extends AbstractFile implements IFile
+	public class ResourceIndexFile extends AbstractFile implements IFile
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
@@ -52,11 +52,11 @@ package com.hexagonstar.io.file.types
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Creates a new ResourceFile instance.
+		 * Creates a new ResourceIndexFile instance.
 		 * 
-		 * @param path The path of the ResourceFile File.
+		 * @param path The path of the ResourceIndexFile File.
 		 */
-		public function ResourceFile(path:String = "", id:String = null)
+		public function ResourceIndexFile(path:String = "", id:String = null)
 		{
 			super(path, id);
 			_content = new ByteArray();
@@ -108,7 +108,7 @@ package com.hexagonstar.io.file.types
 		
 		public function get fileTypeID():int
 		{
-			return FileTypeIndex.RESOURCE_FILE_ID;
+			return FileTypeIndex.RESOURCE_INDEX_FILE_ID;
 		}
 	}
 }
