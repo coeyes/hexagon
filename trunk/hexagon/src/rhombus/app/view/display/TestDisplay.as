@@ -27,10 +27,10 @@
 package view.display
 {
 	import com.hexagonstar.display.ui.controls.TextArea;
-	import com.hexagonstar.framework.io.resource.ImageResource;
-	import com.hexagonstar.framework.io.resource.ResourceManager;
 	import com.hexagonstar.framework.view.display.AbstractDisplay;
 	import com.hexagonstar.framework.view.display.IDisplay;
+	import com.hexagonstar.io.resource.ResourceManager;
+	import com.hexagonstar.io.resource.types.ImageResource;
 
 	
 	/**
