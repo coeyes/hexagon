@@ -96,8 +96,12 @@ package view.display
 			
 			bl.addFile(file1);
 			bl.addFile(file2);
+			bl.addFile(file3);
+			bl.addFile(file4);
+			bl.addFile(file5);
 			bl.addFile(file6);
 			bl.addFile(file7);
+			bl.addFile(file8);
 			
 			bl.load();
 			Debug.trace(bl.fileCount);
