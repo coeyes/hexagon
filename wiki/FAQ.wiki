@@ -1,7 +1,7 @@
 #summary Frequently Asked Questions regarding hexagon.
 
   * [FAQ#The_project_structure_confuses_me!_Is_there_any_guide? The project structure confuses me! Is there any guide?]
-  * [FAQ#What_is_the_difference_between_hexagon_lib,_tetragon_ lib_and_the_rhombus_framework? What is the difference between hexagon lib, tetragon lib and the rhombus framework?]
+  * [FAQ#What_is_the_difference_between_hexagon_lib,_tetragon_lib_and_the_rhombus_framework? What is the difference between hexagon lib, tetragon lib and the rhombus framework?]
 
 ----
 
