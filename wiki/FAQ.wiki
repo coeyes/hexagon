@@ -1,12 +1,8 @@
 #summary Frequently Asked Questions regarding hexagonLib.
 
-= FAQ =
+[FAQ#The_project_structure_confuses_me!_Is_there_any_guide?]
 
+----
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+===The project structure confuses me! Is there any guide?===
+Yes! See here: 
