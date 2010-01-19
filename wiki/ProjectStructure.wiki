@@ -1,4 +1,4 @@
-#summary the hexagon project structure explained.
+#summary The hexagon project structure explained.
 = Introduction =
 
 Add your content here.
