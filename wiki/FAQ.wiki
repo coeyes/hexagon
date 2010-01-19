@@ -5,4 +5,4 @@
 ----
 
 ===The project structure confuses me! Is there any guide?===
-Yes! See here: [ProjectStructure Project Structure]
+Yes! The file & folder structure of the project is explained here: [ProjectStructure Project Structure]
