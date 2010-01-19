@@ -1,5 +1,4 @@
-#summary One-sentence summary of this page.
-
+#summary the hexagon project structure explained.
 = Introduction =
 
 Add your content here.
