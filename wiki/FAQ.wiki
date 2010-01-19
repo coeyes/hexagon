@@ -1,8 +1,11 @@
 #summary Frequently Asked Questions regarding hexagon.
 
   * [FAQ#The_project_structure_confuses_me!_Is_there_any_guide? The project structure confuses me! Is there any guide?]
+  * [FAQ#What_is_the_difference_between_hexagonLib,_tetragonLib_and_the_rhombus_framework? What is the difference between hexagonLib, tetragonLib and the rhombus framework?]
 
 ----
 
 ===The project structure confuses me! Is there any guide?===
 Yes! The folder structure of the project is explained here: [ProjectStructure Project Structure]
+
+===What is the difference between hexagonLib, tetragonLib and the rhombus framework?===
