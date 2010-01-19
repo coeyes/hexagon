@@ -1,6 +1,6 @@
 #summary Frequently Asked Questions regarding hexagonLib.
 
-[FAQ#The_project_structure_confuses_me!_Is_there_any_guide? The project structure confuses me! Is there any guide?]
+  * [FAQ#The_project_structure_confuses_me!_Is_there_any_guide? The project structure confuses me! Is there any guide?]
 
 ----
 
