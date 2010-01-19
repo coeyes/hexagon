@@ -1,6 +1,6 @@
 #summary Frequently Asked Questions regarding hexagonLib.
 
-[WikiSyntax#The project structure confuses me! Is there any guide?]
+[FAQ#The project structure confuses me! Is there any guide?]
 
 ----
 
