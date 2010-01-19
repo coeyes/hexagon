@@ -7,7 +7,7 @@
 ----
 
 ===The project structure confuses me! Is there any guide?===
-Yes! The folder structure of the project is explained here: [ProjectStructure Project Structure]
+  Yes! The folder structure of the project is explained here: [ProjectStructure Project Structure]
 
 ===What is the difference between hexagon lib, tetragon lib and the rhombus framework?===
-Please see the [ProjectParts Project Parts] wiki page for an in-depth explanation about the project parts.
+  Please see the [ProjectParts Project Parts] wiki page for an in-depth explanation about the project parts.
