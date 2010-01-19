@@ -1,5 +1,5 @@
 #summary The hexagon project structure explained.
-#sidebar FAQ
+
 = Introduction =
 
 Add your content here.
