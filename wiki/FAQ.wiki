@@ -9,3 +9,4 @@
 Yes! The folder structure of the project is explained here: [ProjectStructure Project Structure]
 
 ===What is the difference between hexagonLib, tetragonLib and the rhombus framework?===
+Please see the [ProjectParts Project Parts] wiki page for an in-depth explanation about the project parts.
