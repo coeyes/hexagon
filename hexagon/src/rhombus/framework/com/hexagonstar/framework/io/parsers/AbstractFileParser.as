@@ -180,5 +180,20 @@ package com.hexagonstar.framework.io.parsers
 			if (string.toLowerCase() == "true") return true;
 			return false;
 		}
+		
+		
+		/**
+		 * parseColorValue
+		 * @private
+		 */
+		protected static function parseColorValue(string:String):uint
+		{
+			if (string.substr(0, 1) == "#")
+			{
+				string = string.substr(1, string.length - 1);
+			}
+			var r:uint = uint("0x" + string);
+			return r;
+		}
 	}
 }
