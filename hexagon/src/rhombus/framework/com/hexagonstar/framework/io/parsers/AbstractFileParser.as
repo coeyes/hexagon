@@ -132,6 +132,22 @@ package com.hexagonstar.framework.io.parsers
 		
 		
 		/**
+		 * Extracts the value that is stored under an XML node name or XML attribute name
+		 * specified with the xml and name arguments. The xml parameter can be an object
+		 * of type XML or XMLList.
+		 * 
+		 * @param xml The XML or XMLList on that to find 'name'.
+		 * @param name The node or attribute name on the specified XML.
+		 * @return The extracted value.
+		 * @private
+		 */
+		protected function extract(xml:*, name:String):*
+		{
+			return xml[name].toString();
+		}
+		
+		
+		/**
 		 * Unwraps a string that contains multi-line text, usually from a XML
 		 * file. Any leading and trailing spaces or tabs are removed from
 		 * each line, then the lines are unwrapped (LFs and CRs are removed).
