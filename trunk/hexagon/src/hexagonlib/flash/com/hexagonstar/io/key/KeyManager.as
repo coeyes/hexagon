@@ -2,8 +2,6 @@ package com.hexagonstar.io.key
 {
 	import com.hexagonstar.core.BasicClass;
 	import com.hexagonstar.event.KeyCombinationEvent;
-	import com.hexagonstar.io.key.Key;
-	import com.hexagonstar.io.key.KeyCombination;
 
 	import flash.events.KeyboardEvent;
 	import flash.utils.Dictionary;
@@ -84,6 +82,23 @@ package com.hexagonstar.io.key
 				_assignmentsDown[c] = callback;
 			}
 			_key.addKeyCombination(c);
+		}
+		
+		
+		/**
+		 * Removes a Key Combination from the KeyManager.
+		 * 
+		 * @param keyCodes key codes that the key combination consists of.
+		 */
+		public function removeKeyCombination(keyCodes:Array):void
+		{
+			var c:KeyCombination = new KeyCombination(keyCodes);
+			_assignmentsRelease[c] = null;
+			_assignmentsDown[c] = null;
+			delete _assignmentsRelease[c];
+			delete _assignmentsDown[c];
+			
+			_key.removeKeyCombination(c);
 		}
 		
 		
