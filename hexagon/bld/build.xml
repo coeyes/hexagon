@@ -51,11 +51,11 @@
 	<property name="meta.contributor"	value="${app.copyright}"/>
 	
 	<!-- version of the used flex sdk -->
-	<property name="sdk.version"		value="3.4.0"/>
+	<property name="sdk.version"		value="3.5.0"/>
 	
 	<!-- version of the targetted flash player or air platform -->
 	<property name="fpv.version"		value="10.0.0"/>
-	<property name="air.version"		value="1.5.1"/>
+	<property name="air.version"		value="2.0beta2"/>
 	
 	<!-- default project folders (path.bin.fp is used for flash player launch) -->
 	<property name="path.src"			value="${basedir}/src/rhombus/app"/>
@@ -85,11 +85,13 @@
 	<property name="path.swc.library"	value="${path.src}/assets"/>
 	
 	<!-- sdk & tool pathes -->
-	<property name="sdk"				value="${flex.sdk.basepath}/${sdk.version}"/>
-	<property name="FLEX_HOME"		value="${sdk}"/>
-	<property name="asdoc"			value="${sdk}/bin/asdoc.exe"/>
-	<property name="player.debug"		value="${flashplayer.debug}"/>
-	<property name="player.release"	value="${flashplayer.release}"/>
+	<property name="sdk"					value="${flex.sdk.basepath}/${sdk.version}"/>
+	<property name="FLEX_HOME"			value="${sdk}"/>
+	<property name="asdoc"				value="${sdk}/bin/asdoc.exe"/>
+	<property name="player.debug"			value="${flashplayer.debug}"/>
+	<property name="player.release"		value="${flashplayer.release}"/>
+	<property name="air.debuglauncher"	value="${sdk}/bin/adl.exe"/>
+	<property name="air.developertool"	value="${sdk}/lib/adt.jar"/>
 	
 	<!-- advanced compiler options -->
 	<property name="max.recursiondepth"	value="1000"/>
