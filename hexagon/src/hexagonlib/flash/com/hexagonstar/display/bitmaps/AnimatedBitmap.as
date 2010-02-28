@@ -31,12 +31,14 @@ package com.hexagonstar.display.bitmaps
 {
 	import com.hexagonstar.core.IDisposable;
 	import com.hexagonstar.display.IAnimatedDisplayObject;
+	import com.hexagonstar.display.PlayMode;
 	import com.hexagonstar.event.FrameEvent;
 	import com.hexagonstar.time.FrameRateInterval;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.TimerEvent;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
@@ -67,43 +69,47 @@ package com.hexagonstar.display.bitmaps
 		protected var _buffer:BitmapData;
 		/** @private */
 		protected var _interval:FrameRateInterval;
-		
-		/**
-		 * 1: play
-		 * 2: playThenBackwards
-		 * 3: playAndStopAt
-		 * 4: playAtAndStopAt
-		 * 5: playAtThenBackwardsAt
-		 * 
-		 * @private
-		 */
-		protected var _intervalMode:int;
-		
 		/** @private */
-		protected var _totalFrames:int;
+		protected static var _globalInterval:FrameRateInterval;
 		/** @private */
-		protected var _currentFrame:int;
-		/** @private */
-		protected var _isPlaying:Boolean;
-		/** @private */
-		protected var _isDisposed:Boolean = false;
+		protected static var _globalFrameRate:int = 12;
 		/** @private */
 		protected var _point:Point;
 		/** @private */
 		protected var _rect:Rectangle;
 		/** @private */
+		protected var _ranges:Object;
+		/** @private */
+		protected var _currentRange:Range;
+		/** @private */
+		protected var _startFrame:int;
+		/** @private */
+		protected var _endFrame:int;
+		
+		/** @private */
 		protected var _frameWidth:int;
 		/** @private */
 		protected var _frameHeight:int;
+		
+		/**@private */
+		protected var _playMode:int;
+		
 		/** @private */
-		protected var _resetWidth:int;
+		protected var _totalFrames:int;
+		/** @private */
+		protected var _currentFrame:int;
 		/**@private */
-		protected var _addFrame:int;
-		/**@private */
-		protected var _startFrame:int;
-		/**@private */
-		protected var _stopFrame:int;
-
+		protected var _addFrame:int = 1;
+		
+		/** @private */
+		protected var _isPlaying:Boolean = false;
+		/** @private */
+		protected var _isFlipX:Boolean = false;
+		/** @private */
+		protected var _isFlipY:Boolean = false;
+		/** @private */
+		protected var _isDisposed:Boolean = false;
+		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
@@ -120,7 +126,8 @@ package com.hexagonstar.display.bitmaps
 		 */
 		public function AnimatedBitmap(bitmap:BitmapData,
 										   frameWidth:int,
-										   interval:FrameRateInterval,
+										   playMode:int = 0,
+										   interval:FrameRateInterval = null,
 										   transparent:Boolean = true,
 										   pixelSnapping:String = "auto",
 										   smoothing:Boolean = false)
@@ -132,16 +139,24 @@ package com.hexagonstar.display.bitmaps
 				pixelSnapping, smoothing);
 			
 			_buffer = bitmap.clone();
+			_playMode = playMode;
 			_totalFrames = _buffer.width / _frameWidth;
-			_currentFrame = 1;
-			_addFrame = 1;
-			_startFrame = 0;
-			_stopFrame = 0;
-			_isPlaying = false;
-			_intervalMode = 1;
-			_interval = interval;
+			_startFrame = _currentFrame = 1;
+			_endFrame = _totalFrames;
 			_point = new Point(0, 0);
-			_rect = new Rectangle(0, 0, _frameWidth, _frameHeight);
+			_ranges = {};
+			
+			if (interval)
+			{
+				_interval = interval;
+			}
+			else
+			{
+				if (!_globalInterval) _globalInterval = new FrameRateInterval(_globalFrameRate);
+				_interval = _globalInterval;
+			}
+			
+			draw();
 		}
 		
 		
@@ -152,10 +167,8 @@ package com.hexagonstar.display.bitmaps
 		 */
 		public function play():void
 		{
-			_intervalMode = 1;
 			if (!_isPlaying)
 			{
-				draw();
 				_isPlaying = true;
 				_interval.addEventListener(TimerEvent.TIMER, onInterval, false, 0, true);
 				_interval.start();
@@ -169,116 +182,6 @@ package com.hexagonstar.display.bitmaps
 		
 		
 		/**
-		 * Starts the playback of the animated display object. If the animated display
-		 * object is already playing while calling this method, it calls stop() and then
-		 * plays again instantly to allow for framerate changes during playback.
-		 * Once max frame is reached, plays backwards until first frame, and again.
-		 */
-		public function playThenBackwards():void
-		{
-			_intervalMode = 2;
-			if (!_isPlaying)
-			{
-				draw();
-				_isPlaying = true;
-				_interval.addEventListener(TimerEvent.TIMER, onInterval);//, false, 0, true); //add of weak reference if needed
-				_interval.start();
-			}
-			else
-			{
-				stop();
-
-				playThenBackwards();
-			}
-		}
-
-		
-		/**
-		 * Starts the playback of the animated display object. If the animated display
-		 * object is already playing while calling this method, it calls stop() and then
-		 * plays again instantly to allow for framerate changes during playback.
-		 * Once given param f (stored in _stopFrame) is reached, the playback is stopped.
-		 * 
-		 * @param frameNr the number to which to stop playback
-		 */
-		public function playAndStopAt(f:int):void
-		{
-			_intervalMode = 3;
-			_stopFrame = f;
-			if (!_isPlaying)
-			{
-				draw();
-				_isPlaying = true;
-				_interval.addEventListener(TimerEvent.TIMER, onInterval);//, false, 0, true); //add of weak reference if needed
-				_interval.start();
-			}
-			else
-			{
-				stop();
-				playAndStopAt(f);
-			}
-		}
-
-		
-		/**
-		 * Starts the playback of the animated display object at the given param f (stored in_startFrame). If the animated display
-		 * object is already playing while calling this method, it calls stop() and then
-		 * plays again instantly to allow for framerate changes during playback.
-		 * Once given param g (stored in _stopFrame) is reached, the playback is stopped.
-		 * 
-		 * @param f the frame number to which to start playback
-		 * @param g the frame number to which stop playback
-		 */
-		public function playAtAndStopAt(f:int,g:int):void
-		{
-			_intervalMode = 4;
-			_currentFrame = f;
-			_stopFrame = g;
-			if (!_isPlaying)
-			{
-				draw();
-				_isPlaying = true;
-				_interval.addEventListener(TimerEvent.TIMER, onInterval);//, false, 0, true); //add of weak reference if needed
-				_interval.start();
-			}
-			else
-			{
-				stop();
-				playAtAndStopAt(f, g);
-			}
-		}
-
-		
-		/**
-		 * Starts the playback of the animated display object at the given param f (stored in_startFrame). If the animated display
-		 * object is already playing while calling this method, it calls stop() and then
-		 * plays again instantly to allow for framerate changes during playback.
-		 * Once given param g (stored in _stopFrame) is reached, the playback is restarted from f.
-		 * @param f the frame number to which to start playback
-		 * @param g the frame number to which to restart playback
-		 */
-		public function playAtThenBackwardsAt(f:int,g:int):void
-		{
-			_intervalMode = 5;
-			_startFrame = f;
-			_currentFrame = f;
-			_stopFrame = g;
-			if (!_isPlaying)
-			{
-				draw();
-				_isPlaying = true;
-				_interval.addEventListener(TimerEvent.TIMER, onInterval);//, false, 0, true); //add of weak reference if needed
-				_interval.start();
-			}
-			else
-			{
-				stop();
-				playAtThenBackwardsAt(f, g);
-			}
-		}
-
-		
-		/**
 		 * Stops the playback of the animated bitmap.
 		 */
 		public function stop():void
@@ -290,7 +193,7 @@ package com.hexagonstar.display.bitmaps
 				_isPlaying = false;
 			}
 		}
-
+		
 		
 		/**
 		 * Jumps to the specified frame nr. and plays the animated bitmap from that
@@ -298,11 +201,11 @@ package com.hexagonstar.display.bitmaps
 		 * a MovieClip.
 		 * 
 		 * @param frame an Integer that designates the frame from which to start play.
-		 * @param scene unused.
+		 * @param scene unused in animated bitmaps.
 		 */
-		public function gotoAndPlay(frame:Object, scene:String = null):void
+		public function gotoAndPlay(frameOrRange:Object, scene:String = null):void
 		{
-			_currentFrame = int(frame) - 1;
+			_currentFrame = resolveFrame(frameOrRange) - 1;
 			play();
 		}
 
@@ -312,11 +215,11 @@ package com.hexagonstar.display.bitmaps
 		 * Note that the frames of an animated bitmap start at 1 just like a MovieClip.
 		 * 
 		 * @param frame an Integer that designates the frame to which to jump.
-		 * @param scene unused.
+		 * @param scene unused in animated bitmaps.
 		 */
-		public function gotoAndStop(frame:Object, scene:String = null):void
+		public function gotoAndStop(frameOrRange:Object, scene:String = null):void
 		{
-			var f:int = int(frame);
+			var f:int = resolveFrame(frameOrRange);
 			if (f >= _currentFrame)
 			{
 				_currentFrame = f - 1;
@@ -328,7 +231,7 @@ package com.hexagonstar.display.bitmaps
 				prevFrame();
 			}
 		}
-
+		
 		
 		/**
 		 * Moves the animation to the next of the current frame. If the animated bitmap is
@@ -357,6 +260,28 @@ package com.hexagonstar.display.bitmaps
 
 		
 		/**
+		 * Defines a new animation range to the animated bitmap.
+		 * 
+		 * @param name The name of the range.
+		 * @param startFrame Starting frame number of the range.
+		 * @param endFrame Ending frame number of the range.
+		 */
+		public function defineRange(name:String, startFrame:int, endFrame:int):void
+		{
+			_ranges[name] = new Range(name, startFrame, endFrame);
+		}
+		
+		
+		/**
+		 * removeRange
+		 */
+		public function removeRange(name:String):void
+		{
+			delete(_ranges[name]);
+		}
+		
+		
+		/**
 		 * Disposes the animated bitmap.
 		 */
 		public function dispose():void
@@ -382,24 +307,30 @@ package com.hexagonstar.display.bitmaps
 			{
 				stop();
 				_interval = v;
-				switch (_intervalMode)
-				{
-					case 1:
-						play();
-					case 2:
-						playThenBackwards();
-					case 3:
-						playAndStopAt(_stopFrame);
-					case 4:
-						playAtAndStopAt(_startFrame, _stopFrame);
-					case 5:
-						playAtThenBackwardsAt(_startFrame, _stopFrame);
-				}
+				play();
 			}
 			else
 			{
 				_interval = v;
 			}
+		}
+		
+		
+		/**
+		 * Indicates the framerate of the global framerate Interval that can be used
+		 * as a default interval for all animated objects. The valid range is
+		 * between 1 and 1000.
+		 */
+		static public function get globalFrameRate():int
+		{
+			return _globalFrameRate;
+		}
+		static public function set globalFrameRate(v:int):void
+		{
+			if (v < 1) v = 1;
+			else if (v > 1000) v = 1000;
+			_globalFrameRate = v;
+			if (_globalInterval) _globalInterval.frameRate = _globalFrameRate;
 		}
 
 		
@@ -412,7 +343,11 @@ package com.hexagonstar.display.bitmaps
 		{
 			return _interval.frameRate;
 		}
-
+		public function set frameRate(v:int):void
+		{
+			_interval.frameRate = v;
+		}
+		
 		
 		/**
 		 * Returns the current frame position of the animated bitmap.
@@ -423,7 +358,25 @@ package com.hexagonstar.display.bitmaps
 		{
 			return _currentFrame;
 		}
-
+		
+		
+		/**
+		 * Returns the name of the range that the current frame is in or null if the
+		 * current frame is not in any defined range.
+		 */
+		public function get currentRange():String
+		{
+			for (var n:String in _ranges)
+			{
+				var r:Range = _ranges[n];
+				if (_currentFrame >= r.start && _currentFrame <= r.end)
+				{
+					return n;
+				}
+			}
+			return null;
+		}
+		
 		
 		/**
 		 * Returns the total amount of frames that the animated bitmap has.
@@ -434,7 +387,108 @@ package com.hexagonstar.display.bitmaps
 		{
 			return _totalFrames;
 		}
-
+		
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get playMode():int
+		{
+			return _playMode;
+		}
+		public function set playMode(v:int):void
+		{
+			_playMode = v;
+		}
+		
+		
+		/**
+		 * The name of the animation range that should be played.
+		 * 
+		 * @see addRange
+		 * @see removeRange
+		 */
+		public function get range():String
+		{
+			if (_currentRange) return _currentRange.name;
+			return null;
+		}
+		public function set range(v:String):void
+		{
+			if (_currentRange && v == _currentRange.name) return;
+			_currentRange = _ranges[v];
+			if (_currentRange)
+			{
+				_startFrame = _currentFrame = _currentRange.start;
+				_endFrame = _currentRange.end;
+				draw();
+			}
+		}
+		
+		
+		/**
+		 * Shortcut property to set horizontal and vertical scaling equally.
+		 */
+		public function get scale():Number
+		{
+			return scaleX;
+		}
+		public function set scale(v:Number):void
+		{
+			scaleX = scaleY = v;
+		}
+		
+		
+		public function get xPos():Number
+		{
+			if (_isFlipX) return x - width;
+			return x;
+		}
+		public function set xPos(v:Number):void
+		{
+			x = xPos;
+		}
+		
+		
+		public function get flipX():Boolean
+		{
+			return _isFlipX;
+		}
+		public function set flipX(v:Boolean):void
+		{
+			if (v == _isFlipX) return;
+			
+			_isFlipX = v;
+			var m:Matrix = transform.matrix;
+			m.transformPoint(new Point(width / 2, height / 2));
+			m.a = -1 * m.a;
+			
+			if (_isFlipX) m.tx = width + x;
+			else m.tx = x - width;
+			
+			transform.matrix = m;
+		}
+		
+		
+		public function get flipY():Boolean
+		{
+			return _isFlipY;
+		}
+		public function set flipY(v:Boolean):void
+		{
+			if (v == _isFlipY) return;
+			
+			_isFlipY = v;
+			var m:Matrix = transform.matrix;
+			m.transformPoint(new Point(width / 2, height / 2));
+			m.d = -1 * m.d;
+			
+			if (_isFlipY) m.ty = y + height;
+			else m.ty = y - height;
+			
+			transform.matrix = m;
+		}
+		
 		
 		/**
 		 * Returns whether the animated bitmap is playing or not.
@@ -445,7 +499,7 @@ package com.hexagonstar.display.bitmaps
 		{
 			return _isPlaying;
 		}
-
+		
 		
 		/**
 		 * Determines if the object has been disposed (true), or is still available
@@ -467,45 +521,26 @@ package com.hexagonstar.display.bitmaps
 		 */
 		protected function onInterval(e:TimerEvent):void
 		{
-			/* play mode */
-			if (_intervalMode == 1)
+			if (_playMode == PlayMode.FORWARD)
 			{
 				_currentFrame++;
-				if (_currentFrame > _totalFrames)
+				if (_currentFrame > _endFrame)
 				{
-					_currentFrame = 1;
-				}
-				else if (_currentFrame < 1)
-				{
-					_currentFrame = _totalFrames;
+					_currentFrame = _startFrame;
 				}
 			}
-			
-			/* playThenBackwards mode */
-			else if (_intervalMode == 2)
+			else if (_playMode == PlayMode.BACKWARD)
+			{
+				_currentFrame--;
+				if (_currentFrame < _startFrame)
+				{
+					_currentFrame = _endFrame;
+				}
+			}
+			else if (_playMode == PlayMode.PINGPONG)
 			{
 				_currentFrame += _addFrame;
-				if (_currentFrame == _totalFrames || _currentFrame < 2)
-				{
-					_addFrame = -_addFrame;
-				}
-			}
-			
-			/* playAndStopAt and playAtAndStopAt modes */
-			else if (_intervalMode == 3 || _intervalMode == 4)
-			{
-				_currentFrame++;
-				if (_currentFrame > _stopFrame - 1)
-				{
-					stop();
-				}
-			}
-			
-			/* playAtThenBackwardsAt mode */
-			else if (_intervalMode == 5)
-			{
-				_currentFrame += _addFrame;
-				if (_currentFrame == _stopFrame || _currentFrame < _startFrame + 1)
+				if (_currentFrame == _endFrame || _currentFrame < _startFrame + 1)
 				{
 					_addFrame = -_addFrame;
 				}
@@ -528,17 +563,37 @@ package com.hexagonstar.display.bitmaps
 			dispatchEvent(new FrameEvent(FrameEvent.ENTER_FRAME, _currentFrame));
 			_rect = new Rectangle((_currentFrame - 1) * _frameWidth, 0, _frameWidth, _frameHeight);
 			bitmapData.copyPixels(_buffer, _rect, _point);
-			
-			/*
-			* Previously 
-			* _rect.offset(_currentFrame == 1 ? _resetWidth : _frameWidth, 0);
-			* If we use this way with resetWidth we lock to forward play only.
-			* if we need to absolutely use the offset method, but compatible only with playUntil, then we'd use 
-			* _rect.offset(_frameWidth*_addFrame,0);
-			* but then locked again for no play anymore. Offset method that speedy compared to redefining new rectangle ? 
-			* method that will work with either ways is this:
-			*_rect = new Rectangle((_currentFrame-1) * _frameWidth, 0, _frameWidth, _frameHeight);
-			*/
 		}
+		
+		
+		/**
+		 * Resolves the frame number of the specified value. If v is a number it is
+		 * returned direclly. If v is not a number it is seen as the name of a range
+		 * and the start frame number of the range is tried to be returned.
+		 * @private
+		 */
+		protected function resolveFrame(v:*):int
+		{
+			if (isNaN(v))
+			{
+				var r:Range = _ranges[String(v)];
+				if (r) return r.start;
+			}
+			return v;
+		}
+	}
+}
+
+class Range
+{
+	public var name:String;
+	public var start:int;
+	public var end:int;
+	
+	public function Range(n:String, s:int, e:int)
+	{
+		name = n;
+		start = s;
+		end = e;
 	}
 }
