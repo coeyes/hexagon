@@ -56,7 +56,7 @@ package com.hexagonstar.display.bitmaps
 	 * 
 	 * @author Sascha Balkau
 	 * @additional backwards play and custom loops Nilsen Filc
-	 * @version 1.1.0
+	 * @version 1.2.0
 	 */
 	public class AnimatedBitmap extends Bitmap implements IAnimatedDisplayObject,
 		IDisposable
@@ -65,49 +65,132 @@ package com.hexagonstar.display.bitmaps
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
-		/** @private */
-		protected var _buffer:BitmapData;
-		/** @private */
-		protected var _interval:FrameRateInterval;
-		/** @private */
+		/**
+		 * The global interval is used for all animated bitmaps that do not use their
+		 * own dedicated interval. The framerate of this interval can be changed with
+		 * the globalFrameRate property.
+		 * @private
+		 */
 		protected static var _globalInterval:FrameRateInterval;
-		/** @private */
+		
+		/**
+		 * The framrate used with the global interval.
+		 * @private
+		 */
 		protected static var _globalFrameRate:int = 12;
-		/** @private */
+		
+		/**
+		 * The buffer that contains all single frames of the animation.
+		 * @private
+		 */
+		protected var _buffer:BitmapData;
+		
+		/**
+		 * Interval that is used to mae the animation 'run'.
+		 * @private
+		 */
+		protected var _interval:FrameRateInterval;
+		
+		/**
+		 * Point used to position frame window on the buffer.
+		 * @private
+		 */
 		protected var _point:Point;
-		/** @private */
+		
+		/**
+		 * Rectangle used as the frame window.
+		 * @private
+		 */
 		protected var _rect:Rectangle;
-		/** @private */
-		protected var _ranges:Object;
-		/** @private */
-		protected var _currentRange:Range;
-		/** @private */
+		
+		/**
+		 * Storage object for frame coords on the buffer image.
+		 * @private
+		 */
+		protected var _frameCoords:Vector.<Point>;
+		
+		/**
+		 * Storage object for defined animation sequences.
+		 * @private
+		 */
+		protected var _sequences:Object;
+		
+		/**
+		 * The currently playing animation sequence.
+		 * @private
+		 */
+		protected var _currentSequence:Sequence;
+		
+		/**
+		 * Frame number from which to start playing.
+		 * @private
+		 */
 		protected var _startFrame:int;
-		/** @private */
+		
+		/**
+		 * Frame number at which playback ends.
+		 * @private
+		 */
 		protected var _endFrame:int;
 		
-		/** @private */
+		/**
+		 * The width of a single animation frame.
+		 * @private
+		 */
 		protected var _frameWidth:int;
-		/** @private */
+		
+		/**
+		 * The height of a single animation frame.
+		 * @private
+		 */
 		protected var _frameHeight:int;
 		
-		/**@private */
+		/**
+		 * The current playback mode of the animated bitmap.
+		 * @private
+		 */
 		protected var _playMode:int;
 		
-		/** @private */
+		/**
+		 * The number of total frames of the animated bitmap.
+		 * @private
+		 */
 		protected var _totalFrames:int;
-		/** @private */
+		
+		/**
+		 * The frame number on that the playhead currently is.
+		 * @private
+		 */
 		protected var _currentFrame:int;
-		/**@private */
+		
+		/**
+		 * Frame count property used for ping pong mode playback.
+		 * @private
+		 */
 		protected var _addFrame:int = 1;
 		
-		/** @private */
+		/**
+		 * Determines if the animated bitmap is currently playing.
+		 * @private
+		 */
 		protected var _isPlaying:Boolean = false;
-		/** @private */
+		
+		/**
+		 * Determines if the animated bitmap is flipped in x direction.
+		 * @private
+		 */
 		protected var _isFlipX:Boolean = false;
-		/** @private */
+		
+		/**
+		 * Determines if the animated bitmap is flipped in y direction.
+		 * @private
+		 */
 		protected var _isFlipY:Boolean = false;
-		/** @private */
+		
+		/**
+		 * Determines if the animated bitmap has been disposed.
+		 * @private
+		 */
 		protected var _isDisposed:Boolean = false;
 		
 		
@@ -116,46 +199,59 @@ package com.hexagonstar.display.bitmaps
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Creates a new AnimatedBitmap instance.
+		 * Creates a new AnimatedBitmap instance. Required parameters are bitmap,
+		 * frameWidth and frameHeight.
 		 * 
-		 * @param bitmap The bitmapData object that contains the image sequence for the
-		 *            animated bitmap.
-		 * @param frameWidth The width of the AnimatedBitmap, this should be equal to the
-		 *            width of a single animation frame on the specified bitmapData.
-		 * @param interval The framerate interval used for the animated bitmap.
+		 * @param bitmapData
+		 * @param frameWidth
+		 * @param frameHeight
+		 * @param totalFrames
+		 * @param playMode
+		 * @param interval
+		 * @param transparent
+		 * @param pixelSnapping
+		 * @param smoothing
 		 */
-		public function AnimatedBitmap(bitmap:BitmapData,
+		public function AnimatedBitmap(bitmapData:BitmapData,
 										   frameWidth:int,
+										   frameHeight:int,
+										   totalFrames:int = 0,
 										   playMode:int = 0,
 										   interval:FrameRateInterval = null,
 										   transparent:Boolean = true,
 										   pixelSnapping:String = "auto",
 										   smoothing:Boolean = false)
 		{
-			_frameHeight = bitmap.height;
-			_frameWidth = frameWidth;
-			
-			super(new BitmapData(frameWidth, _frameHeight, transparent, 0x00000000),
+			super(new BitmapData(frameWidth, frameHeight, transparent, 0x00000000),
 				pixelSnapping, smoothing);
 			
-			_buffer = bitmap.clone();
-			_playMode = playMode;
-			_totalFrames = _buffer.width / _frameWidth;
-			_startFrame = _currentFrame = 1;
-			_endFrame = _totalFrames;
+			_buffer = bitmapData.clone();
 			_point = new Point(0, 0);
-			_ranges = {};
+			_sequences = {};
 			
-			if (interval)
+			_frameWidth = frameWidth;
+			_frameHeight = frameHeight;
+			_playMode = playMode;
+			_startFrame = _currentFrame = 1;
+			
+			_endFrame = _totalFrames = (totalFrames > 0)
+				? totalFrames 
+				: (_buffer.width / _frameWidth) * (_buffer.height / _frameHeight);
+			
+			if (!interval)
 			{
-				_interval = interval;
+				if (!_globalInterval)
+				{
+					_globalInterval = new FrameRateInterval(_globalFrameRate);
+				}
+				_interval = _globalInterval;
 			}
 			else
 			{
-				if (!_globalInterval) _globalInterval = new FrameRateInterval(_globalFrameRate);
-				_interval = _globalInterval;
+				_interval = interval;
 			}
 			
+			calculateFrameCoords();
 			draw();
 		}
 		
@@ -203,9 +299,9 @@ package com.hexagonstar.display.bitmaps
 		 * @param frame an Integer that designates the frame from which to start play.
 		 * @param scene unused in animated bitmaps.
 		 */
-		public function gotoAndPlay(frameOrRange:Object, scene:String = null):void
+		public function gotoAndPlay(frameOrSequence:Object, scene:String = null):void
 		{
-			_currentFrame = resolveFrame(frameOrRange) - 1;
+			_currentFrame = resolveFrame(frameOrSequence) - 1;
 			play();
 		}
 
@@ -217,9 +313,9 @@ package com.hexagonstar.display.bitmaps
 		 * @param frame an Integer that designates the frame to which to jump.
 		 * @param scene unused in animated bitmaps.
 		 */
-		public function gotoAndStop(frameOrRange:Object, scene:String = null):void
+		public function gotoAndStop(frameOrSequence:Object, scene:String = null):void
 		{
-			var f:int = resolveFrame(frameOrRange);
+			var f:int = resolveFrame(frameOrSequence);
 			if (f >= _currentFrame)
 			{
 				_currentFrame = f - 1;
@@ -260,24 +356,24 @@ package com.hexagonstar.display.bitmaps
 
 		
 		/**
-		 * Defines a new animation range to the animated bitmap.
+		 * Defines a new animation sequence to the animated bitmap.
 		 * 
-		 * @param name The name of the range.
+		 * @param name The name of the sequence.
 		 * @param startFrame Starting frame number of the range.
 		 * @param endFrame Ending frame number of the range.
 		 */
-		public function defineRange(name:String, startFrame:int, endFrame:int):void
+		public function defineSequence(name:String, startFrame:int, endFrame:int):void
 		{
-			_ranges[name] = new Range(name, startFrame, endFrame);
+			_sequences[name] = new Sequence(name, startFrame, endFrame);
 		}
 		
 		
 		/**
 		 * removeRange
 		 */
-		public function removeRange(name:String):void
+		public function removeSequence(name:String):void
 		{
-			delete(_ranges[name]);
+			delete(_sequences[name]);
 		}
 		
 		
@@ -364,12 +460,12 @@ package com.hexagonstar.display.bitmaps
 		 * Returns the name of the range that the current frame is in or null if the
 		 * current frame is not in any defined range.
 		 */
-		public function get currentRange():String
+		public function get currentSequence():String
 		{
-			for (var n:String in _ranges)
+			for (var n:String in _sequences)
 			{
-				var r:Range = _ranges[n];
-				if (_currentFrame >= r.start && _currentFrame <= r.end)
+				var s:Sequence = _sequences[n];
+				if (_currentFrame >= s.start && _currentFrame <= s.end)
 				{
 					return n;
 				}
@@ -408,19 +504,19 @@ package com.hexagonstar.display.bitmaps
 		 * @see addRange
 		 * @see removeRange
 		 */
-		public function get range():String
+		public function get sequence():String
 		{
-			if (_currentRange) return _currentRange.name;
+			if (_currentSequence) return _currentSequence.name;
 			return null;
 		}
-		public function set range(v:String):void
+		public function set sequence(v:String):void
 		{
-			if (_currentRange && v == _currentRange.name) return;
-			_currentRange = _ranges[v];
-			if (_currentRange)
+			if (_currentSequence && v == _currentSequence.name) return;
+			_currentSequence = _sequences[v];
+			if (_currentSequence)
 			{
-				_startFrame = _currentFrame = _currentRange.start;
-				_endFrame = _currentRange.end;
+				_startFrame = _currentFrame = _currentSequence.start;
+				_endFrame = _currentSequence.end;
 				draw();
 			}
 		}
@@ -561,8 +657,37 @@ package com.hexagonstar.display.bitmaps
 		protected function draw():void
 		{
 			dispatchEvent(new FrameEvent(FrameEvent.ENTER_FRAME, _currentFrame));
-			_rect = new Rectangle((_currentFrame - 1) * _frameWidth, 0, _frameWidth, _frameHeight);
+			var p:Point = _frameCoords[_currentFrame - 1];
+			_rect = new Rectangle(p.x, p.y, _frameWidth, _frameHeight);
 			bitmapData.copyPixels(_buffer, _rect, _point);
+		}
+		
+		
+		/**
+		 * @private
+		 */
+		protected function calculateFrameCoords():void
+		{
+			_frameCoords = new Vector.<Point>(_totalFrames, true);
+			
+			var x:int = 0;
+			var y:int = 0;
+			
+			/* Iterate through frames on the buffer */
+			for (var i:int = 0; i < _totalFrames; i++)
+			{
+				_frameCoords[i] = new Point(x, y);
+				
+				/* Increase x position */
+				x += _frameWidth;
+				
+				/* Reset x and increase y after reaching the last frame per row */
+				if (x > (_buffer.width - _frameWidth))
+				{
+					x = 0;
+					y += _frameHeight;
+				}
+			}
 		}
 		
 		
@@ -576,21 +701,22 @@ package com.hexagonstar.display.bitmaps
 		{
 			if (isNaN(v))
 			{
-				var r:Range = _ranges[String(v)];
-				if (r) return r.start;
+				var s:Sequence = _sequences[String(v)];
+				if (s) return s.start;
 			}
 			return v;
 		}
 	}
 }
 
-class Range
+
+class Sequence
 {
 	public var name:String;
 	public var start:int;
 	public var end:int;
 	
-	public function Range(n:String, s:int, e:int)
+	public function Sequence(n:String, s:int, e:int)
 	{
 		name = n;
 		start = s;
