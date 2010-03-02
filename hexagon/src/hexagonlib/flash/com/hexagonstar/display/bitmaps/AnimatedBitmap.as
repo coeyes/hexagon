@@ -41,6 +41,7 @@ package com.hexagonstar.display.bitmaps
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.utils.setTimeout;
 
 	/**
 	 * Dispatched everytime a frame is entered.
@@ -86,7 +87,7 @@ package com.hexagonstar.display.bitmaps
 		protected var _buffer:BitmapData;
 		
 		/**
-		 * Interval that is used to mae the animation 'run'.
+		 * Interval that is used to make the animation 'run'.
 		 * @private
 		 */
 		protected var _interval:FrameRateInterval;
@@ -119,7 +120,7 @@ package com.hexagonstar.display.bitmaps
 		 * The currently playing animation sequence.
 		 * @private
 		 */
-		protected var _currentSequence:Sequence;
+		protected var _sequence:Sequence;
 		
 		/**
 		 * Frame number from which to start playing.
@@ -146,12 +147,6 @@ package com.hexagonstar.display.bitmaps
 		protected var _frameHeight:int;
 		
 		/**
-		 * The current playback mode of the animated bitmap.
-		 * @private
-		 */
-		protected var _playMode:int;
-		
-		/**
 		 * The number of total frames of the animated bitmap.
 		 * @private
 		 */
@@ -168,6 +163,11 @@ package com.hexagonstar.display.bitmaps
 		 * @private
 		 */
 		protected var _addFrame:int = 1;
+		
+		/**
+		 * @private
+		 */
+		protected var _loopCount:int = 0;
 		
 		/**
 		 * Determines if the animated bitmap is currently playing.
@@ -188,11 +188,19 @@ package com.hexagonstar.display.bitmaps
 		protected var _isFlipY:Boolean = false;
 		
 		/**
+		 * Determines if the animated bitmap uses the global interval.
+		 * @private
+		 */
+		protected var _useGlobalInterval:Boolean = false;
+		
+		/**
 		 * Determines if the animated bitmap has been disposed.
 		 * @private
 		 */
 		protected var _isDisposed:Boolean = false;
 		
+		private var _frameRate:int;
+
 		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
@@ -231,7 +239,6 @@ package com.hexagonstar.display.bitmaps
 			
 			_frameWidth = frameWidth;
 			_frameHeight = frameHeight;
-			_playMode = playMode;
 			_startFrame = _currentFrame = 1;
 			
 			_endFrame = _totalFrames = (totalFrames > 0)
@@ -245,13 +252,18 @@ package com.hexagonstar.display.bitmaps
 					_globalInterval = new FrameRateInterval(_globalFrameRate);
 				}
 				_interval = _globalInterval;
+				_useGlobalInterval = true;
 			}
 			else
 			{
 				_interval = interval;
 			}
 			
+			_frameRate = _interval.frameRate;
+			
 			calculateFrameCoords();
+			defineSequence("all", _startFrame, _endFrame, playMode);
+			sequence = "all";
 			draw();
 		}
 		
@@ -265,6 +277,11 @@ package com.hexagonstar.display.bitmaps
 		{
 			if (!_isPlaying)
 			{
+				if (_loopCount == _sequence.loops)
+				{
+					_loopCount = 0;
+				}
+				
 				_isPlaying = true;
 				_interval.addEventListener(TimerEvent.TIMER, onInterval, false, 0, true);
 				_interval.start();
@@ -340,7 +357,7 @@ package com.hexagonstar.display.bitmaps
 			if (_currentFrame > _totalFrames) _currentFrame = _totalFrames;
 			draw();
 		}
-
+		
 		
 		/**
 		 * Moves the animation to the previous of the current frame. If the animated bitmap
@@ -353,7 +370,7 @@ package com.hexagonstar.display.bitmaps
 			if (_currentFrame < 1) _currentFrame = 1;
 			draw();
 		}
-
+		
 		
 		/**
 		 * Defines a new animation sequence to the animated bitmap.
@@ -361,10 +378,23 @@ package com.hexagonstar.display.bitmaps
 		 * @param name The name of the sequence.
 		 * @param startFrame Starting frame number of the range.
 		 * @param endFrame Ending frame number of the range.
+		 * @param loops Nr of loops that the sequence should play.
+		 * @param playMode
+		 * @param followSequence Optional sequence name that follows after this sequence
+		 *         reached its end.
+		 * @param followDelay Delay in ms after that the followSequence should play.
 		 */
-		public function defineSequence(name:String, startFrame:int, endFrame:int):void
+		public function defineSequence(name:String,
+										   startFrame:int,
+										   endFrame:int,
+										   loops:int = 0,
+										   playMode:int = 0,
+										   followSequence:String = null,
+										   followDelay:int = 0
+										   ):void
 		{
-			_sequences[name] = new Sequence(name, startFrame, endFrame);
+			_sequences[name] = new Sequence(name, startFrame, endFrame, playMode, loops,
+				followSequence, followDelay);
 		}
 		
 		
@@ -385,7 +415,7 @@ package com.hexagonstar.display.bitmaps
 			stop();
 			_isDisposed = true;
 		}
-
+		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Getters & Setters                                                                  //
@@ -417,38 +447,45 @@ package com.hexagonstar.display.bitmaps
 		 * as a default interval for all animated objects. The valid range is
 		 * between 1 and 1000.
 		 */
-		static public function get globalFrameRate():int
+		public static function get globalFrameRate():int
 		{
 			return _globalFrameRate;
 		}
-		static public function set globalFrameRate(v:int):void
+		public static function set globalFrameRate(v:int):void
 		{
 			if (v < 1) v = 1;
 			else if (v > 1000) v = 1000;
 			_globalFrameRate = v;
 			if (_globalInterval) _globalInterval.frameRate = _globalFrameRate;
 		}
-
+		
 		
 		/**
-		 * Returns the frame rate with that the animated bitmap is playing.
-		 * 
-		 * @return The fps value of the animated bitmap.
+		 * The framerate with that the animated bitmap is playing.
 		 */
 		public function get frameRate():int
 		{
-			return _interval.frameRate;
+			if (_useGlobalInterval) return AnimatedBitmap.globalFrameRate;
+			return _frameRate;
 		}
 		public function set frameRate(v:int):void
 		{
-			_interval.frameRate = v;
+			if (v < 1) v = 1;
+			else if (v > 1000) v = 1000;
+			_frameRate = v;
+			if (_useGlobalInterval)
+			{
+				AnimatedBitmap.globalFrameRate = _frameRate;
+			}
+			else
+			{
+				_interval.frameRate = _frameRate;
+			}
 		}
 		
 		
 		/**
-		 * Returns the current frame position of the animated bitmap.
-		 * 
-		 * @return The current frame position.
+		 * The current frame position of the animated bitmap.
 		 */
 		public function get currentFrame():int
 		{
@@ -457,27 +494,7 @@ package com.hexagonstar.display.bitmaps
 		
 		
 		/**
-		 * Returns the name of the range that the current frame is in or null if the
-		 * current frame is not in any defined range.
-		 */
-		public function get currentSequence():String
-		{
-			for (var n:String in _sequences)
-			{
-				var s:Sequence = _sequences[n];
-				if (_currentFrame >= s.start && _currentFrame <= s.end)
-				{
-					return n;
-				}
-			}
-			return null;
-		}
-		
-		
-		/**
-		 * Returns the total amount of frames that the animated bitmap has.
-		 * 
-		 * @return The total frame amount.
+		 * The total amount of frames that the animated bitmap has.
 		 */
 		public function get totalFrames():int
 		{
@@ -486,37 +503,36 @@ package com.hexagonstar.display.bitmaps
 		
 		
 		/**
-		 * @inheritDoc
+		 * Returns the play mode of the currently played sequence.
 		 */
 		public function get playMode():int
 		{
-			return _playMode;
-		}
-		public function set playMode(v:int):void
-		{
-			_playMode = v;
+			return _sequence.playMode;
 		}
 		
 		
 		/**
-		 * The name of the animation range that should be played.
+		 * Sets the name of the animation sequence that should be played or returns the name
+		 * of the animation sequence that the play header is currently in.
 		 * 
-		 * @see addRange
-		 * @see removeRange
+		 * @see defineSequence
+		 * @see removeSequence
 		 */
 		public function get sequence():String
 		{
-			if (_currentSequence) return _currentSequence.name;
-			return null;
+			if (!_sequence) return null;
+			return _sequence.name;
 		}
 		public function set sequence(v:String):void
 		{
-			if (_currentSequence && v == _currentSequence.name) return;
-			_currentSequence = _sequences[v];
-			if (_currentSequence)
+			if (_sequence && v == _sequence.name) return;
+			var s:Sequence = _sequences[v];
+			if (s)
 			{
-				_startFrame = _currentFrame = _currentSequence.start;
-				_endFrame = _currentSequence.end;
+				_sequence = s;
+				_startFrame = _currentFrame = _sequence.start;
+				_endFrame = _sequence.end;
+				_loopCount = 0;
 				draw();
 			}
 		}
@@ -535,17 +551,49 @@ package com.hexagonstar.display.bitmaps
 		}
 		
 		
-		public function get xPos():Number
+		/**
+		 * A 'workaround' property that always returns the top-left x position of the
+		 * animated bitmap, regardless if it has been flipped in x direction. If an animated
+		 * bitmap is flipped with flipX it's x coordinate changes to the opposite side of
+		 * it's original position. For example an animated bitmap with a width of 200 and
+		 * whose x coordinate is at 200 will change it's x coordinate to 400 if it is
+		 * flipped on the x axis. To circumvent the changed x position use xPos which would
+		 * still return 200 in the above example, no matter if it is flipped or not.
+		 */
+		public function get xPos():int
 		{
 			if (_isFlipX) return x - width;
 			return x;
 		}
-		public function set xPos(v:Number):void
+		public function set xPos(v:int):void
 		{
-			x = xPos;
+			x = v;
 		}
 		
 		
+		/**
+		 * A 'workaround' property that always returns the top-left y position of the
+		 * animated bitmap, regardless if it has been flipped in y direction. If an animated
+		 * bitmap is flipped with flipY it's y coordinate changes to the opposite side of
+		 * it's original position. For example an animated bitmap with a height of 200 and
+		 * whose y coordinate is at 200 will change it's y coordinate to 400 if it is
+		 * flipped on the y axis. To circumvent the changed y position use yPos which would
+		 * still return 200 in the above example, no matter if it is flipped or not.
+		 */
+		public function get yPos():int
+		{
+			if (_isFlipY) return y - height;
+			return y;
+		}
+		public function set yPos(v:int):void
+		{
+			y = v;
+		}
+		
+		
+		/**
+		 * Indicates if the animated bitmap is flipped in the x direction.
+		 */
 		public function get flipX():Boolean
 		{
 			return _isFlipX;
@@ -566,6 +614,9 @@ package com.hexagonstar.display.bitmaps
 		}
 		
 		
+		/**
+		 * Indicates if the animated bitmap is flipped in the y direction.
+		 */
 		public function get flipY():Boolean
 		{
 			return _isFlipY;
@@ -588,8 +639,6 @@ package com.hexagonstar.display.bitmaps
 		
 		/**
 		 * Returns whether the animated bitmap is playing or not.
-		 * 
-		 * @return true if the animated bitmap is playing, else false.
 		 */
 		public function get isPlaying():Boolean
 		{
@@ -612,33 +661,60 @@ package com.hexagonstar.display.bitmaps
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Plays the animation according the the interval mode.
 		 * @private
 		 */
 		protected function onInterval(e:TimerEvent):void
 		{
-			if (_playMode == PlayMode.FORWARD)
+			if (_sequence.playMode == PlayMode.FORWARD)
 			{
 				_currentFrame++;
 				if (_currentFrame > _endFrame)
 				{
+					_loopCount++;
+					if (_loopCount == _sequence.loops)
+					{
+						stop();
+						_currentFrame--;
+						checkFollowSequence();
+						return;
+					}
 					_currentFrame = _startFrame;
 				}
 			}
-			else if (_playMode == PlayMode.BACKWARD)
+			else if (_sequence.playMode == PlayMode.BACKWARD)
 			{
 				_currentFrame--;
 				if (_currentFrame < _startFrame)
 				{
+					_loopCount++;
+					if (_loopCount == _sequence.loops)
+					{
+						stop();
+						_currentFrame++;
+						checkFollowSequence();
+						return;
+					}
 					_currentFrame = _endFrame;
 				}
 			}
-			else if (_playMode == PlayMode.PINGPONG)
+			else if (_sequence.playMode == PlayMode.PINGPONG)
 			{
 				_currentFrame += _addFrame;
-				if (_currentFrame == _endFrame || _currentFrame < _startFrame + 1)
+				if (_currentFrame == _endFrame)
 				{
 					_addFrame = -_addFrame;
+				}
+				else if (_currentFrame == _startFrame)
+				{
+					_loopCount++;
+					_addFrame = -_addFrame;
+					if (_loopCount == _sequence.loops)
+					{
+						stop();
+						draw();
+						checkFollowSequence();
+						return;
+					}
 				}
 			}
 			
@@ -652,6 +728,7 @@ package com.hexagonstar.display.bitmaps
 		
 		/**
 		 * Draws the next bitmap frame from the buffer to the visible area.
+		 * 
 		 * @private
 		 */
 		protected function draw():void
@@ -664,6 +741,8 @@ package com.hexagonstar.display.bitmaps
 		
 		
 		/**
+		 * Prepares coordinates for frames on the buffer.
+		 * 
 		 * @private
 		 */
 		protected function calculateFrameCoords():void
@@ -692,9 +771,10 @@ package com.hexagonstar.display.bitmaps
 		
 		
 		/**
-		 * Resolves the frame number of the specified value. If v is a number it is
-		 * returned direclly. If v is not a number it is seen as the name of a range
-		 * and the start frame number of the range is tried to be returned.
+		 * Resolves the frame number of the specified value. If v is a number it is returned
+		 * directly. If v is not a number it is seen as the name of a sequence and the start
+		 * frame number of the sequence is tried to be returned.
+		 * 
 		 * @private
 		 */
 		protected function resolveFrame(v:*):int
@@ -706,20 +786,56 @@ package com.hexagonstar.display.bitmaps
 			}
 			return v;
 		}
+		
+		
+		/**
+		 * @private
+		 */
+		protected function checkFollowSequence():void
+		{
+			if (_sequence.followSeq)
+			{
+				if (_sequence.followDelay < 1)
+				{
+					sequence = _sequence.followSeq;
+					play();
+				}
+				else
+				{
+					setTimeout(function():void 
+					{
+						sequence = _sequence.followSeq;
+						play();
+					}, _sequence.followDelay);
+				}
+			}
+		}
 	}
 }
 
 
+/**
+ * Sequence Data Object
+ * @private
+ */
 class Sequence
 {
 	public var name:String;
 	public var start:int;
 	public var end:int;
+	public var playMode:int;
+	public var loops:int;
+	public var followSeq:String;
+	public var followDelay:int;
 	
-	public function Sequence(n:String, s:int, e:int)
+	public function Sequence(n:String, s:int, e:int, pm:int, l:int, fs:String, fd:int)
 	{
 		name = n;
 		start = s;
 		end = e;
+		playMode = pm;
+		loops = l;
+		followSeq = fs;
+		followDelay = fd;
 	}
 }
