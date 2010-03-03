@@ -24,60 +24,44 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hexagonstar.framework.io.parsers
+package command.file
 {
-	import com.hexagonstar.io.file.types.IFile;
-	import com.hexagonstar.io.file.types.XMLFile;
+	import com.hexagonstar.framework.command.file.AbstractLoadCommand;
+	import com.hexagonstar.framework.io.loaders.DataFileLoader;
+	import com.hexagonstar.framework.io.parsers.NullDataFileParser;
 
 	
 	/**
-	 * ExampleDataFileParser Class
-	 * 
 	 * @author Sascha Balkau
 	 * @version 1.0.0
 	 */
-	public class ExampleDataFileParser extends AbstractFileParser implements IFileParser
+	public class LoadDataCommand extends AbstractLoadCommand
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Creates a new ExampleDataFileParser instance.
+		 * Creates a new LoadDataCommand instance.
 		 */
-		public function ExampleDataFileParser()
+		public function LoadDataCommand()
 		{
 			super();
 		}
 		
 		
 		/**
-		 * parse
-		 */
-		override public function parse(file:IFile):void
+		 * Execute the command.
+		 */ 
+		override public function execute():void
 		{
-			super.parse(file);
+			/* Initlialize main data model before anything is loaded. */
+			Main.data.init();
 			
-			var xml:XML = XMLFile(file).contentAsXML;
+			_loader = new DataFileLoader(Main.config.dataIndexFile);
+			_loader.addParser(new NullDataFileParser());
 			
-			for each (var x:XML in xml.entry)
-			{
-				/* Create a new object instance of the data model you're using for
-				 * the parsed data and fill it in from the parsed xml here, e.g.:
-				 * 
-				 * var d:DataModel = new DataModel();
-				 * d.id = x.@id;
-				 * d.text = x;
-				 * 
-				 * After that add the data model object to a data container in the
-				 * main data model:
-				 * 
-				 * _data.exampleDataModels.push(d);
-				 */
-				x = x; // To prevent local var warning in FDT!
-			}
-			
-			complete();
+			super.execute();
 		}
 		
 		
@@ -85,13 +69,9 @@ package com.hexagonstar.framework.io.parsers
 		// Getters & Setters                                                                  //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
-		/**
-		 * Returns the ID of the parser that is used to identify which loaded
-		 * files should be parsed with which parser.
-		 */
-		override public function get id():String
+		override public function get name():String
 		{
-			return "example";
+			return "loadData";
 		}
 	}
 }
