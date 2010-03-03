@@ -24,54 +24,61 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package command.env
+package com.hexagonstar.framework.io.parsers
 {
-	import command.file.LoadDataCommand;
-
-	import com.hexagonstar.framework.command.file.LoadConfigCommand;
-	import com.hexagonstar.framework.command.file.LoadLocaleCommand;
-	import com.hexagonstar.pattern.cmd.CompositeCommand;
+	import com.hexagonstar.io.file.types.IFile;
+	import com.hexagonstar.io.file.types.XMLFile;
 
 	
 	/**
-	 * This composite command is used to execute the initialization of the application.
-	 * The following tasks are taken care of by this command in order:
-	 * 
-	 * 1. Load App Config
-	 * 2. Load Locale
-	 * 3. Load Data Files
-	 * 4. Init KeyManager
+	 * A data file parser that does nothing. This parser only exists as a placeholder
+	 * and to give an example for a data file parser.
 	 * 
 	 * @author Sascha Balkau
 	 * @version 1.0.0
 	 */
-	public class InitApplicationCommand extends CompositeCommand
+	public class NullDataFileParser extends AbstractFileParser implements IFileParser
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Creates a new InitApplicationCommand instance.
+		 * Creates a new NullDataFileParser instance.
 		 */
-		public function InitApplicationCommand()
+		public function NullDataFileParser()
 		{
 			super();
 		}
 		
 		
 		/**
-		 * Execute the application initialization command.
-		 */ 
-		override public function execute():void
+		 * parse
+		 */
+		override public function parse(file:IFile):void
 		{
-			/* Ignore whitespace on all XML data files. */
-			XML.ignoreWhitespace = true;
+			super.parse(file);
 			
-			/* Initlialize main data model before anything is loaded. */
-			Main.data.init();
+			var xml:XML = XMLFile(file).contentAsXML;
 			
-			super.execute();
+			for each (var x:XML in xml.entry)
+			{
+				/* Create a new object instance of the data model you're using for
+				 * the parsed data and fill it in from the parsed xml here, e.g.:
+				 * 
+				 * var d:DataModel = new DataModel();
+				 * d.id = x.@id;
+				 * d.text = x;
+				 * 
+				 * After that add the data model object to a data container in the
+				 * main data model:
+				 * 
+				 * _data.exampleDataModels.push(d);
+				 */
+				x = x; // To prevent local var warning in FDT!
+			}
+			
+			complete();
 		}
 		
 		
@@ -80,27 +87,12 @@ package command.env
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * @inheritDoc
+		 * Returns the ID of the parser that is used to identify which loaded
+		 * files should be parsed with which parser.
 		 */
-		override public function get name():String
+		override public function get id():String
 		{
-			return "appInit";
-		}
-		
-		
-		////////////////////////////////////////////////////////////////////////////////////////
-		// Private Methods                                                                    //
-		////////////////////////////////////////////////////////////////////////////////////////
-		
-		/**
-		 * @private
-		 */
-		override protected function enqueueCommands():void
-		{
-			enqueue(new LoadConfigCommand(), "Config file loading complete.");
-			enqueue(new LoadLocaleCommand(), "Locale loading complete.");
-			enqueue(new LoadDataCommand(), "Data loading complete.");
-			enqueue(new InitKeyManagerCommand(), "KeyManager initialization complete.");
+			return "null";
 		}
 	}
 }

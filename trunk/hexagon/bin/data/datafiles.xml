@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files>
-	<file parserID="example" path="data/data1.xml"/>
-	<file parserID="example" path="data/data2.xml"/>
-	<file parserID="example" path="data/data3.xml"/>
-</files>
+<!--
+	 =====================================================================================
+	 DATA INDEX FILE
+	 
+	 This file defines all XML data files that are being loaded by the application.
+	 Every XML data file that should be loaded needs to be added in a <file> tag and
+	 requires a 'parserID' and a 'path' attribute. Files are being loaded in the same
+	 order as they are added to this list.
+	 
+	 path			The path of the data file, relative to the application's root folder.
+	 
+	 parserID		The ID of the data parser that should be used to parse the contents
+	 				of the data file. (Parser IDs can only be defined inside the
+	 				application).
+	 =====================================================================================
+-->
+<dif:dataIndexFile xmlns:dif="http://www.hexagonstar.com/2009/DataIndexFile/1.0">
+	<files>
+		<file path="data/example_data_1.xml" parserID="null"/>
+		<file path="data/example_data_2.xml" parserID="null"/>
+	</files>
+</dif:dataIndexFile>
