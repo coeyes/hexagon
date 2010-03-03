@@ -81,7 +81,7 @@
 	
 	<!-- additional swc pathes -->
 	<property name="path.swc.hexagon"	value="${workspace}/com.hexagonstar.hexagon/swc"/>
-	<property name="path.swc.alcon"	value="${workspace}/com.hexagonstar.alcon/bin/debug/as3"/>
+	<property name="path.swc.alcon"	value="${workspace}/com.hexagonstar.alcon.debug/bin"/>
 	<property name="path.swc.library"	value="${path.src}/assets"/>
 	
 	<!-- sdk & tool pathes -->
