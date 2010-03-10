@@ -15,8 +15,8 @@ package
 		public function get id():String {return "com.hexagonstar.rhombus.app";}
 		public function get name():String {return "rhombus app";}
 		public function get version():String {return "1.0.0";}
-		public function get build():String {return "595";}
-		public function get buildDate():String {return "10-March-2010 23:34";}
+		public function get build():String {return "596";}
+		public function get buildDate():String {return "10-March-2010 23:52";}
 		public function get releaseStage():String {return "beta";}
 		public function get releaseType():String {return "web";}
 		public function get copyright():String {return "Hexagon Star Softworks";}
