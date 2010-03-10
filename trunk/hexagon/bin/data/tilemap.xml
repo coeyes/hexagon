@@ -5,18 +5,18 @@
 	 
 	 Defines a universal tilemap for use with the tetragon tile engine.
 	 
-	 id					The unique resource ID.
+	 id					The unique resource ID of the tilemap.
 	 type				The type of the tilemap which is one of "orthogonal",
 	 					"hexagonal" or "isometric". Only orthogonal is supported yet.
 	 layerCount			How many tile layers the tilemap is comprising of.
 	 width				The width of the tilemap, counted in tiles.
 	 height				The height of the tilemap, counted in tiles.
 	 
-	 meta.name			Meta-name of the tilemap. Meta data is mainly used for editors.
-	 meta.description	Optional description of the tilemap.
-	 meta.author		Optional author name of the tilemap.
+	 meta.name			Meta-name of the resource. Meta data is mainly used for editors.
+	 meta.description	Optional description of the resource.
+	 meta.author		Optional author name of the resource.
 	 meta.keywords		List of optional keywords, separated by comma, that the
-	 					tilemap can be associated with.
+	 					resource can be associated with.
 	 
 	 mapProperties		These are a list of general properties which are supported
 	 					by a tilemap, e.g. 'backgroundColor' and 'backgroundGradient'
@@ -35,8 +35,8 @@
 		height="16">
 		
 		<meta>
-			<name><![CDATA[TileMap Name]]></name>
-			<description><![CDATA[TileMap Description]]></description>
+			<name><![CDATA[Resource Name]]></name>
+			<description><![CDATA[Resource Description]]></description>
 			<author><![CDATA[Author Name]]></author>
 			<keywords><![CDATA[Optional, Keywords]]></keywords>
 			<date></date>

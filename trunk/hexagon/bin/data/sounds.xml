@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	 =====================================================================================
+	 SOUND DEFINITION FILE
+	 
+	 Defines sound and sound group resources.
+	 
+	 =====================================================================================
+-->
+<sdf:soundDefinitionFile xmlns:sdf="http://www.hexagonstar.com/2010/SoundDefinitionFile/1.0">
+	
+	<sounds>
+		<sound
+			id="soundID"
+			volume="1.0"
+			pan="0"
+			startOffset="0"
+			loops="0"
+			fadeInDuration="0.0"
+			fadeOutDuration="0.0"
+			source="path/to/soundfile.mp3"/>
+		
+		<sound
+			id="soundID"
+			volume="1.0"
+			pan="0"
+			startOffset="0"
+			loops="0"
+			fadeInDuration="0.0"
+			fadeOutDuration="0.0"
+			source="path/to/soundfile.mp3"/>
+	</sounds>
+	
+	<soundGroups>
+		<soundGroup id="soundGroupID" playMode="forward|backward|pingpong|random">
+			<sound id="sound1"/>
+			<sound id="sound2"/>
+			<sound id="sound3"/>
+		</soundGroup>
+	</soundGroups>
+	
+</sdf:soundDefinitionFile>

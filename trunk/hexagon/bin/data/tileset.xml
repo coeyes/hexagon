@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	 =====================================================================================
+	 TILESET FILE
+	 
+	 Defines a universal tileset for use with the tetragon tile engine.
+	 
+	 id						The unique resource ID of the tileset.
+	 tileWidth				The width of a tile used in the tileset.
+	 tileHeight				The height of a tile used in the tileset.
+	 tileGap				Can be used to determine a gap between tiles on the
+	 						tileset source image.
+	 transparent			Determines if the tileset bitmap is transparent. This is
+	 						used when using a transparent PNG image for the tileset.
+	 bgColor				The background color of the tileset (TODO: Needs explanation!)
+	 source					Path to the image file which contains the tiles.
+	 
+	 meta.name				Meta-name of the resource. Meta data is mainly used for
+	 						editors.
+	 meta.description		Optional description of the resource.
+	 meta.author			Optional author name of the resource.
+	 meta.keywords			List of optional keywords, separated by comma, that the
+	 						resource can be associated with.
+	 
+	 propertyDefinitions	Defines properties that can be used as global- and tile-
+	 						properties. This is like a pool to that any arbitrary tile
+	 						property or global property has access to and can reference
+	 						the property definitions by their id.
+	 
+	 globalProperties		Global properties are properties that affect every tile in
+	 						the tileset. These are applied to every tile in the tileset
+	 						automatically.
+	 
+	 tiles					The list of tile definitions. Every tile has a unique ID
+	 						which is the number of the tile rectangle on the used tileset
+	 						image. Any tile can have a set of properties whose ID refers
+	 						to the property definition (see propertyDefinitions) which
+	 						it reflects. Animated tiles have an additional frameCount
+	 						atribute which determines how many frames the animation
+	 						uses.
+	 =====================================================================================
+-->
+<tsf:tileSetFile xmlns:tsf="http://www.hexagonstar.com/2009/TileSetFile/1.0">
+	
+	<tileSet
+		id="tilesetID"
+		tileWidth="32"
+		tileHeight="32"
+		tileGap="0"
+		transparent="false"
+		bgColor="0xFF00FF"
+		source="path/to/tile_image.png">
+		
+		<meta>
+			<name><![CDATA[Resource Name]]></name>
+			<description><![CDATA[Resource Description]]></description>
+			<author><![CDATA[Author Name]]></author>
+			<keywords><![CDATA[Optional, Keywords]]></keywords>
+			<date></date>
+		</meta>
+		
+		<propertyDefinitions>
+			<property id="0" name="description" defaultValue=""/>
+			<property id="1" name="isSolid" defaultValue="false"/>
+			<property id="2" name="isDiggable" defaultValue="false"/>
+			<property id="3" name="isCollectable" defaultValue="false"/>
+			<property id="4" name="isDestructable" defaultValue="false"/>
+			<property id="5" name="hasGravity" defaultValue="false"/>
+			<property id="6" name="scoreValue" defaultValue="0"/>
+		</propertyDefinitions>
+		
+		<globalProperties>
+			<property id="0" value="An example Tileset"/>
+		</globalProperties>
+		
+		<tiles>
+			<tile id="1">
+				<properties>
+					<property id="0" value="Outer Wall Tile"/>
+					<property id="1" value="true"/>
+				</properties>
+			</tile>
+			<tile id="2">
+				<properties>
+					<property id="0" value="Solid Block"/>
+					<property id="1" value="true"/>
+				</properties>
+			</tile>
+			<tile id="3">
+				<properties>
+					<property id="0" value="Masonry"/>
+					<property id="1" value="true"/>
+					<property id="4" value="true"/>
+				</properties>
+			</tile>
+			<tile id="4">
+				<properties>
+					<property id="0" value="Soil"/>
+					<property id="2" value="true"/>
+				</properties>
+			</tile>
+			<tile id="5" frameCount="11">
+				<properties>
+					<property id="0" value="Gemstone"/>
+					<property id="3" value="true"/>
+					<property id="4" value="true"/>
+					<property id="5" value="true"/>
+					<property id="6" value="1000"/>
+				</properties>
+			</tile>
+			<tile id="6">
+				<properties>
+					<property id="0" value="Boulder"/>
+					<property id="4" value="true"/>
+					<property id="5" value="true"/>
+				</properties>
+			</tile>
+			<tile id="7" frameCount="11">
+				<properties>
+					<property id="0" value="Gemstone2"/>
+					<property id="3" value="true"/>
+					<property id="4" value="true"/>
+					<property id="5" value="true"/>
+					<property id="6" value="2000"/>
+				</properties>
+			</tile>
+			<tile id="8" frameCount="4">
+				<properties>
+					<property id="0" value="Moving Background"/>
+				</properties>
+			</tile>
+		</tiles>
+		
+	</tileSet>
+	
+</tsf:tileSetFile>
