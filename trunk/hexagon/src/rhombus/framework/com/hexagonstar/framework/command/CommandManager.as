@@ -271,28 +271,42 @@ package com.hexagonstar.framework.command
 			 * to. Otherwise the command must have handler methods manually assigned */
 			if (l)
 			{
-				cmd.addEventListener(CommandEvent.COMPLETE, l.onCommandComplete);
-				cmd.addEventListener(CommandEvent.ERROR, l.onCommandError);
-				cmd.addEventListener(CommandEvent.ABORT, l.onCommandAbort);
-				cmd.addEventListener(CommandEvent.PROGRESS, l.onCommandProgress);
+				cmd.addEventListener(CommandEvent.COMPLETE, l.onCommandComplete,
+					false, 0, true);
+				cmd.addEventListener(CommandEvent.ERROR, l.onCommandError, false, 0, true);
+				cmd.addEventListener(CommandEvent.ABORT, l.onCommandAbort, false, 0, true);
+				cmd.addEventListener(CommandEvent.PROGRESS, l.onCommandProgress,
+					false, 0, true);
 			}
 			else
 			{
 				if (cmdDO.completeHandler != null)
-					cmd.addEventListener(CommandEvent.COMPLETE, cmdDO.completeHandler);
+				{
+					cmd.addEventListener(CommandEvent.COMPLETE, cmdDO.completeHandler,
+						false, 0, true);
+				}
 				if (cmdDO.errorHandler != null)
-					cmd.addEventListener(CommandEvent.ERROR, cmdDO.errorHandler);
+				{
+					cmd.addEventListener(CommandEvent.ERROR, cmdDO.errorHandler,
+						false, 0, true);
+				}
 				if (cmdDO.abortHandler != null)
-					cmd.addEventListener(CommandEvent.ABORT, cmdDO.abortHandler);
+				{
+					cmd.addEventListener(CommandEvent.ABORT, cmdDO.abortHandler,
+						false, 0, true);
+				}
 				if (cmdDO.progressHandler != null)
-					cmd.addEventListener(CommandEvent.PROGRESS, cmdDO.progressHandler);
+				{
+					cmd.addEventListener(CommandEvent.PROGRESS, cmdDO.progressHandler,
+						false, 0, true);
+				}
 			}
 			
 			/* Add event listeners that call handlers in the command manager */
-			cmd.addEventListener(CommandEvent.COMPLETE, onCommandComplete);
-			cmd.addEventListener(CommandEvent.ERROR, onCommandError);
-			cmd.addEventListener(CommandEvent.ABORT, onCommandAbort);
-			cmd.addEventListener(CommandEvent.PROGRESS, onCommandProgress);
+			cmd.addEventListener(CommandEvent.COMPLETE, onCommandComplete, false, 0, true);
+			cmd.addEventListener(CommandEvent.ERROR, onCommandError, false, 0, true);
+			cmd.addEventListener(CommandEvent.ABORT, onCommandAbort, false, 0, true);
+			cmd.addEventListener(CommandEvent.PROGRESS, onCommandProgress, false, 0, true);
 		}
 		
 		
