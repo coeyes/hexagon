@@ -64,6 +64,9 @@ package com.hexagonstar.framework.model
 		/* Screen */
 		public var useFullscreen:Boolean;
 		
+		/* IO */
+		public var useAbsoluteFilePath:Boolean;
+		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
@@ -89,6 +92,8 @@ package com.hexagonstar.framework.model
 			fpsMonitorKey = "SHIFT+F8";
 			
 			useFullscreen = false;
+			
+			useAbsoluteFilePath = true;
 		}
 	}
 }
