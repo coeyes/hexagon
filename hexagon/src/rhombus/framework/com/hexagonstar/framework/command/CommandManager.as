@@ -27,6 +27,7 @@
 package com.hexagonstar.framework.command
 {
 	import com.hexagonstar.event.CommandEvent;
+	import com.hexagonstar.exception.SingletonException;
 	import com.hexagonstar.pattern.cmd.Command;
 	import com.hexagonstar.pattern.cmd.ICommandListener;
 	import com.hexagonstar.pattern.cmd.PausableCommand;
@@ -72,11 +73,7 @@ package com.hexagonstar.framework.command
 		 */
 		public function CommandManager()
 		{
-			if (!_singletonLock)
-			{
-				throw new Error("Tried to instantiate CommandManager through"
-					+ " it's constructor. Use CommandManager.instance instead!");
-			}
+			if (!_singletonLock) throw new SingletonException(this);
 			
 			_executingCommands = new Vector.<CommandDO>();
 		}
