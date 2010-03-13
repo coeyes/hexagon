@@ -2,6 +2,7 @@ package com.hexagonstar.io.key
 {
 	import com.hexagonstar.core.BasicClass;
 	import com.hexagonstar.event.KeyCombinationEvent;
+	import com.hexagonstar.exception.SingletonException;
 
 	import flash.events.KeyboardEvent;
 	import flash.utils.Dictionary;
@@ -43,11 +44,7 @@ package com.hexagonstar.io.key
 		{
 			// TODO There is still a bug with KeyCombination when more than 3 keys are used!
 			
-			if (!_singletonLock)
-			{
-				throw new Error("Tried to instantiate KeyManager through"
-					+ " it's constructor. Use KeyManager.instance instead!");
-			}
+			if (!_singletonLock) throw new SingletonException(this);
 			
 			_assignmentsDown = new Dictionary();
 			_assignmentsRelease = new Dictionary();
