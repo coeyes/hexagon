@@ -1,6 +1,8 @@
-﻿# Application Locale File
-# Part of the hexagon Application Template
+﻿###############################################
+# Application Locale File
+# Part of the Rhombus application framework
 # Copyright (c) 2009 Hexagon Star Softworks
+###############################################
 
 mainMenuStart = 開始
 mainMenuExit = 終了

@@ -76,7 +76,7 @@ package model
 			defaultLocale = Locale.ENGLISH;
 			currentLocale = defaultLocale;
 			
-			dataIndexFile = "data/datafiles.xml";
+			dataIndexFile = "data/dataindex.xml";
 		}
 	}
 }
