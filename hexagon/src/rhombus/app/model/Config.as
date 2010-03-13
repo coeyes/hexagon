@@ -48,8 +48,14 @@ package model
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/* AIR app only settings */
-		public var autoCheckForUpdates:Boolean;
+		public var updateEnabled:Boolean;
 		public var updateURL:String;
+		public var updateAutoCheck:Boolean;
+		public var updateCheckInterval:Number;
+		public var updateCheckVisible:Boolean;
+		public var updateDownloadProgressVisible:Boolean;
+		public var updateDownloadUpdateVisible:Boolean;
+		public var updateFileUpdateVisible:Boolean;
 		
 		public var localePath:String;
 		public var defaultLocale:String;
@@ -69,8 +75,14 @@ package model
 		{
 			super.init();
 			
-			autoCheckForUpdates = true;
+			updateEnabled = false;
 			updateURL = "";
+			updateAutoCheck = true;
+			updateCheckInterval = 1;
+			updateCheckVisible = false;
+			updateDownloadProgressVisible = true;
+			updateDownloadUpdateVisible = true;
+			updateFileUpdateVisible = true;
 			
 			localePath = "locale";
 			defaultLocale = Locale.ENGLISH;
