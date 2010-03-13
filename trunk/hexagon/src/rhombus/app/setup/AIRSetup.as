@@ -29,6 +29,7 @@ package setup
 	import command.env.CloseApplicationCommand;
 
 	import com.hexagonstar.env.WindowBoundsManager;
+	import com.hexagonstar.framework.env.update.UpdateManager;
 	import com.hexagonstar.framework.setup.ISetup;
 
 	import flash.desktop.NativeApplication;
@@ -106,6 +107,12 @@ package setup
 			/* Make application visible. */
 			_app.stage.nativeWindow.visible = true;
 			_app.stage.nativeWindow.activate();
+			
+			/* Only create update manager if updates are enabled */
+			if (Main.config.updateEnabled)
+			{
+				UpdateManager.instance.initialize();
+			}
 		}
 		
 		
