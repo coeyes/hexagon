@@ -26,8 +26,6 @@
  */
 package command.env
 {
-	import command.file.LoadDataCommand;
-
 	import com.hexagonstar.framework.command.file.LoadConfigCommand;
 	import com.hexagonstar.framework.command.file.LoadLocaleCommand;
 	import com.hexagonstar.pattern.cmd.CompositeCommand;
@@ -99,7 +97,7 @@ package command.env
 		{
 			enqueue(new LoadConfigCommand(), "Config file loading complete.");
 			enqueue(new LoadLocaleCommand(), "Locale loading complete.");
-			enqueue(new LoadDataCommand(), "Data loading complete.");
+			//enqueue(new LoadDataCommand(), "Data loading complete.");
 			enqueue(new InitKeyManagerCommand(), "KeyManager initialization complete.");
 		}
 	}

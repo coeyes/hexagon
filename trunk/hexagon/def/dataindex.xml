@@ -17,7 +17,8 @@
 -->
 <dif:dataIndexFile xmlns:dif="http://www.hexagonstar.com/2009/DataIndexFile/1.0">
 	<files>
-		<file path="data/example_data_1.xml" parserID="null"/>
-		<file path="data/example_data_2.xml" parserID="null"/>
+		<file path="data/generic_data_file.xml" parserID="null"/>
+		<file path="data/generic_data_file.xml" parserID="null"/>
+		<file path="data/generic_data_file.xml" parserID="null"/>
 	</files>
 </dif:dataIndexFile>

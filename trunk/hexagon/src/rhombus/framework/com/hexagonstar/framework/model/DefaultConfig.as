@@ -52,6 +52,7 @@ package com.hexagonstar.framework.model
 		public var consoleEnabled:Boolean;
 		public var consoleAutoOpen:Boolean;
 		public var consoleKey:String;
+		public var consoleSize:int;
 		public var consoleTransparency:Number;
 		public var consoleFontSize:int;
 		public var consoleMaxBufferSize:int;
@@ -83,6 +84,7 @@ package com.hexagonstar.framework.model
 			consoleEnabled = true;
 			consoleAutoOpen = false;
 			consoleKey = "F8";
+			consoleSize = 2;
 			consoleTransparency = 0.8;
 			consoleFontSize = 11;
 			consoleMaxBufferSize = 40000;
