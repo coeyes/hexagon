@@ -17,7 +17,7 @@
 	<property name="swc.targetname.flash"	value="tetragonlib_flash.swc"/>
 	
 	<!-- version of the used flex sdk -->
-	<property name="sdk.version"		value="3.4.0"/>
+	<property name="sdk.version"		value="3.5.0"/>
 	
 	<!-- version of the targetted flash player -->
 	<property name="fpv.version"		value="10.0.0"/>
@@ -42,6 +42,9 @@
 	<property name="path.cfg.air"		value="${sdk}/frameworks/air-config.xml"/>
 	<property name="path.buildnumber"	value="bld/tetragonlib_build.number"/>
 	
+	<!-- flextasks definitions -->
+	<taskdef resource="flexTasks.tasks" classpath="${sdk}/ant/lib/flexTasks.jar"/>
+	
 	
 	<!-- ==================================================================================== -->
 	<!-- TARGETS                                                                              -->
@@ -54,7 +57,7 @@
 	<target name="swc air" description="Builds the SWC of the tetragonlib AIR branch.">
 		<prepareBuild/>
 		<echo message="Building tetragonlib AIR SWC ..." level="info"/>
-		<flextasks.compc
+		<compc
 			output="${path.swc}/${swc.targetname.air}"
 			target-player="${fpv.version}"
 			debug="false"
@@ -66,14 +69,14 @@
 			<source-path path-element="${path.src.hexagonlib.air}"/>
 			<source-path path-element="${path.src.hexagonlib.flash}"/>
 			<include-sources dir="${path.src.air}" includes="**/*.as"/>
-		</flextasks.compc>
+		</compc>
 	</target>
 	
 	
 	<target name="swc flash" description="Builds the SWC of the tetragonlib Flash branch.">
 		<prepareBuild/>
 		<echo message="Building tetragonlib Flash SWC ..." level="info"/>
-		<flextasks.compc
+		<compc
 			output="${path.swc}/${swc.targetname.flash}"
 			target-player="${fpv.version}"
 			debug="false"
@@ -83,7 +86,7 @@
 			<source-path path-element="${path.src.flash}"/>
 			<source-path path-element="${path.src.hexagonlib.flash}"/>
 			<include-sources dir="${path.src.flash}" includes="**/*.as"/>
-		</flextasks.compc>
+		</compc>
 	</target>
 	
 	

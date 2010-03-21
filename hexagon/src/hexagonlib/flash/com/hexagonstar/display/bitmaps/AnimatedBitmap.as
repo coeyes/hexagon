@@ -301,7 +301,6 @@ package com.hexagonstar.display.bitmaps
 		{
 			if (_isPlaying)
 			{
-				_interval.stop();
 				_interval.removeEventListener(TimerEvent.TIMER, onInterval);
 				_isPlaying = false;
 			}
