@@ -97,6 +97,10 @@
 	<property name="max.recursiondepth"	value="1000"/>
 	<property name="max.executiontime"	value="60"/>
 	
+	<!-- flextasks definitions -->
+	<taskdef resource="flexTasks.tasks" classpath="${sdk}/ant/lib/flexTasks.jar"/>
+	
+	
 	<!-- ==================================================================================== -->
 	<!-- TARGETS                                                                              -->
 	<!-- ==================================================================================== -->
@@ -322,7 +326,7 @@ package
 		<attribute name="isair" default="false"/>
 		<sequential>
 			<echo message="Compiling ${swf.targetname} for runtime v${fpv.version} ..." level="info"/>
-			<flextasks.mxmlc
+			<mxmlc
 				show-unused-type-selector-warnings="false"
 				file="${path.src}/@{mainclass}"
 				output="${path.bin}/${swf.targetname}"
@@ -389,7 +393,7 @@ package
 					<include name="tetragonlib_flash.swc"/>
 				</compiler.library-path> -->
 				
-			</flextasks.mxmlc>
+			</mxmlc>
 		</sequential>
 	</macrodef>
 	
