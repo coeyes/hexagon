@@ -51,7 +51,7 @@
 	<property name="meta.contributor"	value="${app.copyright}"/>
 	
 	<!-- version of the used flex sdk -->
-	<property name="sdk.version"		value="3.5.0"/>
+	<property name="sdk.version"		value="4.0.0"/>
 	
 	<!-- version of the targetted flash player or air platform -->
 	<property name="fpv.version"		value="10.0.0"/>
