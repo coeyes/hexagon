@@ -67,6 +67,7 @@ package com.hexagonstar.framework.model
 		
 		/* IO */
 		public var useAbsoluteFilePath:Boolean;
+		public var preventFileCaching:Boolean;
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -96,6 +97,7 @@ package com.hexagonstar.framework.model
 			useFullscreen = false;
 			
 			useAbsoluteFilePath = true;
+			preventFileCaching = false;
 		}
 	}
 }

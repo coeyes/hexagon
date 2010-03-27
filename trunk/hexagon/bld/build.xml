@@ -57,7 +57,11 @@
 	<property name="fpv.version"		value="10.0.0"/>
 	<property name="air.version"		value="2.0beta2"/>
 	
-	<!-- default project folders (path.bin.fp is used for flash player launch) -->
+	<!-- default project folders (path.bin.fp is used for flash player launch    -->
+	<!-- change path.src to the source folder in your project. it is only set to -->
+	<!-- ${basedir}\src\rhombus\app here to follow the hexagon project folder    -->
+	<!-- structure. In a generic project which uses this build file you can      -->
+	<!-- change this to ${basedir}\src                                           -->
 	<property name="path.src"			value="${basedir}/src/rhombus/app"/>
 	<property name="path.bin"			value="${basedir}/bin"/>
 	<property name="path.bin.fp"		value="${basedir}\\bin\\"/>
