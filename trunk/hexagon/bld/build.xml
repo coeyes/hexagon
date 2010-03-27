@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-*********************************************************************************************
-	Buildfile for rhombus framework-based applications
+***************************************************************************************************
+	Buildfile for rhombus framework-based applications -  Version 1.1
 	
 	rhombus - Application framework for web/desktop-based Flash & Flex projects.
 	
@@ -11,12 +11,29 @@
 	Licensed under the MIT License
 	Copyright (c) 2008 Sascha Balkau / Hexagon Star Softworks
 	
-	Requires Adobe FlexTasks.
-*********************************************************************************************
+	
+	IMPORTANT: Before using this build file the following properties should be defined in
+	Eclipse under Preferences/Ant/Runtime/Properties (replace substitutions in [] with
+	correct paths on your system):
+	
+		eclipse.workspace = ${workspace_loc}
+		flex.sdk.basepath = [your/flex/sdk/base/path]
+		web.browser = [path/to/your/webbrowser.exe]
+	
+	Additionally for publishing AIR applications you need to set:
+	
+		air.certificate.path = [path/to/your/air/certificate/file]
+		air.certificate.password = [yourAIRCertificatePassword]
+	
+***************************************************************************************************
 -->
 <project name="rhombus app" default="init" basedir="..">
 	
-	<!-- application information -->
+	<!-- ====================================================================================== -->
+	<!-- Project-specific Settings                                                              -->
+	<!-- ====================================================================================== -->
+	
+	<!-- General Application Information -->
 	<property name="app.id"			value="com.hexagonstar.rhombus.app"/>
 	<property name="app.name"			value="rhombus app"/>
 	<property name="app.version"		value="1.0.0"/>
@@ -27,8 +44,23 @@
 	<property name="app.language"		value="EN"/>
 	<property name="app.description"	value=""/>
 	
-	<!-- air-only application information -->
-	<property name="air.windowtitle"	value="Rhombus"/>
+	<!-- SWF Properties -->
+	<property name="swf.bgcolor"		value="0x000000"/>
+	<property name="swf.framerate"	value="60"/>
+	<property name="swf.width"		value="1024"/>
+	<property name="swf.height"		value="640"/>
+	<property name="swf.targetname"	value="app.swf"/>
+	<property name="swf.htmlwrapper"	value="index.html"/>
+	
+	<!-- SWF Meta Tags -->
+	<property name="meta.title"		value="${app.name}"/>
+	<property name="meta.description"	value="${app.description}"/>
+	<property name="meta.publisher"	value="${app.copyright}"/>
+	<property name="meta.creator"		value="${app.copyright}"/>
+	<property name="meta.contributor"	value="${app.copyright}"/>
+	
+	<!-- AIR-only Application Properties -->
+	<property name="air.windowtitle"	value="Rhombus Application"/>
 	<property name="air.filename"		value="app"/>
 	<property name="air.minimizable"	value="true"/>
 	<property name="air.maximizable"	value="true"/>
@@ -36,46 +68,39 @@
 	<property name="air.minsize"		value="640 480"/>
 	<property name="air.targetname"	value="rhombus_app.air"/>
 	
-	<!-- swf properties -->
-	<property name="swf.bgcolor"		value="0x000000"/>
-	<property name="swf.framerate"	value="60"/>
-	<property name="swf.width"		value="1024"/>
-	<property name="swf.height"		value="640"/>
-	<property name="swf.targetname"	value="app.swf"/>
-	
-	<!-- swf meta tags -->
-	<property name="meta.title"		value="${app.name}"/>
-	<property name="meta.description"	value="${app.description}"/>
-	<property name="meta.publisher"	value="${app.copyright}"/>
-	<property name="meta.creator"		value="${app.copyright}"/>
-	<property name="meta.contributor"	value="${app.copyright}"/>
-	
-	<!-- version of the used flex sdk -->
+	<!-- Version of the targetted Flex SDK -->
 	<property name="sdk.version"		value="4.0.0"/>
 	
-	<!-- version of the targetted flash player or air platform -->
+	<!-- Version of the targetted Flash or AIR Runtime -->
 	<property name="fpv.version"		value="10.0.0"/>
-	<property name="air.version"		value="2.0beta2"/>
+	<property name="air.version"		value="1.5.3"/>
 	
-	<!-- default project folders (path.bin.fp is used for flash player launch    -->
-	<!-- change path.src to the source folder in your project. it is only set to -->
-	<!-- ${basedir}\src\rhombus\app here to follow the hexagon project folder    -->
-	<!-- structure. In a generic project which uses this build file you can      -->
-	<!-- change this to ${basedir}\src                                           -->
+	<!-- Default Project Folders (path.bin.fp is used for Flash Player launch) -->
+	<!-- Change path.src to "${basedir}/src" when using in your own project!   -->
 	<property name="path.src"			value="${basedir}/src/rhombus/app"/>
 	<property name="path.bin"			value="${basedir}/bin"/>
 	<property name="path.bin.fp"		value="${basedir}\\bin\\"/>
 	<property name="path.pub"			value="${basedir}/pub"/>
 	
-	<!-- ==================================================================================== -->
+	<!-- Advanced Compiler Options -->
+	<property name="max.recursiondepth"	value="1000"/>
+	<property name="max.executiontime"	value="60"/>
 	
-	<!-- default class names -->
+	
+	<!-- ====================================================================================== -->
+	<!-- Default References & Paths                                                               -->
+	<!-- ====================================================================================== -->
+	
+	<!-- Default Class Names (these should not be changed!) -->
 	<property name="class.app.flash"	value="App.as"/>
 	<property name="class.app.air"	value="AppAIR.as"/>
 	<property name="class.app.flex"	value="App.mxml"/>
 	
-	<!-- eclipse workspace & additional source pathes -->
+	<!-- Eclipse Workspace Reference -->
 	<property name="workspace"				  value="${eclipse.workspace}"/>
+	
+	<!-- External Source Paths. You can define any additional source paths here but you  -->
+	<!-- also need to reference them in the 'compile' MacroDef under Source Paths.       -->
 	<property name="path.src.hexagon"			  value="${workspace}/com.hexagonstar.hexagon/src"/>
 	<property name="path.src.hexagonlib.air"	  value="${path.src.hexagon}/hexagonlib/air"/>
 	<property name="path.src.hexagonlib.flash"  value="${path.src.hexagon}/hexagonlib/flash"/>
@@ -83,74 +108,69 @@
 	<property name="path.src.tetragonlib.flash" value="${path.src.hexagon}/tetragonlib/flash"/>
 	<property name="path.src.rhombus.framework" value="${path.src.hexagon}/rhombus/framework"/>
 	
-	<!-- additional swc pathes -->
+	<!-- External SWC Paths. Same rules as for Source Paths but for SWC files. -->
 	<property name="path.swc.hexagon"	value="${workspace}/com.hexagonstar.hexagon/swc"/>
 	<property name="path.swc.alcon"	value="${workspace}/com.hexagonstar.alcon.debug/bin"/>
+	
+	<!-- Path reference to the library.swc used in the project. -->
 	<property name="path.swc.library"	value="${path.src}/assets"/>
 	
-	<!-- sdk & tool pathes -->
+	<!-- ====================================================================================== -->
+	<!-- SDK & Tool References                                                                  -->
+	<!-- ====================================================================================== -->
+	
 	<property name="sdk"					value="${flex.sdk.basepath}/${sdk.version}"/>
 	<property name="FLEX_HOME"			value="${sdk}"/>
 	<property name="asdoc"				value="${sdk}/bin/asdoc.exe"/>
-	<property name="player.debug"			value="${flashplayer.debug}"/>
-	<property name="player.release"		value="${flashplayer.release}"/>
 	<property name="air.debuglauncher"	value="${sdk}/bin/adl.exe"/>
 	<property name="air.developertool"	value="${sdk}/lib/adt.jar"/>
+	<property name="browser"				value="${web.browser}"/>
 	
-	<!-- advanced compiler options -->
-	<property name="max.recursiondepth"	value="1000"/>
-	<property name="max.executiontime"	value="60"/>
+	<!-- Currently set for Windows only! You might want to adapt this line to your OS! -->
+	<property name="player.debug"			value="${sdk}/runtimes/player/10/win/FlashPlayer.exe"/>
 	
-	<!-- flextasks definitions -->
+	<!-- FlexTasks Definitions -->
 	<taskdef resource="flexTasks.tasks" classpath="${sdk}/ant/lib/flexTasks.jar"/>
 	
 	
-	<!-- ==================================================================================== -->
-	<!-- TARGETS                                                                              -->
-	<!-- ==================================================================================== -->
+	<!-- ====================================================================================== -->
+	<!-- ANT TARGETS                                                                            -->
+	<!-- ====================================================================================== -->
 	
 	<target name="init" description="Does nothing.">
 	</target>
-	
 	
 	<target name="Flash Compile Debug" description="Compiles a debug version of the Flash Application.">
 		<prepareBuild releasetype="web" debug="true"/>
 		<compile debug="true" config="flex-config.xml" mainclass="App.as" isflash="true" isflex="false" isair="false"/>
 	</target>
 	
-	
 	<target name="Flash Compile" description="Compiles the Flash Application.">
 		<prepareBuild releasetype="web" debug="false"/>
 		<compile debug="false" config="flex-config.xml" mainclass="App.as" isflash="true" isflex="false" isair="false"/>
 	</target>
-	
 	
 	<target name="Flex Compile Debug" description="Compiles a debug version of the Flex Application.">
 		<prepareBuild releasetype="web" debug="true"/>
 		<compile debug="true" config="flex-config.xml" mainclass="App.mxml" isflash="false" isflex="true" isair="false"/>
 	</target>
 	
-	
 	<target name="Flex Compile" description="Compiles the Flex Application.">
 		<prepareBuild releasetype="web" debug="false"/>
 		<compile debug="false" config="flex-config.xml" mainclass="App.mxml" isflash="false" isflex="true" isair="false"/>
 	</target>
 	
-	
 	<target name="Launch Debug" description="Launches the Flash or Flex Application in debug runtime.">
 		<launchFlashDebug/>
 	</target>
 	
-	
-	<target name="Launch" description="Launches the Flash or Flex Application.">
+	<target name="Launch" description="Launches the Flash or Flex Application in the browser.">
 		<launchFlashRelease/>
 	</target>
-	
 	
 	<target name="Launch AIR" description="Launches the Flash or Flex AIR Application.">
 		<LaunchAIR/>
 	</target>
-	
 	
 	<target name="AIR Flash Compile Debug" description="Compiles a debug version of the Flash AIR Application.">
 		<prepareBuild releasetype="desktop" debug="true"/>
@@ -158,13 +178,11 @@
 		<compile debug="true" config="air-config.xml" mainclass="AppAIR.as" isflash="true" isflex="false" isair="true"/>
 	</target>
 	
-	
 	<target name="AIR Flash Compile" description="Compiles the Flash AIR Application.">
 		<prepareBuild releasetype="desktop" debug="false"/>
 		<generateAIRDescriptor/>
 		<compile debug="false" config="air-config.xml" mainclass="AppAIR.as" isflash="true" isflex="false" isair="true"/>
 	</target>
-	
 	
 	<target name="AIR Flex Compile Debug" description="Compiles a debug version of the Flex AIR Application.">
 		<prepareBuild releasetype="desktop" debug="true"/>
@@ -172,22 +190,20 @@
 		<compile debug="true" config="air-config.xml" mainclass="App.mxml" isflash="false" isflex="true" isair="true"/>
 	</target>
 	
-	
 	<target name="AIR Flex Compile" description="Compiles the Flex AIR Application.">
 		<prepareBuild releasetype="desktop" debug="false"/>
 		<generateAIRDescriptor/>
 		<compile debug="false" config="air-config.xml" mainclass="App.mxml" isflash="false" isflex="true" isair="true"/>
 	</target>
 	
-	
 	<target name="Publish AIR" description="Publishes the AIR Application for release.">
 		<publishAIR/>
 	</target>
 	
 	
-	<!-- ==================================================================================== -->
-	<!-- MACRODEFS                                                                            -->
-	<!-- ==================================================================================== -->
+	<!-- ====================================================================================== -->
+	<!-- MACRODEFS                                                                              -->
+	<!-- ====================================================================================== -->
 	
 	<macrodef name="prepareBuild">
 		<attribute name="releasetype" default="web"/>
@@ -201,7 +217,6 @@
 			<generateAppInfo buildnr="${build.number}" builddate="${build.date}" releasetype="@{releasetype}" debug="@{debug}"/>
 		</sequential>
 	</macrodef>
-	
 	
 	<macrodef name="generateAppInfo">
 		<attribute name="buildnr" default=""/>
@@ -244,7 +259,6 @@ package
 </echo>
 		</sequential>
 	</macrodef>
-	
 	
 	<macrodef name="generateAIRDescriptor">
 		<sequential>
@@ -319,7 +333,6 @@ package
 </echo>
 		</sequential>
 	</macrodef>
-	
 	
 	<macrodef name="compile">
 		<attribute name="debug" default="true"/>
@@ -401,7 +414,6 @@ package
 		</sequential>
 	</macrodef>
 	
-	
 	<macrodef name="publishAIR">
 		<sequential>
 			<echo message="Publishing AIR application of ${app.name} ${app.version} ..." level="info"/>
@@ -434,7 +446,6 @@ package
 		</sequential>
 	</macrodef>
 	
-	
 	<macrodef name="launchFlashDebug">
 		<sequential>
 			<echo message="Opening ${swf.targetname} in Flash Player (Debug) ..." level="info"/>
@@ -444,12 +455,11 @@ package
 		</sequential>
 	</macrodef>
 	
-	
 	<macrodef name="launchFlashRelease">
 		<sequential>
-			<echo message="Opening ${swf.targetname} in Flash Player (Release) ..." level="info"/>
-			<exec executable="${player.release}" spawn="true">
-				<arg value="${path.bin.fp}${swf.targetname}"/>
+			<echo message="Opening ${swf.targetname} in Web Browser ..." level="info"/>
+			<exec executable="${browser}" dir=".." spawn="true">
+				<arg value="file://${path.bin}/${swf.htmlwrapper}"/>
 			</exec>
 		</sequential>
 	</macrodef>

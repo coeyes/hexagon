@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://ns.adobe.com/air/application/2.0beta2">
+<application xmlns="http://ns.adobe.com/air/application/1.5.3">
 	<id>com.hexagonstar.rhombus.app</id>
 	<filename>app</filename>
 	<name>rhombus app</name>
-	<version>1.0.0.665</version>
+	<version>1.0.0.695</version>
 	<description></description>
 	<copyright>Hexagon Star Softworks</copyright>
 	<initialWindow>
 		<content>app.swf</content>
-		<title>Rhombus</title>
+		<title>Rhombus Application</title>
 		<systemChrome>standard</systemChrome>
 		<transparent>false</transparent>
 		<visible>false</visible>
