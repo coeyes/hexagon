@@ -279,6 +279,10 @@ package com.hexagonstar.display.bitmaps
 			{
 				if (_loopCount == _sequence.loops)
 				{
+					/* Temp fix! needs testing! Causes anims with only one loop to play
+					 * again after they are stopped and play() is called again. */
+					_currentFrame = 1;
+					
 					_loopCount = 0;
 				}
 				
