@@ -528,7 +528,6 @@ package com.hexagonstar.display.bitmaps
 		}
 		public function set sequence(v:String):void
 		{
-			if (_sequence && v == _sequence.name) return;
 			var s:Sequence = _sequences[v];
 			if (s)
 			{
@@ -536,7 +535,9 @@ package com.hexagonstar.display.bitmaps
 				_startFrame = _currentFrame = _sequence.start;
 				_endFrame = _sequence.end;
 				_loopCount = 0;
-				draw();
+				
+				// Temp Off! Not needed?
+				//draw();
 			}
 		}
 		
@@ -687,6 +688,7 @@ package com.hexagonstar.display.bitmaps
 			else if (_sequence.playMode == PlayMode.BACKWARD)
 			{
 				_currentFrame--;
+				
 				if (_currentFrame < _startFrame)
 				{
 					_loopCount++;
