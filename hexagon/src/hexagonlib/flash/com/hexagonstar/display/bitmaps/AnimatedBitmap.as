@@ -199,6 +199,8 @@ package com.hexagonstar.display.bitmaps
 		 */
 		protected var _isDisposed:Boolean = false;
 		
+		protected var _isStopAtNextLoop:Boolean = false;
+		
 		private var _frameRate:int;
 
 		
@@ -275,6 +277,7 @@ package com.hexagonstar.display.bitmaps
 		 */
 		public function play():void
 		{
+			_isStopAtNextLoop = false;
 			if (!_isPlaying)
 			{
 				if (_loopCount == _sequence.loops)
@@ -308,6 +311,15 @@ package com.hexagonstar.display.bitmaps
 				_interval.removeEventListener(TimerEvent.TIMER, onInterval);
 				_isPlaying = false;
 			}
+		}
+		
+		
+		/**
+		 * stopAtNextLoop
+		 */
+		public function stopAtNextLoop():void
+		{
+			_isStopAtNextLoop = true;
 		}
 		
 		
@@ -675,8 +687,9 @@ package com.hexagonstar.display.bitmaps
 				if (_currentFrame > _endFrame)
 				{
 					_loopCount++;
-					if (_loopCount == _sequence.loops)
+					if (_isStopAtNextLoop || _loopCount == _sequence.loops)
 					{
+						_isStopAtNextLoop = false;
 						stop();
 						_currentFrame--;
 						checkFollowSequence();
@@ -692,8 +705,9 @@ package com.hexagonstar.display.bitmaps
 				if (_currentFrame < _startFrame)
 				{
 					_loopCount++;
-					if (_loopCount == _sequence.loops)
+					if (_isStopAtNextLoop || _loopCount == _sequence.loops)
 					{
+						_isStopAtNextLoop = false;
 						stop();
 						_currentFrame++;
 						checkFollowSequence();
@@ -713,8 +727,9 @@ package com.hexagonstar.display.bitmaps
 				{
 					_loopCount++;
 					_addFrame = -_addFrame;
-					if (_loopCount == _sequence.loops)
+					if (_isStopAtNextLoop || _loopCount == _sequence.loops)
 					{
+						_isStopAtNextLoop = false;
 						stop();
 						draw();
 						checkFollowSequence();
