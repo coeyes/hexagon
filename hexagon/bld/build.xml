@@ -69,11 +69,11 @@
 	<property name="air.targetname"	value="rhombus_app.air"/>
 	
 	<!-- Version of the targetted Flex SDK -->
-	<property name="sdk.version"		value="4.0.0"/>
+	<property name="sdk.version"		value="3.4.0"/>
 	
 	<!-- Version of the targetted Flash or AIR Runtime -->
 	<property name="fpv.version"		value="10.0.0"/>
-	<property name="air.version"		value="1.5.3"/>
+	<property name="air.version"		value="1.5"/>
 	
 	<!-- Default Project Folders (path.bin.fp is used for Flash Player launch) -->
 	<!-- Change path.src to "${basedir}/src" when using in your own project!   -->

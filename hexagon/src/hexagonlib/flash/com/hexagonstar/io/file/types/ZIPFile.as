@@ -31,6 +31,7 @@ package com.hexagonstar.io.file.types
 {
 	import com.hexagonstar.data.constants.CharEncoding;
 	import com.hexagonstar.data.types.Byte;
+	import com.hexagonstar.exception.Exception;
 	import com.hexagonstar.io.file.FileErrorStatus;
 
 	import flash.utils.ByteArray;
@@ -347,7 +348,7 @@ package com.hexagonstar.io.file.types
 				_isValid = true;
 				_errorStatus = FileErrorStatus.OK;
 			}
-			catch (e:Error)
+			catch (e:Exception)
 			{
 				_isValid = false;
 				_errorStatus = e.toString();

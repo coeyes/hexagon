@@ -29,6 +29,7 @@
  */
 package com.hexagonstar.motion.tween.plugins 
 {
+	import flash.display.DisplayObject;
 	import com.hexagonstar.motion.tween.HTween;
 
 	import flash.geom.ColorTransform;
@@ -50,6 +51,14 @@ package com.hexagonstar.motion.tween.plugins
 	 **/
 	public class HTweenColorTransform
 	{
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Constants                                                                          //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/* Used for access to dynamic plugIn data properties */
+		protected static const PLUGINDATA_COLORTRANSFORMENABLED:String = "colorTransformEnabled";
+		
+		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -106,16 +115,18 @@ package com.hexagonstar.motion.tween.plugins
 		 */
 		public static function init(tween:HTween, name:String, value:Number):Number
 		{
-			if (!((enabled && tween.pluginData.colorTransformEnabled == null)
-				|| tween.pluginData.colorTransformEnabled))
-			{ 
-				return value; 
+			if (!((enabled && tween.pluginData[PLUGINDATA_COLORTRANSFORMENABLED] == null)
+				|| tween.pluginData[PLUGINDATA_COLORTRANSFORMENABLED]))
+			{
+				return value;
 			}
+			
+			var d:DisplayObject = DisplayObject(tween.target);
 			
 			if (name == "tint")
 			{
 				/* try to calculate initial tint */
-				var ct:ColorTransform = tween.target.transform.colorTransform;
+				var ct:ColorTransform = d.transform.colorTransform;
 				var a:uint = Math.min(1, 1 - ct.redMultiplier);
 				var r:uint = Math.min(0xFF, ct.redOffset * a);
 				var g:uint = Math.min(0xFF, ct.greenOffset * a);
@@ -125,7 +136,7 @@ package com.hexagonstar.motion.tween.plugins
 			}
 			else
 			{
-				return tween.target.transform.colorTransform[name];
+				return d.transform.colorTransform[name];
 			}
 		}
 		
@@ -150,13 +161,14 @@ package com.hexagonstar.motion.tween.plugins
 										 ratio:Number,
 										 end:Boolean):Number
 		{
-			if (!((tween.pluginData.colorTransformEnabled == null && enabled)
-				|| tween.pluginData.colorTransformEnabled))
+			if (!((tween.pluginData[PLUGINDATA_COLORTRANSFORMENABLED] == null && enabled)
+				|| tween.pluginData[PLUGINDATA_COLORTRANSFORMENABLED]))
 			{ 
 				return value;
 			}
 			
-			var ct:ColorTransform = tween.target.transform.colorTransform;
+			var d:DisplayObject = DisplayObject(tween.target);
+			var ct:ColorTransform = d.transform.colorTransform;
 			
 			if (name == "tint")
 			{
@@ -171,14 +183,13 @@ package com.hexagonstar.motion.tween.plugins
 				var b:uint = bA + ratio * ((tint & 0xFF) - bA);
 				var mult:Number = 1 - a / 0xFF;
 				
-				tween.target.transform.colorTransform =
-					new ColorTransform(mult, mult, mult, ct.alphaMultiplier, r, g, b,
-						ct.alphaOffset);
+				d.transform.colorTransform = new ColorTransform(mult, mult, mult,
+					ct.alphaMultiplier, r, g, b, ct.alphaOffset);
 			}
 			else
 			{
 				ct[name] = value;
-				tween.target.transform.colorTransform = ct;
+				d.transform.colorTransform = ct;
 			}
 			
 			/* tell HTween not to use the default assignment behaviour */

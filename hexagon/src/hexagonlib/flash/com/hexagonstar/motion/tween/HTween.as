@@ -29,6 +29,8 @@
  */
 package com.hexagonstar.motion.tween
 {
+	import com.hexagonstar.motion.tween.plugins.IHTweenPlugin;
+
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -373,8 +375,8 @@ package com.hexagonstar.motion.tween
 			
 			if (properties)
 			{
-				var swap:Boolean = properties.swapValues;
-				delete(properties.swapValues);
+				var swap:Boolean = properties["swapValues"];
+				delete(properties["swapValues"]);
 			}
 			
 			copy(properties, this);
@@ -443,11 +445,11 @@ package com.hexagonstar.motion.tween
 				}
 				if (highPriority)
 				{
-					_plugins[propertyName].unshift(plugin);
+					(_plugins[propertyName] as Array).unshift(plugin);
 				}
 				else
 				{
-					_plugins[propertyName].push(plugin);
+					(_plugins[propertyName] as Array).push(plugin);
 				}
 			}
 		}
@@ -611,7 +613,7 @@ package com.hexagonstar.motion.tween
 					
 					for (var i:int = 0; i < l; i++)
 					{
-						value = pluginArr[i].init(this, n, value);
+						value = IHTweenPlugin(pluginArr[i]).init(this, n, value);
 					}
 					
 					if (!isNaN(value))
@@ -632,7 +634,7 @@ package com.hexagonstar.motion.tween
 				
 				for (i = 0; i < l; i++)
 				{
-					pluginArr[i].init(this, "*", NaN);
+					IHTweenPlugin(pluginArr[i]).init(this, "*", NaN);
 				}
 			}
 			
@@ -726,7 +728,7 @@ package com.hexagonstar.motion.tween
 				delete(_tickList[this]);
 				if (target is IEventDispatcher)
 				{
-					target.removeEventListener("_", invalidate);
+					IEventDispatcher(target).removeEventListener("_", invalidate);
 				}
 				delete(_gcLockList[this]);
 			}
@@ -749,7 +751,7 @@ package com.hexagonstar.motion.tween
 				/* prevent garbage collection */
 				if (target is IEventDispatcher)
 				{
-					target.addEventListener("_", invalidate);
+					IEventDispatcher(target).addEventListener("_", invalidate);
 				}
 				else
 				{
@@ -832,8 +834,8 @@ package com.hexagonstar.motion.tween
 						var l:int = pluginArray.length;
 						for (var i:int = 0; i < l; i++)
 						{
-							val = pluginArray[i].tween(this, n, val, initVal, rangeVal,
-								ratio, end);
+							val = IHTweenPlugin(pluginArray[i]).tween(this, n, val, initVal,
+								rangeVal, ratio, end);
 						}
 						
 						if (!isNaN(val))
@@ -854,7 +856,7 @@ package com.hexagonstar.motion.tween
 				l = pluginArray.length;
 				for (i = 0; i < l; i++)
 				{
-					pluginArray[i].tween(this, "*", NaN, NaN, NaN, ratio, end);
+					IHTweenPlugin(pluginArray[i]).tween(this, "*", NaN, NaN, NaN, ratio, end);
 				}
 			}
 			
@@ -1088,7 +1090,7 @@ dynamic class TargetProxy extends Proxy
 	
 	flash_proxy override function callProperty(methodName:*, ...args:Array):*
 	{
-		return tween.target[methodName].apply(null, args);
+		return Function(tween.target[methodName]).apply(null, args);
 	}
 	
 	flash_proxy override function getProperty(p:*):*

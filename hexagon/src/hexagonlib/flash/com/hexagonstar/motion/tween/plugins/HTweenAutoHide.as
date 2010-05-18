@@ -31,6 +31,8 @@ package com.hexagonstar.motion.tween.plugins
 {
 	import com.hexagonstar.motion.tween.HTween;
 
+	import flash.display.DisplayObject;
+
 	
 	/**
 	 * Plugin for GTween. Sets the visible of the target to false if its alpha is 0 or
@@ -44,6 +46,14 @@ package com.hexagonstar.motion.tween.plugins
 	 */
 	public class HTweenAutoHide implements IHTweenPlugin 
 	{
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Constants                                                                          //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/* Used for access to dynamic plugIn data properties */
+		protected static const PLUGINDATA_AUTOHIDEENABLED:String = "autoHideEnabled";
+		
+		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -109,12 +119,13 @@ package com.hexagonstar.motion.tween.plugins
 								 end:Boolean):Number
 		{
 			/* only change the visibility if the plugin is enabled */
-			if (((tween.pluginData.autoHideEnabled == null && enabled)
-				|| tween.pluginData.autoHideEnabled))
+			if (((tween.pluginData[PLUGINDATA_AUTOHIDEENABLED] == null && enabled)
+				|| tween.pluginData[PLUGINDATA_AUTOHIDEENABLED]))
 			{
-				if (tween.target.visible != (value > 0))
+				var d:DisplayObject = DisplayObject(tween.target);
+				if (d.visible != (value > 0))
 				{
-					tween.target.visible = (value > 0);
+					d.visible = (value > 0);
 				}
 			}
 			return value;

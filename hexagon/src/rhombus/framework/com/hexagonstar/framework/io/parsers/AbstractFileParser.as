@@ -143,7 +143,7 @@ package com.hexagonstar.framework.io.parsers
 		 */
 		protected function extract(xml:*, name:String):*
 		{
-			return xml[name].toString();
+			return xml[name]["toString"]();
 		}
 		
 		
@@ -164,8 +164,8 @@ package com.hexagonstar.framework.io.parsers
 			var lines:Array = string.split("\n");
 			for (var i:int = 0; i < lines.length; i++)
 			{
-				lines[i] = lines[i].replace(/^\s+|\s+$/g, "");
-				if (!(/<br\/>$/.test(lines[i]))) lines[i] += " ";
+				lines[i] = String(lines[i]).replace(/^\s+|\s+$/g, "");
+				if (!(RegExp(/<br\/>$/).test(lines[i]))) lines[i] += " ";
 			}
 			return lines.join("");
 		}
