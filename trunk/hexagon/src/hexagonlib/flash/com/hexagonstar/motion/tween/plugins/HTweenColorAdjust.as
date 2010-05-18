@@ -32,6 +32,7 @@ package com.hexagonstar.motion.tween.plugins
 	import com.hexagonstar.geom.ColorMatrix;
 	import com.hexagonstar.motion.tween.HTween;
 
+	import flash.display.DisplayObject;
 	import flash.filters.ColorMatrixFilter;
 
 	
@@ -53,6 +54,15 @@ package com.hexagonstar.motion.tween.plugins
 	 **/
 	public class HTweenColorAdjust implements IHTweenPlugin
 	{
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Constants                                                                          //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/* Used for access to dynamic plugIn data properties */
+		protected static const PLUGINDATA_COLORADJUSTENABLED:String	= "colorAdjustEnabled";
+		protected static const PLUGINDATA_COLORADJUSTDATA:String		= "colorAdjustData";
+		
+		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -95,31 +105,26 @@ package com.hexagonstar.motion.tween.plugins
 		 */
 		public function init(tween:HTween, name:String, value:Number):Number
 		{
-			if (!((tween.pluginData.colorAdjustEnabled == null && enabled)
-				|| tween.pluginData.colorAdjustEnabled)) 
+			if (!((tween.pluginData[PLUGINDATA_COLORADJUSTENABLED] == null && enabled)
+				|| tween.pluginData[PLUGINDATA_COLORADJUSTENABLED])) 
 			{ 
-				return value; 
+				return value;
 			}
 			
-			if (tween.pluginData.colorAdjustData == null)
+			if (tween.pluginData[PLUGINDATA_COLORADJUSTDATA] == null)
 			{
 				/* try to find an existing color matrix filter on the target */
-				var f:Array = tween.target.filters;
+				var f:Array = DisplayObject(tween.target).filters;
 				for (var i:int = 0; i < f.length; i++)
 				{
 					if (f[i] is ColorMatrixFilter)
 					{
 						var cmF:ColorMatrixFilter = f[i];
-						var o:Object = {index: i, ratio: NaN};
-						
-						/* save off the initial matrix */
-						o.initMatrix = cmF.matrix;
-						
-						/* save off the target matrix */
-						o.matrix = getMatrix(tween);
+						var o:ColorAdjustDO = new ColorAdjustDO(i, NaN, cmF.matrix,
+							getMatrix(tween));
 						
 						/* store in pluginData for this tween for retrieval later */
-						tween.pluginData.colorAdjustData = o;
+						tween.pluginData[PLUGINDATA_COLORADJUSTDATA] = o;
 					}
 				}
 			}
@@ -150,14 +155,14 @@ package com.hexagonstar.motion.tween.plugins
 								 end:Boolean):Number
 		{
 			/* don't run if we're not enabled */
-			if (!((tween.pluginData.colorAdjustEnabled == null && enabled)
-				|| tween.pluginData.colorAdjustEnabled))
+			if (!((tween.pluginData[PLUGINDATA_COLORADJUSTENABLED] == null && enabled)
+				|| tween.pluginData[PLUGINDATA_COLORADJUSTENABLED]))
 			{ 
 				return value; 
 			}
 			
 			/* grab the tween specific data from pluginData */
-			var data:Object = tween.pluginData.colorAdjustData;
+			var data:ColorAdjustDO = tween.pluginData[PLUGINDATA_COLORADJUSTDATA];
 			if (data == null)
 			{
 				data = initTarget(tween); 
@@ -177,7 +182,8 @@ package com.hexagonstar.motion.tween.plugins
 			ratio = value - initValue;
 			
 			/* grab the filter */
-			var f:Array = tween.target.filters;
+			var d:DisplayObject = DisplayObject(tween.target);
+			var f:Array = d.filters;
 			var cmF:ColorMatrixFilter = f[data.index] as ColorMatrixFilter;
 			
 			if (cmF == null)
@@ -208,12 +214,12 @@ package com.hexagonstar.motion.tween.plugins
 			
 			/* set the matrix back to the filter, and set the filters on the target */
 			cmF.matrix = matrix;
-			tween.target.filters = f;
+			d.filters = f;
 			
 			/* clean up if it's the end of the tween */
 			if (end)
 			{
-				delete(tween.pluginData.ColorAdjustData);
+				delete(tween.pluginData[PLUGINDATA_COLORADJUSTDATA]);
 			}
 			
 			/* tell HTween not to use the default assignment behaviour */
@@ -243,16 +249,16 @@ package com.hexagonstar.motion.tween.plugins
 		/**
 		 * @private
 		 */
-		protected function initTarget(tween:HTween):Object 
+		protected function initTarget(tween:HTween):ColorAdjustDO 
 		{
-			var f:Array = tween.target.filters;
+			var d:DisplayObject = DisplayObject(tween.target);
+			var f:Array = d.filters;
 			var mtx:ColorMatrix = new ColorMatrix();
 			f.push(new ColorMatrixFilter(mtx));
-			tween.target.filters = f;
-			var o:Object = {index: f.length - 1, ratio: NaN};
-			o.initMatrix = mtx;
-			o.matrix = getMatrix(tween);
-			return tween.pluginData.colorAdjustData = o;
+			d.filters = f;
+			
+			var o:ColorAdjustDO = new ColorAdjustDO(f.length - 1, NaN, mtx, getMatrix(tween));
+			return tween.pluginData[PLUGINDATA_COLORADJUSTDATA] = o;
 		}
 		
 		
@@ -263,5 +269,25 @@ package com.hexagonstar.motion.tween.plugins
 		{
 			return isNaN(value) ? 0 : value;
 		}
+	}
+}
+
+import com.hexagonstar.geom.ColorMatrix;
+
+
+/* -------------------------------------------------------------------------------------------- */
+class ColorAdjustDO
+{
+	public var index:int;
+	public var ratio:Number;
+	public var initMatrix:Array;
+	public var matrix:ColorMatrix;
+	
+	public function ColorAdjustDO(i:int, r:Number, im:Array, m:ColorMatrix)
+	{
+		index = i;
+		ratio = r;
+		initMatrix = im;
+		matrix = m;
 	}
 }

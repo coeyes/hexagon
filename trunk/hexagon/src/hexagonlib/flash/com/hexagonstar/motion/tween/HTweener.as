@@ -49,6 +49,14 @@ package com.hexagonstar.motion.tween
 	public class HTweener
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
+		// Constants                                                                          //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/* Used for access to dynamic plugIn data property */
+		protected static const PLUGINDATA_PROP:String = "HTweener";
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -129,7 +137,7 @@ package com.hexagonstar.motion.tween
 			}
 			
 			list.push(tween);
-			tween.pluginData.HTweener = true;
+			tween.pluginData[PLUGINDATA_PROP] = true;
 		}
 		
 		
@@ -191,7 +199,7 @@ package com.hexagonstar.motion.tween
 			var l:int = list.length;
 			for (var i:int = 0; i < l; i++)
 			{
-				list[i].paused = paused;
+				HTween(list[i]).paused = paused;
 			}
 		}
 		
@@ -214,7 +222,7 @@ package com.hexagonstar.motion.tween
 		 */
 		public static function remove(tween:HTween):void
 		{
-			delete(tween.pluginData.HTweener);
+			delete(tween.pluginData[PLUGINDATA_PROP]);
 			var list:Array = _tweens[tween.target];
 			if (list == null)
 			{
@@ -251,7 +259,7 @@ package com.hexagonstar.motion.tween
 			var l:int = list.length;
 			for (var i:int = 0; i < l; i++)
 			{
-				delete(list[i].pluginData.HTweener);
+				delete(HTween(list[i]).pluginData[PLUGINDATA_PROP]);
 			}
 			delete(_tweens[target]);
 		}
@@ -280,7 +288,7 @@ package com.hexagonstar.motion.tween
 		{
 			/* if the tween has just completed and it is currently being
 			 * managed by HTweener then remove it. */
-			if (end && tween.pluginData.HTweener)
+			if (end && tween.pluginData[PLUGINDATA_PROP])
 			{
 				remove(tween);
 			}

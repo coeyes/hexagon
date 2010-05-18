@@ -1142,12 +1142,13 @@ package com.hexagonstar.display.ui.controls
 			
 			for (var i:int = 0; i < l; i++)
 			{
-				if (renderers[i].setStyle == null) continue;
+				var r:CellRenderer = renderers[i];
+				if (r.setStyle == null) continue;
 				for (var n:String in _updatedRendererStyles)
 				{
-					renderers[i].setStyle(n, _updatedRendererStyles[n]);
+					r.setStyle(n, _updatedRendererStyles[n]);
 				}
-				renderers[i].drawNow();
+				r.drawNow();
 			}
 			_updatedRendererStyles = {};
 		}

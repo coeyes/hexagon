@@ -46,6 +46,14 @@ package com.hexagonstar.motion.tween.plugins
 	public class HTweenSmartRotation implements IHTweenPlugin 
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
+		// Constants                                                                          //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/* Used for access to dynamic plugIn data properties */
+		protected static const PLUGINDATA_SMARTROTATIONENABLED:String = "smartRotationEnabled";
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -114,8 +122,8 @@ package com.hexagonstar.motion.tween.plugins
 								ratio:Number,
 								end:Boolean):Number
 		{
-			if (!((enabled && tween.pluginData.SmartRotationEnabled == null)
-				|| tween.pluginData.SmartRotationEnabled))
+			if (!((enabled && tween.pluginData[PLUGINDATA_SMARTROTATIONENABLED] == null)
+				|| tween.pluginData[PLUGINDATA_SMARTROTATIONENABLED]))
 			{
 				return value;
 			}

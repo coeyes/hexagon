@@ -44,6 +44,14 @@ package com.hexagonstar.motion.tween.plugins
 	public class HTweenSnapping implements IHTweenPlugin
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
+		// Constants                                                                          //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/* Used for access to dynamic plugIn data properties */
+		protected static const PLUGINDATA_SNAPPINGENABLED:String = "snappingEnabled";
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -110,8 +118,8 @@ package com.hexagonstar.motion.tween.plugins
 								 ratio:Number,
 								 end:Boolean):Number
 		{
-			if (!((enabled && tween.pluginData.snappingEnabled == null)
-				|| tween.pluginData.snappingEnabled))
+			if (!((enabled && tween.pluginData[PLUGINDATA_SNAPPINGENABLED] == null)
+				|| tween.pluginData[PLUGINDATA_SNAPPINGENABLED]))
 			{
 				return value;
 			}

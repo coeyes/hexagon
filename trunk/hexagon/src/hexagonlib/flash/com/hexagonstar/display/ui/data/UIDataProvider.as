@@ -29,9 +29,8 @@
  */
 package com.hexagonstar.display.ui.data
 {
-	import RangeError;
-	import com.hexagonstar.display.ui.event.UIDataChangeType;
 	import com.hexagonstar.display.ui.event.UIDataChangeEvent;
+	import com.hexagonstar.display.ui.event.UIDataChangeType;
 
 	import flash.events.EventDispatcher;
 
@@ -509,11 +508,11 @@ package com.hexagonstar.display.ui.data
 						return result;
 					}
 				}
-				return obj.concat();
+				return a.concat();
 			}
 			else if (obj is UIDataProvider)
 			{
-				return obj.toArray();
+				return UIDataProvider(obj).toArray();
 			}
 			else if (obj is XML)
 			{
