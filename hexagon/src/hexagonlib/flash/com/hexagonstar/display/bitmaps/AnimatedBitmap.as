@@ -282,9 +282,10 @@ package com.hexagonstar.display.bitmaps
 			{
 				if (_loopCount == _sequence.loops)
 				{
+					// TODO This is bad! Needs to be fixed differently!
 					/* Temp fix! needs testing! Causes anims with only one loop to play
 					 * again after they are stopped and play() is called again. */
-					_currentFrame = 1;
+					//_currentFrame = 1;
 					
 					_loopCount = 0;
 				}
@@ -548,8 +549,9 @@ package com.hexagonstar.display.bitmaps
 				_endFrame = _sequence.end;
 				_loopCount = 0;
 				
-				// Temp Off! Not needed?
-				//draw();
+				// TODO Temp Off! Not needed?
+				// This is indeed required!
+				draw();
 			}
 		}
 		
