@@ -110,7 +110,7 @@
 	
 	<!-- External SWC Paths. Same rules as for Source Paths but for SWC files. -->
 	<property name="path.swc.hexagon"	value="${workspace}/com.hexagonstar.hexagon/swc"/>
-	<property name="path.swc.alcon"	value="${workspace}/com.hexagonstar.alcon.debug/bin"/>
+	<property name="path.swc.alcon"	value="${path.src}/assets"/>
 	
 	<!-- Path reference to the library.swc used in the project. -->
 	<property name="path.swc.library"	value="${path.src}/assets"/>
