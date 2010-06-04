@@ -40,9 +40,9 @@ package com.hexagonstar
 		
 		public static const NAME:String			= "hexagonlib";
 		public static const VERSION:String		= "0.3.0";
-		public static const BUILD:String			= "167";
+		public static const BUILD:String			= "170";
 		public static const RELEASE_STAGE:String	= "beta";
-		public static const DATE:String			= "04-June-2010 02:14";
+		public static const DATE:String			= "04-June-2010 18:19";
 		public static const COPYRIGHT:String		= "Copyright(c) Hexagon Star Softworks";
 	}
 }
