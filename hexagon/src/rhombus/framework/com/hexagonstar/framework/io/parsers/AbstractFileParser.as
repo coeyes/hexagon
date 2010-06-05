@@ -143,7 +143,8 @@ package com.hexagonstar.framework.io.parsers
 		 */
 		protected function extract(xml:*, name:String):*
 		{
-			return xml[name]["toString"]();
+			/* TODO Needs to be tested more if casting to String is really safe! */
+			return String(xml[name]).toString();
 		}
 		
 		
