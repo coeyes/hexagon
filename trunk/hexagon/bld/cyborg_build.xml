@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*********************************************************************************************
+	Buildfile for SWC files
+*********************************************************************************************
+-->
+<project name="cyborg framework" default="init" basedir="..">
+	
+	<!-- application information -->
+	<property name="app.name"			value="cyborg framework"/>
+	<property name="app.version"		value="1.0.0"/>
+	<property name="app.releasestage"	value="release"/>
+	<property name="app.copyright"	value="Copyright(c) Hexagon Star Softworks"/>
+	
+	<!-- swc properties -->
+	<property name="swc.targetname"	value="cyborg.swc"/>
+	
+	<!-- version of the used flex sdk -->
+	<property name="sdk.version"		value="3.4.0"/>
+	
+	<!-- version of the targetted flash player -->
+	<property name="fpv.version"		value="10.0.0"/>
+	
+	<!-- default project folders -->
+	<property name="path.src"			value="${basedir}/src/cyborg/framework"/>
+	<property name="path.swc"			value="${basedir}/swc"/>
+	<property name="path.doc"			value="${basedir}/doc"/>
+	
+	<!-- workspace & sdk pathes -->
+	<property name="workspace"		value="${eclipse.workspace}"/>
+	<property name="sdk"				value="${flex.sdk.basepath}/${sdk.version}"/>
+	<property name="FLEX_HOME"		value="${sdk}"/>
+	<property name="path.asdoc"		value="${sdk}/bin/asdoc.exe"/>
+	<property name="path.cfg.flex"	value="${sdk}/frameworks/flex-config.xml"/>
+	<property name="path.cfg.air"		value="${sdk}/frameworks/air-config.xml"/>
+	<property name="path.buildnumber"	value="bld/cyborg_build.number"/>
+	
+	<!-- flextasks definitions -->
+	<taskdef resource="flexTasks.tasks" classpath="${sdk}/ant/lib/flexTasks.jar"/>
+	
+	
+	<!-- ==================================================================================== -->
+	<!-- TARGETS                                                                              -->
+	<!-- ==================================================================================== -->
+	
+	<target name="init" description="Does nothing.">
+	</target>
+	
+	<target name="swc" description="Builds the SWC of cyborg framework.">
+		<prepareBuild/>
+		<echo message="Building cyborg framework SWC ..." level="info"/>
+		<compc
+			output="${path.swc}/${swc.targetname}"
+			target-player="${fpv.version}"
+			debug="false"
+			optimize="true"
+		>
+			<load-config filename="${path.cfg.flex}"/>
+			<source-path path-element="${path.src}"/>
+			<include-sources dir="${path.src}" includes="**/*.as"/>
+		</compc>
+	</target>
+	
+	
+	<target name="docs" description="Generates the docs for the cyborg framework.">
+		<echo message="Generating cyborg framework docs ..." level="info"/>
+		<exec executable="${path.asdoc}" spawn="false">
+			<arg value="-source-path"/>
+			<arg path="${path.src}"/>
+			<arg value="-doc-sources"/>
+			<arg path="${path.src}"/>
+			<arg value="-main-title"/>
+			<arg path="cyborg framework API Documentation"/>
+			<arg value="-window-title"/>
+			<arg path="cyborg framework API Documentation"/>
+			<arg value="-output"/>
+			<arg path="${path.doc}/cyborg"/>
+			<arg line="-target-player=${fpv.version}"/>
+		</exec>
+	</target>
+	
+	
+	<!-- ==================================================================================== -->
+	<!-- MACRODEFS                                                                            -->
+	<!-- ==================================================================================== -->
+	
+	<macrodef name="prepareBuild">
+		<sequential>
+			<buildnumber file="${path.buildnumber}"/>
+			<tstamp>
+				<format property="build.date" pattern="dd-MMMM-yyyy HH:mm" unit="minute" locale="en"/>
+			</tstamp>
+			<echo message="*** ${ant.project.name} version: ${app.version} build #${build.number}, ${build.date} ***" level="info"/>
+			<generateAppInfo buildnr="${build.number}" builddate="${build.date}" releasestage="${app.releasestage}"/>
+		</sequential>
+	</macrodef>
+	
+	
+	<macrodef name="generateAppInfo">
+		<attribute name="buildnr" default=""/>
+		<attribute name="builddate" default=""/>
+		<attribute name="releasestage" default=""/>
+		<sequential>
+			<echo message="Generating CyborgFramework.as ..." level="info"/>
+			<echo file="${path.src}/com/hexagonstar/cyborg/CyborgFramework.as" append="false"><![CDATA[/*
+ * cyborg - ActionScript3 application framework based on robotlegs.
+ * 
+ *  ___   |_  __    __
+ * |___\_||_|(__)|/|__|
+ *      _|           _|
+ *  
+ * Licensed under the MIT License
+ * 
+ * Copyright (c) 2010 Hexagon Star Softworks
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+package com.hexagonstar.cyborg
+{
+	/**
+	 * Contains constants that describe version information about the framework.
+	 */
+	public class CyborgFramework
+	{
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Constants                                                                          //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		public static const NAME:String			= "${app.name}";
+		public static const VERSION:String		= "${app.version}";
+		public static const BUILD:String			= "@{buildnr}";
+		public static const RELEASE_STAGE:String	= "@{releasestage}";
+		public static const DATE:String			= "@{builddate}";
+		public static const COPYRIGHT:String		= "${app.copyright}";
+	}
+}]]>
+</echo>
+		</sequential>
+	</macrodef>
+	
+</project>
