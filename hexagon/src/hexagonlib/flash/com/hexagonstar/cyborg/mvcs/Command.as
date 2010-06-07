@@ -28,6 +28,7 @@
  */
 package com.hexagonstar.cyborg.mvcs
 {
+	import com.hexagonstar.core.BasicClass;
 	import com.hexagonstar.cyborg.core.ICommandMap;
 	import com.hexagonstar.cyborg.core.IInjector;
 	import com.hexagonstar.cyborg.core.IMediatorMap;
@@ -40,7 +41,7 @@ package com.hexagonstar.cyborg.mvcs
 	/**
 	 * Abstract MVCS command implementation.
 	 */
-	public class Command
+	public class Command extends BasicClass
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //

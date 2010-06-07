@@ -28,6 +28,7 @@
  */
 package com.hexagonstar.cyborg.mvcs
 {
+	import com.hexagonstar.core.BasicClass;
 	import com.hexagonstar.cyborg.base.EventMap;
 	import com.hexagonstar.cyborg.core.IEventMap;
 
@@ -56,7 +57,7 @@ package com.hexagonstar.cyborg.mvcs
 	 * injection supplied is a candidate for extending <code>Actor</code>.
 	 * </p>
 	 */
-	public class Actor
+	public class Actor extends BasicClass
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //

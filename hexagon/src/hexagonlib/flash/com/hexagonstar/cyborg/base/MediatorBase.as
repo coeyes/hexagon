@@ -28,6 +28,7 @@
  */
 package com.hexagonstar.cyborg.base
 {
+	import com.hexagonstar.core.BasicClass;
 	import com.hexagonstar.cyborg.core.IMediator;
 
 	import flash.events.Event;
@@ -38,7 +39,7 @@ package com.hexagonstar.cyborg.base
 	/**
 	 * An abstract <code>IMediator</code> implementation.
 	 */
-	public class MediatorBase implements IMediator
+	public class MediatorBase extends BasicClass implements IMediator
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //

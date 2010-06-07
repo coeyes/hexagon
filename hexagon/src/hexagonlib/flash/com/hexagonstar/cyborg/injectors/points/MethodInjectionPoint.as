@@ -85,7 +85,7 @@ package com.hexagonstar.cyborg.injectors.points
 		{
 			var nameArgs:XMLList = node.arg.(@key == "name");
 			var methodNode:XML = node.parent();
-			_methodName = XML(methodNode.@name).toString();
+			_methodName = String(methodNode.@name);
 			gatherParameters(methodNode, nameArgs, injector);
 		}
 		
@@ -105,15 +105,15 @@ package com.hexagonstar.cyborg.injectors.points
 				
 				if (nameArgs[i])
 				{
-					injectionName = XML(nameArgs[i].@value).toString();
+					injectionName = String(nameArgs[i].@value);
 				}
 				
-				var parameterTypeName:String = XML(parameter.@type).toString();
+				var parameterTypeName:String = String(parameter.@type);
 				var parameterType:Class;
 				
 				if (parameterTypeName == "*")
 				{
-					if (XML(parameter.@optional).toString() == "false")
+					if (String(parameter.@optional) == "false")
 					{
 						// TODO Find a way to trace name of affected class here!
 						throw new Error("Error in method definition of injectee. Required "
@@ -132,7 +132,7 @@ package com.hexagonstar.cyborg.injectors.points
 				
 				_injectionConfigs.push(injector.getMapping(parameterType, injectionName));
 				
-				if (XML(parameter.@optional).toString() == "false")
+				if (String(parameter.@optional) == "false")
 				{
 					_requiredParameters++;
 				}

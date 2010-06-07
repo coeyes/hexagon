@@ -87,8 +87,8 @@ package com.hexagonstar.cyborg.injectors.points
 		 */
 		override protected function initializeInjection(node:XML, injector:Injector):void
 		{
-			_propertyType = XML(node.parent().@type).toString();
-			_propertyName = XML(node.parent().@name).toString();
+			_propertyType = String(node.parent().@type);
+			_propertyName = String(node.parent().@name);
 			_injectionConfig = injector.getMapping(Class(injector.getApplicationDomain()
 				.getDefinition(_propertyType)),node.arg.attribute("value").toString());
 		}

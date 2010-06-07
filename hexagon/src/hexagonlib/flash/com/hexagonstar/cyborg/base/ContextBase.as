@@ -28,6 +28,7 @@
  */
 package com.hexagonstar.cyborg.base
 {
+	import com.hexagonstar.core.BasicClass;
 	import com.hexagonstar.cyborg.core.IContext;
 
 	import flash.events.Event;
@@ -38,7 +39,7 @@ package com.hexagonstar.cyborg.base
 	/**
 	 * An abstract <code>IContext</code> implementation
 	 */
-	public class ContextBase implements IContext, IEventDispatcher
+	public class ContextBase extends BasicClass implements IContext, IEventDispatcher
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //

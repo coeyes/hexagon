@@ -297,7 +297,7 @@ package com.hexagonstar.cyborg.injectors
 			var description:XML = describeType(clazz);
 			var injectionPoints:Array = [];
 			_injectionPointLists[clazz] = injectionPoints;
-			_injectionPointLists[XML(description.@name).toString()] = injectionPoints;
+			_injectionPointLists[String(description.@name)] = injectionPoints;
 			var node:XML;
 			
 			/* This is where we have to wire in the XML ... */
