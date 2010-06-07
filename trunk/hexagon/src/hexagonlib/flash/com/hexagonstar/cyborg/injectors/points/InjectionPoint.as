@@ -1,14 +1,13 @@
 /*
- * hexagonlib - Multi-Purpose ActionScript 3 Library.
- *       __    __
- *    __/  \__/  \__    __
- *   /  \__/HEXAGON \__/  \
- *   \__/  \__/  LIBRARY _/
- *            \__/  \__/
- *
+ * cyborg - ActionScript3 application framework based on robotlegs.
+ * 
+ *  ___   |_  __    __
+ * |___\_||_|(__)|/|__|
+ *      _|           _|
+ *  
  * Licensed under the MIT License
  * 
- * Copyright (c) 2007-2008 Sascha Balkau / Hexagon Star Softworks
+ * Copyright (c) 2010 Hexagon Star Softworks
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -27,22 +26,43 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.hexagonstar
+package com.hexagonstar.cyborg.injectors.points
 {
+	import com.hexagonstar.cyborg.injectors.Injector;
+
+	
 	/**
-	 * Contains constants that describe version information about the library.
+	 * InjectionPoint
 	 */
-	public class HexagonLib
+	public class InjectionPoint
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
-		// Constants                                                                          //
+		// Public Methods                                                                     //
 		////////////////////////////////////////////////////////////////////////////////////////
 		
-		public static const NAME:String			= "hexagonlib";
-		public static const VERSION:String		= "0.3.0";
-		public static const BUILD:String			= "172";
-		public static const RELEASE_STAGE:String	= "beta";
-		public static const DATE:String			= "07-June-2010 23:18";
-		public static const COPYRIGHT:String		= "Copyright(c) Hexagon Star Softworks";
+		/**
+		 * Constructor
+		 */
+		public function InjectionPoint(node:XML, injector:Injector)
+		{
+			initializeInjection(node, injector);
+		}
+		
+		
+		public function applyInjection(target:Object, injector:Injector):Object
+		{
+			return target;
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Private Methods                                                                    //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/**
+		 * @private
+		 */
+		protected function initializeInjection(node:XML, injector:Injector):void
+		{
+		}
 	}
 }

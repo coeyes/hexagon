@@ -386,10 +386,19 @@ package
 				<source-path path-element="${path.src.rhombus.framework}"/>
 				
 				<!-- Library Paths -->
+				<compiler.library-path dir="${FLEX_HOME}/frameworks/libs/player/10" append="false">
+					<include name="playerglobal.swc"/>
+				</compiler.library-path>
+				<compiler.library-path dir="${FLEX_HOME}/frameworks/libs" append="false">
+					<include name="flex.swc"/>
+				</compiler.library-path>
+				<compiler.library-path dir="${FLEX_HOME}/frameworks/locale/en_US" append="false">
+					<include name="*"/>
+				</compiler.library-path>
+				
 				<compiler.library-path dir="${path.swc.library}" append="true">
 					<include name="library.swc"/>
 				</compiler.library-path>
-				
 				<compiler.library-path dir="${path.swc.alcon}" append="true">
 					<include name="alcon.swc"/>
 				</compiler.library-path>
