@@ -28,10 +28,13 @@
  */
 package com.hexagonstar.cyborg.injectors
 {
+	import com.hexagonstar.exception.Exception;
+
+	
 	/**
 	 * InjectorError
 	 */
-	public class InjectorError extends Error
+	public class InjectorError extends Exception
 	{
 		/**
 		 * Constructor

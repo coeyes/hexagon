@@ -28,10 +28,13 @@
  */
 package com.hexagonstar.cyborg.base
 {
+	import com.hexagonstar.exception.Exception;
+
+	
 	/**
 	 * A framework Error implementation
 	 */
-	public class ContextError extends Error
+	public class ContextError extends Exception
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Constants                                                                          //

@@ -88,7 +88,7 @@ package com.hexagonstar.cyborg.injectors.points
 			var orderArg:XMLList = node.arg.(@key == "order");
 			var methodNode:XML = node.parent();
 			_orderValue = int(orderArg.@value);
-			_methodName = XML(methodNode.@name).toString();
+			_methodName = String(methodNode.@name);
 		}
 	}
 }
