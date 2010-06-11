@@ -18,7 +18,7 @@
 	<property name="swc.targetname.flex"	value="hexagonlib_flex.swc"/>
 	
 	<!-- version of the used flex sdk -->
-	<property name="sdk.version"		value="3.4.0"/>
+	<property name="sdk.version"		value="4.0.0"/>
 	
 	<!-- version of the targetted flash player -->
 	<property name="fpv.version"		value="10.0.0"/>
@@ -33,6 +33,7 @@
 	
 	<!-- workspace & sdk pathes -->
 	<property name="workspace"		value="${eclipse.workspace}"/>
+	<property name="flex.sdk.basepath"	value="C:/Users/sascha/Applications/FlexSDK"/>
 	<property name="sdk"				value="${flex.sdk.basepath}/${sdk.version}"/>
 	<property name="FLEX_HOME"		value="${sdk}"/>
 	<property name="path.asdoc"		value="${sdk}/bin/asdoc.exe"/>
