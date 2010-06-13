@@ -67,6 +67,13 @@ package com.hexagonstar.cyborg.base
 		 */
 		protected var _viewComponent:Object;
 		
+		/**
+		 * Internal
+		 * <p>In the case of deffered instantiation, onRemove might get called before
+		 * onCreationComplete has fired. This here Bool helps us track that scenario.</p>
+		 */
+		protected var _removed:Boolean;
+		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Public Methods                                                                     //
@@ -85,6 +92,8 @@ package com.hexagonstar.cyborg.base
 		 */
 		public function preRegister():void
 		{
+			_removed = false;
+			
 			if (_flexAvailable && (_viewComponent is _UIComponentClass)
 				&& !_viewComponent["initialized"])
 			{
@@ -119,6 +128,7 @@ package com.hexagonstar.cyborg.base
 		 */
 		public function preRemove():void
 		{
+			_removed = true;
 			onRemove();
 		}
 		
@@ -179,7 +189,8 @@ package com.hexagonstar.cyborg.base
 		{
 			IEventDispatcher(e.target).removeEventListener("creationComplete",
 				onCreationComplete);
-			onRegister();
+			
+			if (!_removed) onRegister();
 		}
 	}
 }

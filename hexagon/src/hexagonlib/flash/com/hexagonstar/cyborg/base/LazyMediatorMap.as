@@ -61,8 +61,10 @@ package com.hexagonstar.cyborg.base
 		{
 			if (contextView && enabled && _active)
 			{
-				contextView.addEventListener(LazyMediatorEvent.VIEW_ADDED, onViewAdded, true, 0, true);
-				contextView.addEventListener(LazyMediatorEvent.VIEW_REMOVED, onViewRemoved, true, 0, true);
+				contextView.addEventListener(LazyMediatorEvent.VIEW_ADDED, onViewAdded,
+					true, 0, true);
+				contextView.addEventListener(LazyMediatorEvent.VIEW_REMOVED, onViewRemoved,
+					true, 0, true);
 			}
 		}
 		
@@ -74,8 +76,10 @@ package com.hexagonstar.cyborg.base
 		{
 			if (contextView && enabled && _active)
 			{
-				contextView.removeEventListener(LazyMediatorEvent.VIEW_ADDED, onViewAdded, true);
-				contextView.removeEventListener(LazyMediatorEvent.VIEW_REMOVED, onViewRemoved, true);
+				contextView.removeEventListener(LazyMediatorEvent.VIEW_ADDED,
+					onViewAdded, true);
+				contextView.removeEventListener(LazyMediatorEvent.VIEW_REMOVED,
+					onViewRemoved, true);
 			}
 		}
 	}

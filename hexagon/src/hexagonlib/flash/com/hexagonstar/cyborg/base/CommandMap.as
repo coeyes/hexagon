@@ -31,7 +31,7 @@ package com.hexagonstar.cyborg.base
 	import com.hexagonstar.cyborg.core.ICommandMap;
 	import com.hexagonstar.cyborg.core.IInjector;
 	import com.hexagonstar.cyborg.core.IReflector;
-	import com.hexagonstar.cyborg.mvcs.Command;
+	import com.hexagonstar.cyborg.mvcs.MVCSCommand;
 
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
@@ -205,7 +205,7 @@ package com.hexagonstar.cyborg.base
 				_injector.mapValue(payloadClass, payload, named);
 			}
 			
-			var command:Command = _injector.instantiate(commandClass);
+			var command:MVCSCommand = _injector.instantiate(commandClass);
 			
 			if (payload !== null || payloadClass != null)
 			{
