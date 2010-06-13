@@ -57,7 +57,7 @@ package com.hexagonstar.cyborg.mvcs
 	 * injection supplied is a candidate for extending <code>Actor</code>.
 	 * </p>
 	 */
-	public class Actor extends BasicClass
+	public class MVCSActor extends BasicClass
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
@@ -76,7 +76,7 @@ package com.hexagonstar.cyborg.mvcs
 		/**
 		 * Constructor.
 		 */
-		public function Actor()
+		public function MVCSActor()
 		{
 		}
 		

@@ -78,6 +78,7 @@
 			target-player="${fpv.version}"
 			debug="false"
 			optimize="true"
+			strict="true"
 		>
 			<load-config filename="${path.cfg.flex}"/>
 			<source-path path-element="${path.src.flash}"/>

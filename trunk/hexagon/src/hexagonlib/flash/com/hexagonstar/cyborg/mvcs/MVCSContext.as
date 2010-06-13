@@ -52,7 +52,7 @@ package com.hexagonstar.cyborg.mvcs
 	/**
 	 * Abstract MVCS <code>IContext</code> implementation
 	 */
-	public class Context extends ContextBase implements IContext
+	public class MVCSContext extends ContextBase implements IContext
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
@@ -90,7 +90,7 @@ package com.hexagonstar.cyborg.mvcs
 		 *            <code>startup</code> method when it's <code>contextView</code> arrives
 		 *            on Stage?
 		 */
-		public function Context(contextView:DisplayObjectContainer = null,
+		public function MVCSContext(contextView:DisplayObjectContainer = null,
 			autoStartup:Boolean = true)
 		{
 			super();

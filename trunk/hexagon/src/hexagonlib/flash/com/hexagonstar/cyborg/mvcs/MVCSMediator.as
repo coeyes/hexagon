@@ -28,9 +28,9 @@
  */
 package com.hexagonstar.cyborg.mvcs
 {
-	import com.hexagonstar.core.BasicClass;
-	import com.hexagonstar.cyborg.core.ICommandMap;
-	import com.hexagonstar.cyborg.core.IInjector;
+	import com.hexagonstar.cyborg.base.EventMap;
+	import com.hexagonstar.cyborg.base.MediatorBase;
+	import com.hexagonstar.cyborg.core.IEventMap;
 	import com.hexagonstar.cyborg.core.IMediatorMap;
 
 	import flash.display.DisplayObjectContainer;
@@ -39,9 +39,9 @@ package com.hexagonstar.cyborg.mvcs
 
 	
 	/**
-	 * Abstract MVCS command implementation.
+	 * Abstract MVCS <code>IMediator</code> implementation.
 	 */
-	public class Command extends BasicClass
+	public class MVCSMediator extends MediatorBase
 	{
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Properties                                                                         //
@@ -51,16 +51,12 @@ package com.hexagonstar.cyborg.mvcs
 		public var contextView:DisplayObjectContainer;
 		
 		[Inject]
-		public var commandMap:ICommandMap;
-		
-		[Inject]
-		public var eventDispatcher:IEventDispatcher;
-		
-		[Inject]
-		public var injector:IInjector;
-		
-		[Inject]
 		public var mediatorMap:IMediatorMap;
+		
+		/** @private */
+		protected var _eventDispatcher:IEventDispatcher;
+		/** @private */
+		protected var _eventMap:IEventMap;
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +66,7 @@ package com.hexagonstar.cyborg.mvcs
 		/**
 		 * Constructor.
 		 */
-		public function Command()
+		public function MVCSMediator()
 		{
 		}
 		
@@ -78,8 +74,45 @@ package com.hexagonstar.cyborg.mvcs
 		/**
 		 * @inheritDoc
 		 */
-		public function execute():void
+		override public function preRemove():void
 		{
+			if (_eventMap)
+			{
+				_eventMap.unmapListeners();
+			}
+			super.preRemove();
+		}
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Getters & Setters                                                                  //
+		////////////////////////////////////////////////////////////////////////////////////////
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get eventDispatcher():IEventDispatcher
+		{
+			return _eventDispatcher;
+		}
+
+		[Inject]
+		/**
+		 * @private
+		 */
+		public function set eventDispatcher(v:IEventDispatcher):void
+		{
+			_eventDispatcher = v;
+		}
+		
+		
+		/**
+		 * Local EventMap
+		 * @return The EventMap for this Actor
+		 */
+		protected function get eventMap():IEventMap
+		{
+			return _eventMap || (_eventMap = new EventMap(eventDispatcher));
 		}
 		
 		
@@ -88,9 +121,9 @@ package com.hexagonstar.cyborg.mvcs
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		/**
-		 * Dispatch helper method
+		 * Dispatch helper method.
 		 *
-		 * @param e The <code>Event</code> to dispatch on the <code>IContext</code>'s
+		 * @param e The Event to dispatch on the <code>IContext</code>'s
 		 * <code>IEventDispatcher</code>.
 		 */
 		protected function dispatch(e:Event):Boolean
@@ -99,7 +132,47 @@ package com.hexagonstar.cyborg.mvcs
 			{
  		        return eventDispatcher.dispatchEvent(e);
 			}
-			return false;  
+			return false;
+		}
+		
+		
+		/**
+		 * Syntactical sugar for mapping a listener to the <code>viewComponent</code> .
+		 * 
+		 * @param type
+		 * @param listener
+		 * @param eventClass
+		 * @param useCapture
+		 * @param priority
+		 * @param useWeakReference
+		 */		
+		protected function addViewListener(type:String, listener:Function,
+			eventClass:Class = null, useCapture:Boolean = false, priority:int = 0,
+			useWeakReference:Boolean = true):void 
+		{
+			eventMap.mapListener(IEventDispatcher(_viewComponent), type, listener,
+				eventClass, useCapture, priority, useWeakReference);
+		}
+		
+		
+		/**
+		 * Syntactical sugar for mapping a listener to an <code>IEventDispatcher</code>.
+		 * 
+		 * @param dispatcher
+		 * @param type
+		 * @param listener
+		 * @param eventClass
+		 * @param useCapture
+		 * @param priority
+		 * @param useWeakReference
+		 * 
+		 */		
+		protected function addContextListener(type:String, listener:Function,
+			eventClass:Class = null, useCapture:Boolean = false, priority:int = 0,
+			useWeakReference:Boolean = true):void
+		{
+			eventMap.mapListener(eventDispatcher, type, listener, eventClass, useCapture,
+				priority, useWeakReference); 									   
 		}
 	}
 }
