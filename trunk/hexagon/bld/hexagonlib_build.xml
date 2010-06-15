@@ -18,7 +18,7 @@
 	<property name="swc.targetname.flex"	value="hexagonlib_flex.swc"/>
 	
 	<!-- version of the used flex sdk -->
-	<property name="sdk.version"		value="4.0.0"/>
+	<property name="sdk.version"		value="3.4.0"/>
 	
 	<!-- version of the targetted flash player -->
 	<property name="fpv.version"		value="10.0.0"/>
