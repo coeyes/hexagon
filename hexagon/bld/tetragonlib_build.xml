@@ -8,16 +8,16 @@
 	
 	<!-- application information -->
 	<property name="app.name"			value="tetragonlib"/>
-	<property name="app.version"		value="0.1.0"/>
+	<property name="app.version"		value="0.2.0"/>
 	<property name="app.releasestage"	value="alpha"/>
 	<property name="app.copyright"	value="Copyright(c) Hexagon Star Softworks"/>
 	
 	<!-- swc properties -->
-	<property name="swc.targetname.air"	value="tetragonlib_air.swc"/>
-	<property name="swc.targetname.flash"	value="tetragonlib_flash.swc"/>
+	<property name="swc.targetname.air"	value="tetragonlib_020_air.swc"/>
+	<property name="swc.targetname.flash"	value="tetragonlib_020_flash.swc"/>
 	
 	<!-- version of the used flex sdk -->
-	<property name="sdk.version"		value="3.4.0"/>
+	<property name="sdk.version"		value="4.0.0"/>
 	
 	<!-- version of the targetted flash player -->
 	<property name="fpv.version"		value="10.0.0"/>

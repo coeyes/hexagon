@@ -37,10 +37,10 @@ package com.hexagonstar
 		////////////////////////////////////////////////////////////////////////////////////////
 		
 		public static const NAME:String			= "tetragonlib";
-		public static const VERSION:String		= "0.1.0";
-		public static const BUILD:String			= "40";
+		public static const VERSION:String		= "0.2.0";
+		public static const BUILD:String			= "41";
 		public static const RELEASE_STAGE:String	= "alpha";
-		public static const DATE:String			= "04-June-2010 02:05";
+		public static const DATE:String			= "06-July-2010 17:38";
 		public static const COPYRIGHT:String		= "Copyright(c) Hexagon Star Softworks";
 	}
 }
